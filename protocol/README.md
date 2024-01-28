@@ -1,26 +1,27 @@
 # General 
 
-Source Device Name: CITYSPORTS-Linker
-Endianness: Little
+Source Device Name: `CITYSPORTS-Linker`
+
+Endianness: `Little`
 
 # Sending Commands
 
-ATT OPCODE: 0x012 (Write Request)
+ATT OPCODE: `0x012` (Write Request)
 
 | Operation | Value |
 | --------- | ----- |
-| Start | 00 |
-| Stop | 08 01 |
-| Set Speed | 02 XX XX |
-| Beep | 07 |
+| Start | `00` |
+| Stop | `08 01` |
+| Set Speed | `02 XX XX` |
+| Beep | `07` |
 
-XX XX is Speed in 100 x kmh
+`XX XX` is Speed in 100 x kmh
 
 # Receiving Data
 
-ATT OPCODE: 0x1b (Received Handle Value Notification)
+ATT OPCODE: `0x1b` (Received Handle Value Notification)
 
-| 84 24 | XX XX | XX XX  | XX XX    | 00 ff | ff ff | XX XX   | XX XX | 00  |
+| `84 24` | `XX XX` | `XX XX`  | `XX XX`    | `00 ff` | `ff ff` | `XX XX` | `XX XX` | `00`  |
 | ----- | ----- | ------ | -------- | ----- | ----- | ------- | ----- | --- |
 | Start | Speed | Metres | Calories | ?     | ?     | Seconds | Steps | END |
 
