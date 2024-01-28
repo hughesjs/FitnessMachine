@@ -1,0 +1,28 @@
+Commands in PacketLog
+1. Start
+2. Increase to 1.5...6.0
+3. Decrease to 5.5...1.0
+4. Stop
+
+Initial Capture:
+
+Send commands with OPCODE 0x0020
+Change speed seems to be 02 + Speed in KMH * 100
+Start seems to be 00
+Beep is 07
+Stop is 0801
+
+Filter: bthci_acl.src.name == "CITYSPORTS-Linker"
+Second Capture:
+Commands: Start -> Increase to 1.5 -> Increase to 2.0 -> Stop
+Distance Covered: 0.03km
+Calories: 1kcal
+Time: 1:00
+Steps ~65
+
+Third Capture:
+Commands: Start -> Increase through 6.0 -> Stop
+
+Little Endian
+| 8424  | aa00           | 2100   | 0001      | 00ff |  ffff | 3c00     |  4200  | 00   |
+| Const | Speed in 100kmh| Metres | Calories? |      |       | Seconds  |  Steps | END? |
