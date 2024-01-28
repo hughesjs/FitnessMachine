@@ -7,6 +7,7 @@ Endianness: `Little`
 # Sending Commands
 
 UUID: `2AD9` (Fitness Machine Control Point)
+
 ATT OPCODE: `0x012` (Write Request)
 
 | Operation | Value |
@@ -20,6 +21,7 @@ ATT OPCODE: `0x012` (Write Request)
 # Receiving Data
 
 UUID: `2ACD` (Treadmill Data)
+
 ATT OPCODE: `0x1b` (Received Handle Value Notification)
 
 | `84 24` | `XX XX` | `XX XX`  | `XX XX`    | `00 ff` | `ff ff` | `XX XX` | `XX XX` | `00`  |
