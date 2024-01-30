@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/csharp,rider
-# Edit at https://www.toptal.com/developers/gitignore?templates=csharp,rider
+# Created by https://www.toptal.com/developers/gitignore/api/rider,csharp,xamarinstudio
+# Edit at https://www.toptal.com/developers/gitignore?templates=rider,csharp,xamarinstudio
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -478,4 +478,9 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# End of https://www.toptal.com/developers/gitignore/api/csharp,rider
+### XamarinStudio ###
+bin/
+obj/
+.packages
+
+# End of https://www.toptal.com/developers/gitignore/api/rider,csharp,xamarinstudio
