@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		_controller = new(CrossBluetoothLE.Current.Adapter, DeviceName);
-		_controller.TreadmillReady += (_, _) => BluetoothStatusLbl.Text = "Connected";
+		_controller.TreadmillReady += (_, _) => BluetoothStatusLbl.Text = "Bluetooth: Connected";
 		InitializeComponent();
 	}
 	

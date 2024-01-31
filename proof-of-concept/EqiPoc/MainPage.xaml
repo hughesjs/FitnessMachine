@@ -35,8 +35,28 @@
             
             <Label
                 x:Name="BluetoothStatusLbl"
-                Text="Disconnected"
+                Text="Bluetooth: Disconnected"
                 />
+            
+            <Label 
+                x:Name="TimeLbl"
+                Text = "Time (s):"/>
+            
+            <Label 
+                x:Name="DistanceLbl"
+                Text = "Distance (km):"/>
+            
+            <Label 
+                x:Name="SpeedLbl"
+                Text = "Speed (kmh⁻¹):"/>
+            
+            <Label 
+                x:Name="StepsLbl"
+                Text = "Steps:"/>
+            
+            <Label 
+                x:Name="CaloriesLbl"
+                Text = "Calories (Indicated):"/>
 
         </VerticalStackLayout>
     </ScrollView>
