@@ -23,11 +23,9 @@
                 Clicked="OnStopTreadmill"
                 HorizontalOptions="Center" />
             
-            <Button
-                x:Name="DisconnectBtn"
-                Text="Disconnect"
-                SemanticProperties.Hint="Disconnects the Treadmill"
-                Clicked="OnDisconnectTreadmill"
+            <Button x:Name="DebugBtn"
+                Text="Debug"
+                Clicked="OnDebug"
                 HorizontalOptions="Center" />
             
             <Label
