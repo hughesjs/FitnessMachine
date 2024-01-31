@@ -23,6 +23,13 @@
                 Clicked="OnStopTreadmill"
                 HorizontalOptions="Center" />
             
+            <Button
+                x:Name="DisconnectBtn"
+                Text="Disconnect"
+                SemanticProperties.Hint="Disconnects the Treadmill"
+                Clicked="OnDisconnectTreadmill"
+                HorizontalOptions="Center" />
+            
             <Label
                 x:Name="BluetoothStatusLbl"
                 Text="Disconnected"
