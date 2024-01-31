@@ -20,7 +20,6 @@ public partial class MainPage : ContentPage
 		_controller.StartConnectingToDevice();
 	}
 	
-
 	private void OnStartTreadmill(object sender, EventArgs e)
 	{
 		Console.WriteLine("Starting Treadmill");

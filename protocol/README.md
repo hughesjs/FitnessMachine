@@ -12,7 +12,7 @@ ATT OPCODE: `0x012` (Write Request)
 | Operation | Value |
 | --------- | ----- |
 | Wakeup | `00` |
-| Start  | '07' |
+| Start  | '07e |
 | Stop | `08 01` |
 | Set Speed | `02 XX XX` |
 

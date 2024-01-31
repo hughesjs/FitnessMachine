@@ -7,26 +7,31 @@
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="Start">
+            
+            <Image
+                Source="{AppThemeBinding Light=treadmill.png Dark=treadmill_darkmode.png}"
+                   HeightRequest="200"
+                   HorizontalOptions="Center" />
             
             <Button
                 x:Name="StartBtn"
                 Text="Start"
                 SemanticProperties.Hint="Starts the Treadmill"
                 Clicked="OnStartTreadmill"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Fill"/>
             
             <Button
                 x:Name="StopBtn"
                 Text="Stop"
                 SemanticProperties.Hint="Stops the Treadmill"
                 Clicked="OnStopTreadmill"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Fill" />
             
             <Button x:Name="DemoBtn"
                 Text="Debug"
                 Clicked="OnDemo"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Fill" />
             
             <Label
                 x:Name="BluetoothStatusLbl"

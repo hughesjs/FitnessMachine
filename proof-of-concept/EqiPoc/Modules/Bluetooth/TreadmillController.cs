@@ -11,7 +11,7 @@ public class TreadmillController
     
     private IDevice? _device;
    
-    private Dictionary<string, ICharacteristic> _characteristics;
+    private readonly Dictionary<string, ICharacteristic> _characteristics;
 
     public event EventHandler? TreadmillReady;
     
