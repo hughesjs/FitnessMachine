@@ -1,6 +1,5 @@
 ﻿using EqiPoc.Modules.Bluetooth;
 using Plugin.BLE;
-using Plugin.BLE.Abstractions.Contracts;
 
 namespace EqiPoc;
 
@@ -34,9 +33,10 @@ public partial class MainPage : ContentPage
 		_controller.StopTreadmill();
 	}
 
-	private void OnDebug(object? sender, EventArgs e)
+	private void OnDemo(object? sender, EventArgs e)
 	{
-		
+		Console.WriteLine("Doing Demo");
+		_controller.DoDemo();
 	}
 }
 

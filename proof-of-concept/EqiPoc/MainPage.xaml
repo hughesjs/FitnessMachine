@@ -23,9 +23,9 @@
                 Clicked="OnStopTreadmill"
                 HorizontalOptions="Center" />
             
-            <Button x:Name="DebugBtn"
+            <Button x:Name="DemoBtn"
                 Text="Debug"
-                Clicked="OnDebug"
+                Clicked="OnDemo"
                 HorizontalOptions="Center" />
             
             <Label
