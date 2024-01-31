@@ -22,22 +22,21 @@ public partial class MainPage : ContentPage
 	}
 	
 
-	private async void OnStartTreadmill(object sender, EventArgs e)
+	private void OnStartTreadmill(object sender, EventArgs e)
 	{
 		Console.WriteLine("Starting Treadmill");
-		//var res = await _control!.WriteAsync(new byte[] {0x00});
-		//Console.WriteLine(res);
-		
+		_controller.StartTreadmill();
 	}
 
 	private void OnStopTreadmill(object sender, EventArgs e)
 	{
 		Console.WriteLine("Stopping Treadmill");
+		_controller.StopTreadmill();
 	}
 
 	private void OnDebug(object? sender, EventArgs e)
 	{
-		Task.Run(async () => await _controller.HitEveryCharacteristic());
+		
 	}
 }
 

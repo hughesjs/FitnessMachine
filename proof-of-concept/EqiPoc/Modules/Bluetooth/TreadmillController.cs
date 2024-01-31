@@ -9,10 +9,8 @@ public class TreadmillController
     private readonly string _deviceName;
     
     private IDevice? _device;
-    private ICharacteristic? _control;
-    private ICharacteristic? _status;
-    
-    private List<ICharacteristic> _characteristics;
+   
+    private Dictionary<string, ICharacteristic> _characteristics;
 
     public event EventHandler? TreadmillReady;
     
@@ -38,46 +36,98 @@ public class TreadmillController
         Console.WriteLine("Device connected");
         
         var services = await _device.GetServicesAsync();
-
-        List<ICharacteristic> characteristics = [];
+        
         foreach (IService? service in services)
         {
             var chars = await service.GetCharacteristicsAsync();
-            characteristics.AddRange(chars);
+            foreach (ICharacteristic? characteristic in chars)
+            {
+                _characteristics.Add(characteristic.Uuid, characteristic);
+            }
         }
+        Console.WriteLine($"Found {_characteristics.Keys.Count} characteristics");
 
-        _characteristics = characteristics;
+        WakeTreadmill();
         
-        Console.WriteLine($"Found {characteristics.Count} characteristics");
-        
-        _control = characteristics.FirstOrDefault(c => c.Uuid == "2ad9");
-        _status = characteristics.FirstOrDefault(c => c.Uuid == "2acd");
-        
-        Console.WriteLine($"Control: {_control?.Uuid}");
-        Console.WriteLine($"Status: {_status?.Uuid}");
+        //await DoHandshake();
 
         TreadmillReady?.Invoke(this, EventArgs.Empty);
     }
-
-    public async Task HitEveryCharacteristic()
+    
+    private async Task DoHandshake()
     {
-        byte frame = 0;
-        foreach (ICharacteristic characteristic in _characteristics)
+        if (_device == null) return;
+        
+        string[] characteristicUuids = ["2acd", "2ad3", "2ad9", "2ada", "c4208999-8d92-bee1-4456-2068528eccf6"];
+        byte[][] values = [[0x01, 0x00], [0x01, 0x00], [0x02, 0x00], [0x01, 0x00], [0x01, 0x00]];
+        
+        for (int i = 0; i < characteristicUuids.Length; i++)
         {
-            CancellationTokenSource cts = new();
-            cts.CancelAfter(1000);
-            bool errored = false;
-            try
-            {
-                await characteristic.WriteAsync([frame++], cts.Token);
-            }
-            catch
-            {
-                errored = true;
-            }
-            Console.WriteLine($"Writing {frame} to {characteristic.Uuid} [{(errored ? "FAILED" : "OK")}]");
+            ICharacteristic? characteristic = _characteristics[characteristicUuids[i]];
+            
+            byte[] payload = values[i];
+            IDescriptor? descriptor = (await characteristic.GetDescriptorsAsync()).Single();
+            
+            await descriptor.WriteAsync(payload);
         }
     }
+
+    public void WakeTreadmill()
+    {
+        byte[] payload = [0x00];
+        ICharacteristic characteristic = _characteristics["2ad9"];
+        Task.Run(async () => await characteristic.WriteAsync(payload)); 
+    }
+
+    public void StartTreadmill()
+    {
+        byte[] payload = [0x07];
+        ICharacteristic characteristic = _characteristics["2ad9"];
+        Task.Run(async () => await characteristic.WriteAsync(payload));
+    }
+
+    public void StopTreadmill()
+    {
+        byte[] payload = [0x08, 0x01];
+        ICharacteristic characteristic = _characteristics["2ad9"];
+        Task.Run(async () => await characteristic.WriteAsync(payload));
+    }
+
+    // public async Task HitEveryCharacteristicAndDescriptor()
+    // {
+    //     byte frame = 0;
+    //     foreach (ICharacteristic characteristic in _characteristics.Values)
+    //     {
+    //         CancellationTokenSource cts = new();
+    //         cts.CancelAfter(1000);
+    //         bool errored = false;
+    //         try
+    //         {
+    //             await characteristic.WriteAsync([frame++], cts.Token);
+    //         }
+    //         catch
+    //         {
+    //             errored = true;
+    //         }
+    //         Console.WriteLine($"Writing {frame} to {characteristic.Uuid} [{(errored ? "FAILED" : "OK")}]");
+    //     }
+    //     
+    //     foreach (IDescriptor? descriptor in _descriptors)
+    //     {
+    //         bool err = false;
+    //         CancellationTokenSource cts = new();
+    //         cts.CancelAfter(1000);
+    //         try
+    //         {
+    //             await descriptor.WriteAsync([frame++], cts.Token);
+    //         }
+    //         catch
+    //         {
+    //             err = true;
+    //         }
+    //         Console.WriteLine($"Writing {frame} to {descriptor.Characteristic}->{descriptor.Id} [{(err ? "FAILED" : "OK")}]");
+    //     }
+    // }
 
     public void StartConnectingToDevice()
     {
