@@ -1,0 +1,993 @@
+nRF Connect, 2024-02-01
+CITYSPORTS-Linker (B1:72:47:A8:AA:F0)
+V	00:08:09.526	Connecting to B1:72:47:A8:AA:F0...
+D	00:08:09.526	gatt = device.connectGatt(autoConnect = false, TRANSPORT_LE, preferred PHY = LE 1M)
+D	00:08:09.866	[Callback] Connection state changed with status: 0 and new state: CONNECTED (2)
+I	00:08:09.866	Connected to B1:72:47:A8:AA:F0
+D	00:08:09.867	wait(1600ms)
+D	00:08:09.893	[Broadcast] Action received: android.bluetooth.device.action.ACL_CONNECTED
+V	00:08:11.468	Discovering services...
+D	00:08:11.468	gatt.discoverServices()
+D	00:08:11.491	[Callback] Services discovered with status: 0
+I	00:08:11.491	Services discovered
+V	00:08:11.505	Generic Access (0x1800)
+- Device Name [R W] (0x2A00)
+Device Information (0x180A)
+- Manufacturer Name String [R] (0x2A29)
+- Model Number String [R] (0x2A24)
+- Serial Number String [R] (0x2A25)
+- Hardware Revision String [R] (0x2A27)
+- Firmware Revision String [R] (0x2A26)
+- Software Revision String [R] (0x2A28)
+- System ID [R] (0x2A23)
+Fitness Machine (0x1826)
+- Fitness Machine Feature [R] (0x2ACC)
+- Treadmill Data [N] (0x2ACD)
+   Client Characteristic Configuration (0x2902)
+- Training Status [N R] (0x2AD3)
+   Client Characteristic Configuration (0x2902)
+- Supported Speed Range [R] (0x2AD4)
+- Supported Inclination Range [R] (0x2AD5)
+- Supported Resistance Level Range [R] (0x2AD6)
+- Supported Heart Rate Range [R] (0x2AD7)
+- Supported Power Range [R] (0x2AD8)
+- Fitness Machine Control Point [I WNR] (0x2AD9)
+   Client Characteristic Configuration (0x2902)
+- Fitness Machine Status [N] (0x2ADA)
+   Client Characteristic Configuration (0x2902)
+- Unknown Characteristic [R WNR] (a580d216-7087-5e6c-36b3-77c02f551c85)
+- Unknown Characteristic [N] (c4208999-8d92-bee1-4456-2068528eccf6)
+   Client Characteristic Configuration (0x2902)
+- Unknown Characteristic [R] (62b817cb-47db-c59e-b675-1a66e37a5196)
+D	00:08:11.505	gatt.setCharacteristicNotification(00002acd-0000-1000-8000-00805f9b34fb, true)
+D	00:08:11.509	gatt.setCharacteristicNotification(00002ad3-0000-1000-8000-00805f9b34fb, true)
+D	00:08:11.512	gatt.setCharacteristicNotification(00002ad9-0000-1000-8000-00805f9b34fb, true)
+D	00:08:11.515	gatt.setCharacteristicNotification(00002ada-0000-1000-8000-00805f9b34fb, true)
+D	00:08:11.520	gatt.setCharacteristicNotification(c4208999-8d92-bee1-4456-2068528eccf6, true)
+V	00:08:20.332	Disabling notifications for 00002ada-0000-1000-8000-00805f9b34fb
+D	00:08:20.332	gatt.setCharacteristicNotification(00002ada-0000-1000-8000-00805f9b34fb, false)
+D	00:08:20.336	gatt.writeDescriptor(00002902-0000-1000-8000-00805f9b34fb, value=0x0000)
+I	00:08:20.443	Data written to descr. 00002902-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	00:08:20.443	"Notifications and indications disabled" sent
+V	00:08:20.446	Notifications and indications disabled for 00002ada-0000-1000-8000-00805f9b34fb
+I	00:08:20.896	Connection parameters updated (interval: 30.0ms, latency: 0, timeout: 6000ms)
+V	00:08:24.959	Enabling notifications for 00002ada-0000-1000-8000-00805f9b34fb
+D	00:08:24.959	gatt.setCharacteristicNotification(00002ada-0000-1000-8000-00805f9b34fb, true)
+D	00:08:24.964	gatt.writeDescriptor(00002902-0000-1000-8000-00805f9b34fb, value=0x0100)
+I	00:08:25.062	Data written to descr. 00002902-0000-1000-8000-00805f9b34fb, value: (0x) 01-00
+A	00:08:25.062	"Notifications enabled" sent
+V	00:08:25.065	Notifications enabled for 00002ada-0000-1000-8000-00805f9b34fb
+V	00:08:39.445	Enabling notifications for 00002acd-0000-1000-8000-00805f9b34fb
+D	00:08:39.445	gatt.setCharacteristicNotification(00002acd-0000-1000-8000-00805f9b34fb, true)
+D	00:08:39.449	gatt.writeDescriptor(00002902-0000-1000-8000-00805f9b34fb, value=0x0100)
+I	00:08:39.552	Data written to descr. 00002902-0000-1000-8000-00805f9b34fb, value: (0x) 01-00
+A	00:08:39.552	"Notifications enabled" sent
+V	00:08:39.557	Notifications enabled for 00002acd-0000-1000-8000-00805f9b34fb
+I	00:08:39.612	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:39.612	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:40.097	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:40.099	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:40.577	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:40.577	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:41.100	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:41.100	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:41.576	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:41.576	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:42.060	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:42.060	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:42.540	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:42.540	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:43.017	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:43.017	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:43.500	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:43.500	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:43.978	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:43.978	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:44.459	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:44.459	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:44.937	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:44.937	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:45.419	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:45.419	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:45.899	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:45.900	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:46.378	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:46.378	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:46.860	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:46.860	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:47.207	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 04-00-00
+A	00:08:47.207	"Fitness Machine Started or Resumed by the User
+Unknown parameters: (0x) 00-00" received
+I	00:08:47.292	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:47.292	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:47.820	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:47.820	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:48.299	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:48.299	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:48.779	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:48.779	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:49.258	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:49.258	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:49.739	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:49.739	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:49.739	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-96-00
+A	00:08:49.739	"Target Speed Changed
+New Target Value: 1.5 km/h" received
+I	00:08:50.219	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:50.219	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:50.699	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:50.699	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:51.179	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:51.179	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:51.315	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-C8-00
+A	00:08:51.315	"Target Speed Changed
+New Target Value: 2.0 km/h" received
+I	00:08:51.658	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C8-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:51.658	"Instantaneous Speed: 2.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:52.137	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C8-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:52.137	"Instantaneous Speed: 2.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:52.619	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C8-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:52.619	"Instantaneous Speed: 2.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:53.098	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C8-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:53.099	"Instantaneous Speed: 2.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:53.172	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-FA-00
+A	00:08:53.172	"Target Speed Changed
+New Target Value: 2.5 km/h" received
+I	00:08:53.579	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-FA-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:53.579	"Instantaneous Speed: 2.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:54.061	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-FA-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:54.061	"Instantaneous Speed: 2.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:54.539	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-FA-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:54.539	"Instantaneous Speed: 2.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:54.838	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-2C-01
+A	00:08:54.838	"Target Speed Changed
+New Target Value: 3.0 km/h" received
+I	00:08:54.974	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-2C-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:54.974	"Instantaneous Speed: 3.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:55.499	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-2C-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:55.499	"Instantaneous Speed: 3.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:55.979	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-2C-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:55.979	"Instantaneous Speed: 3.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:56.428	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-5E-01
+A	00:08:56.429	"Target Speed Changed
+New Target Value: 3.5 km/h" received
+I	00:08:56.429	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5E-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:56.429	"Instantaneous Speed: 3.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:56.938	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5E-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:56.938	"Instantaneous Speed: 3.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:57.419	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5E-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:57.419	"Instantaneous Speed: 3.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:57.869	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-90-01
+A	00:08:57.869	"Target Speed Changed
+New Target Value: 4.0 km/h" received
+I	00:08:57.870	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:57.870	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:58.376	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:58.376	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:58.859	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:58.859	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:59.339	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:59.339	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:08:59.339	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-C2-01
+A	00:08:59.339	"Target Speed Changed
+New Target Value: 4.5 km/h" received
+I	00:08:59.818	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C2-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:08:59.819	"Instantaneous Speed: 4.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:00.262	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C2-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:00.262	"Instantaneous Speed: 4.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:00.719	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-F4-01
+A	00:09:00.719	"Target Speed Changed
+New Target Value: 5.0 km/h" received
+I	00:09:00.734	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-F4-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:00.734	"Instantaneous Speed: 5.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:01.259	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-F4-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:01.259	"Instantaneous Speed: 5.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:01.739	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-F4-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:01.739	"Instantaneous Speed: 5.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:02.128	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-26-02
+A	00:09:02.129	"Target Speed Changed
+New Target Value: 5.5 km/h" received
+I	00:09:02.172	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-26-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:02.172	"Instantaneous Speed: 5.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:02.699	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-26-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:02.699	"Instantaneous Speed: 5.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:03.179	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-26-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:03.180	"Instantaneous Speed: 5.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:03.539	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-58-02
+A	00:09:03.539	"Target Speed Changed
+New Target Value: 6.0 km/h" received
+I	00:09:03.612	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-58-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:03.612	"Instantaneous Speed: 6.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:04.137	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-58-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:04.137	"Instantaneous Speed: 6.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:04.576	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-58-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:04.576	"Instantaneous Speed: 6.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:05.099	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-58-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:05.099	"Instantaneous Speed: 6.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:05.578	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-58-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:05.578	"Instantaneous Speed: 6.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:06.016	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-58-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:06.017	"Instantaneous Speed: 6.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:06.325	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-26-02
+A	00:09:06.325	"Target Speed Changed
+New Target Value: 5.5 km/h" received
+I	00:09:06.494	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-26-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:06.494	"Instantaneous Speed: 5.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:07.018	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-26-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:07.019	"Instantaneous Speed: 5.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:07.458	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-26-02-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:07.458	"Instantaneous Speed: 5.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:07.512	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-F4-01
+A	00:09:07.512	"Target Speed Changed
+New Target Value: 5.0 km/h" received
+I	00:09:07.979	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-F4-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:07.979	"Instantaneous Speed: 5.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:08.459	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-F4-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:08.460	"Instantaneous Speed: 5.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:08.906	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-C2-01
+A	00:09:08.906	"Target Speed Changed
+New Target Value: 4.5 km/h" received
+I	00:09:08.907	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C2-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:08.907	"Instantaneous Speed: 4.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:09.419	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C2-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:09.419	"Instantaneous Speed: 4.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:09.858	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C2-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:09.858	"Instantaneous Speed: 4.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:10.225	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-90-01
+A	00:09:10.225	"Target Speed Changed
+New Target Value: 4.0 km/h" received
+I	00:09:10.336	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:10.336	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:10.873	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:10.873	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:11.298	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-90-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:11.298	"Instantaneous Speed: 4.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:11.472	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-5E-01
+A	00:09:11.472	"Target Speed Changed
+New Target Value: 3.5 km/h" received
+I	00:09:11.819	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5E-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:11.819	"Instantaneous Speed: 3.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:12.299	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5E-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:12.299	"Instantaneous Speed: 3.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:12.734	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5E-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:12.734	"Instantaneous Speed: 3.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:12.853	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-2C-01
+A	00:09:12.853	"Target Speed Changed
+New Target Value: 3.0 km/h" received
+I	00:09:13.254	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-2C-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:13.254	"Instantaneous Speed: 3.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:13.740	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-2C-01-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:13.740	"Instantaneous Speed: 3.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:14.159	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-FA-00
+A	00:09:14.159	"Target Speed Changed
+New Target Value: 2.5 km/h" received
+I	00:09:14.173	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-FA-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:14.173	"Instantaneous Speed: 2.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:14.699	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-FA-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:14.699	"Instantaneous Speed: 2.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:15.176	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-FA-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:15.176	"Instantaneous Speed: 2.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:15.314	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-C8-00
+A	00:09:15.314	"Target Speed Changed
+New Target Value: 2.0 km/h" received
+I	00:09:15.657	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C8-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:15.657	"Instantaneous Speed: 2.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:16.139	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-C8-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:16.139	"Instantaneous Speed: 2.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:16.589	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-96-00
+A	00:09:16.589	"Target Speed Changed
+New Target Value: 1.5 km/h" received
+I	00:09:16.590	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:16.590	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:17.099	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:17.099	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:17.578	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:17.578	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:17.744	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 05-64-00
+A	00:09:17.744	"Target Speed Changed
+New Target Value: 1.0 km/h" received
+I	00:09:18.060	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:18.060	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:18.535	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:18.535	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:19.019	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:19.019	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:19.500	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:19.500	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:19.979	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:19.979	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:20.458	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-A0-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:20.458	"Instantaneous Speed: 1.5999999 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:20.939	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-96-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:20.939	"Instantaneous Speed: 1.5 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:21.424	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-82-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:21.424	"Instantaneous Speed: 1.3 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:21.899	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-78-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:21.899	"Instantaneous Speed: 1.1999999 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:22.379	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-64-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:22.379	"Instantaneous Speed: 1.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:22.843	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-5A-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:22.843	"Instantaneous Speed: 0.9 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:23.339	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-46-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:23.339	"Instantaneous Speed: 0.7 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:23.818	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-3C-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:23.818	"Instantaneous Speed: 0.59999996 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:24.298	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-28-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:24.298	"Instantaneous Speed: 0.39999998 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:24.779	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-1E-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:24.779	"Instantaneous Speed: 0.29999998 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:25.259	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-0A-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:25.259	"Instantaneous Speed: 0.099999994 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:25.303	Notification received from 00002ada-0000-1000-8000-00805f9b34fb, value: (0x) 02-01-00
+A	00:09:25.303	"Fitness Machine Stopped or Paused by the User
+Control Information: Stop" received
+I	00:09:25.739	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:25.739	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:26.217	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:26.217	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:26.700	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:26.700	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:27.138	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:27.138	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:27.660	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:27.660	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:28.139	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:28.139	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:28.619	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:28.619	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:29.099	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:29.099	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:29.572	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:29.572	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:30.054	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:30.054	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+I	00:09:30.538	Notification received from 00002acd-0000-1000-8000-00805f9b34fb, value: (0x) 84-24-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+A	00:09:30.538	"Instantaneous Speed: 0.0 km/h
+Total Distance: 0 m
+Total Energy: 0 kcal
+Energy Per Hour: 0 kcal
+Energy Per Minute: 0 kcal
+Elapsed Time: 0 s
+Reserved Flags for Future Use: 0x2000" received
+V	00:09:30.850	Disconnecting...
+D	00:09:30.850	gatt.disconnect()
+D	00:09:30.873	[Callback] Connection state changed with status: 0 and new state: DISCONNECTED (0)
+I	00:09:30.873	Disconnected
+D	00:09:30.873	gatt.close()
+D	00:09:30.884	wait(200)
