@@ -1,6 +1,5 @@
 # General
 
-Treadmill Model: `CP-WP8`
 Source Device Name: `CITYSPORTS-Linker`
 
 Endianness: `Little`
@@ -13,7 +12,8 @@ ATT OPCODE: `0x012` (Write Request)
 
 | Operation | Value |
 | --------- | ----- |
-| Start | `07` (Doesn't wake up device from sleep) |
+| Wakeup | `00` |
+| Start  | '07e |
 | Stop | `08 01` |
 | Set Speed | `02 XX XX` |
 
@@ -29,4 +29,7 @@ ATT OPCODE: `0x1b` (Received Handle Value Notification)
 | ----- | ----- | ------ | -------- | ----- | ----- | ------- | ----- | --- |
 | Start | Speed | Metres | Calories | ?     | ?     | Seconds | Steps | END |
 
-Note: Don't trust the calorie measurement, the treadmill doesn't know your weight.
+
+Note:
+Calories are in big endian for some bloody reason.
+Don't trust the calorie measurement anyway, the treadmill doesn't know your weight.
