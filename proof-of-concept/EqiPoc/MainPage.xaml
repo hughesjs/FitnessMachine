@@ -11,7 +11,7 @@
             
             <Image
                 Source="{AppThemeBinding Light=treadmill.png Dark=treadmill_darkmode.png}"
-                   HeightRequest="200"
+                   HeightRequest="150"
                    HorizontalOptions="Center" />
             
             <Button
@@ -28,10 +28,19 @@
                 Clicked="OnStopTreadmill"
                 HorizontalOptions="Fill" />
             
-            <Button x:Name="DemoBtn"
-                Text="Debug"
-                Clicked="OnDemo"
+            <Button
+                x:Name="SpeedBtn"
+                Text="Speed Up"
+                SemanticProperties.Hint="Speeds Up the Treadmill"
+                Clicked="OnSpeedTreadmill"
                 HorizontalOptions="Fill" />
+            
+            <Button
+                x:Name="SlowBtn"
+                Text="Slow Down"
+                SemanticProperties.Hint="Slows the Treadmill"
+                Clicked="OnSlowTreadmill"
+                HorizontalOptions="Fill"/>
             
             <Label
                 x:Name="BluetoothStatusLbl"

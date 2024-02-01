@@ -1,4 +1,5 @@
 ﻿using EqiPoc.Modules.Bluetooth;
+using EqiPoc.Modules.Workout;
 using Plugin.BLE;
 
 namespace EqiPoc;
@@ -12,9 +13,19 @@ public partial class MainPage : ContentPage
 	{
 		_controller = new(CrossBluetoothLE.Current.Adapter, DeviceName);
 		_controller.TreadmillReady += (_, _) => BluetoothStatusLbl.Text = "Bluetooth: Connected";
+		_controller.WorkoutStatusUpdated += OnWorkoutStatusUpdated;
 		InitializeComponent();
 	}
-	
+
+	private void OnWorkoutStatusUpdated(object? sender, WorkoutStatus e)
+	{
+			SpeedLbl.Text = $"Speed: {e.SpeedInKmh} (kmh\u207b\u00b9):";
+			DistanceLbl.Text = $"Distance: {e.DistanceInKm} (km)";
+			TimeLbl.Text = $"Time: {e.TimeInSeconds} (s)";
+			CaloriesLbl.Text = $"Indicated Calories: {e.IndicatedCalories} (kcal)";
+			StepsLbl.Text = $"Steps: {e.Steps}";
+	}
+
 	protected override void OnAppearing()
 	{
 		_controller.StartConnectingToDevice();
@@ -32,10 +43,16 @@ public partial class MainPage : ContentPage
 		_controller.StopTreadmill();
 	}
 
-	private void OnDemo(object? sender, EventArgs e)
+	private void OnSlowTreadmill(object? sender, EventArgs e)
 	{
-		Console.WriteLine("Doing Demo");
-		_controller.DoDemo();
+		Console.WriteLine("Slowing Treadmill");
+		_controller.SlowDownTreadmill();
+	}
+
+	private void OnSpeedTreadmill(object? sender, EventArgs e)
+	{
+		Console.WriteLine("Speeding Up Treadmill");
+		_controller.SpeedUpTreadmill();
 	}
 }
 

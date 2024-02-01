@@ -27,4 +27,7 @@ ATT OPCODE: `0x1b` (Received Handle Value Notification)
 | ----- | ----- | ------ | -------- | ----- | ----- | ------- | ----- | --- |
 | Start | Speed | Metres | Calories | ?     | ?     | Seconds | Steps | END |
 
-Note: Don't trust the calorie measurement, the treadmill doesn't know your weight.
+
+Note: 
+Calories are in big endian for some bloody reason.
+Don't trust the calorie measurement anyway, the treadmill doesn't know your weight.
