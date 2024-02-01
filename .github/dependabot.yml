@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/src" # Location of package manifests
+    schedule:
+      interval: "daily"
+    groups:
+      nuget-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      actions-dependencies:
+        patterns:
+          - "*"
