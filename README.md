@@ -15,7 +15,7 @@ This project aims to reverse engineer the bluetooth protocol used by these tread
 
 The details of the protocol are [here](protocol).
 
-And there's a proof of concept [here](https://github.com/hughesjs/OpenEQiSports/tree/master/proof-of-concept).
+And there's a proof of concept [here](proof-of-concept).
 
 # New App
 
