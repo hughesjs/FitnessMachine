@@ -9,7 +9,9 @@ on:
       - master
         
 jobs:
+  # Probably need to work out what issues this presents re: cross-platform tests... Cross that when we get there
   run-tests:
+    name: "Run Tests"
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -24,6 +26,7 @@ jobs:
         run: dotnet test ./src/OpenEqiSports.sln
         
   build-android:
+    name: "Build Android"
     needs: run-tests
     runs-on: windows-latest
     steps:
@@ -48,6 +51,7 @@ jobs:
           path: ./src/OpenEqiSports/bin/Release/net8.0-android/*Signed.a*
           
   build-windows:
+    name: "Build Windows"
     needs: run-tests
     runs-on: windows-latest
     steps:
@@ -69,7 +73,8 @@ jobs:
           name: OpenEqiSports-Windows
           path: ./src/OpenEqiSports/bin/Release/net8.0-windows*/**/OpenEqiSports*.msix   
 
-  build-iOS:
+  build-ios:
+    name: "Build iOS"
     needs: run-tests
     runs-on: macos-latest
     steps:
@@ -93,7 +98,8 @@ jobs:
           name: OpenEqiSports-iOS
           path: ./src/OpenEqiSports/bin/Release/net8.0-ios/**/*.app/
           
-  build-MacCatalyst:
+  build-maccatalyst:
+    name: "Build MacCatalyst"
     needs: run-tests
     runs-on: macos-latest
     steps:
