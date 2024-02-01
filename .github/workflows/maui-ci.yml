@@ -1,0 +1,25 @@
+name: MAUI Continuous Integration
+
+on:
+  pull_request: 
+    branches:
+      - master
+  push:
+    branches:
+      - master
+        
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0.x
+      - name: Run tests
+        run: dotnet test --logger GitHubActions ./src/OpenEqiSports.sln
