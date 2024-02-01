@@ -19,7 +19,7 @@ And there's a proof of concept [here](proof-of-concept).
 
 # Proof of Concept
 
-A very basic proof of concept exists [here](proof-of-concept).
+A very basic proof of concept exists [here](proof-of-concept). It is truly barebones and not good code, but it works and should be reasonably easy to understand.
 
 This is a MAUI app and should be fairly straightforward to build.
 
