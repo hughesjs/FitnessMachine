@@ -26,5 +26,8 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<!--Description of the Bluetooth request message-->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>We need bluetooth to find your treadmill</string>
 </dict>
 </plist>

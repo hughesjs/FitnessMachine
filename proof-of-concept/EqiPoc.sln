@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqiPoc", "EqiPoc.csproj", "{C11CE434-B126-4D27-9CCC-FDDA76E5709F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqiPoc", "EqiPoc/EqiPoc.csproj", "{C11CE434-B126-4D27-9CCC-FDDA76E5709F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
