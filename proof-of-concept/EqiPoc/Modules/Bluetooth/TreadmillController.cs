@@ -11,10 +11,14 @@ public class TreadmillController
     private readonly string _deviceName;
     
     private IDevice? _device;
-   
-    private readonly Dictionary<string, ICharacteristic> _characteristics;
     
-    private WorkoutStatus _status;
+    private const string ControlUuid = "2ad9";
+    private ICharacteristic? _control;
+    
+    private const string StatusUuid = "2acd";
+    private ICharacteristic? _status;
+    
+    private WorkoutStatus _workoutStatus;
 
     public event EventHandler? TreadmillReady;
     public event EventHandler<WorkoutStatus>? WorkoutStatusUpdated;
@@ -23,8 +27,6 @@ public class TreadmillController
     {
         _adapter = adapter;
         _deviceName = deviceName;
-        _characteristics = [];
-        
         _adapter.DeviceDiscovered += OnDeviceDiscovered;
     }
 
@@ -43,19 +45,28 @@ public class TreadmillController
         var services = await _device.GetServicesAsync();
         
         foreach (IService? service in services)
-        {
+        { 
             var chars = await service.GetCharacteristicsAsync();
-            foreach (ICharacteristic? characteristic in chars)
+            
+            ICharacteristic? control = chars.SingleOrDefault(c => c.Uuid == ControlUuid);
+            if (control is not null)
             {
-                _characteristics.Add(characteristic.Uuid, characteristic);
+                _control = control;
             }
+            
+            ICharacteristic? status = chars.SingleOrDefault(c => c.Uuid == StatusUuid);
+            if (status is not null)
+            {
+                _status = status;
+            }
+
+            if (status is not null && control is not null) break;
         }
-        Console.WriteLine($"Found {_characteristics.Keys.Count} characteristics");
+
 
         WakeTreadmill();
-
-        var status = _characteristics["2acd"];
-        status.ValueUpdated += StatusUpdated;
+        
+        _status!.ValueUpdated += StatusUpdated;
 
         await StartUpdates();
 
@@ -73,31 +84,28 @@ public class TreadmillController
             TimeInSeconds = BinaryPrimitives.ReadInt16LittleEndian(value.AsSpan()[12..14]),
             Steps = BinaryPrimitives.ReadInt16LittleEndian(value.AsSpan()[14..16])
         };
-        _status = status;
+        _workoutStatus = status;
         WorkoutStatusUpdated?.Invoke(this, status);
     }
 
     public void WakeTreadmill()
     {
         byte[] payload = [0x00];
-        ICharacteristic characteristic = _characteristics["2ad9"];
-        Task.Run(async () => await characteristic.WriteAsync(payload)); 
+        Task.Run(async () => await _control.WriteAsync(payload)); 
     }
 
     public void StartTreadmill()
     {
         Task.Run(async () => await StartUpdates());
         byte[] payload = [0x07];
-        ICharacteristic characteristic = _characteristics["2ad9"];
-        Task.Run(async () => await characteristic.WriteAsync(payload));
+        Task.Run(async () => await _control.WriteAsync(payload));
     }
 
     public void StopTreadmill()
     {
         Task.Run(async () => await StopUpdates());
         byte[] payload = [0x08, 0x01];
-        ICharacteristic characteristic = _characteristics["2ad9"];
-        Task.Run(async () => await characteristic.WriteAsync(payload));
+        Task.Run(async () => await _control.WriteAsync(payload));
     }
 
     public void SetSpeed(decimal kmh)
@@ -106,18 +114,17 @@ public class TreadmillController
         byte[] payload = [0x02, 0x00, 0x00];
         var span = payload.AsSpan()[1..3];
         BinaryPrimitives.WriteInt16LittleEndian(span, (short)(kmh * 100));
-        ICharacteristic characteristic = _characteristics["2ad9"];
-        Task.Run(async () => await characteristic.WriteAsync(payload));
+        Task.Run(async () => await _control.WriteAsync(payload));
     }
     
     public void SpeedUpTreadmill()
     {
-        SetSpeed(_status.SpeedInKmh + 0.5m);
+        SetSpeed(_workoutStatus.SpeedInKmh + 0.5m);
     }
 
     public void SlowDownTreadmill()
     {
-        SetSpeed(_status.SpeedInKmh - 0.5m);
+        SetSpeed(_workoutStatus.SpeedInKmh - 0.5m);
     }
     
     public void StartConnectingToDevice()
@@ -127,13 +134,11 @@ public class TreadmillController
 
     private async Task StartUpdates()
     {
-        var status = _characteristics["2acd"];
-        await status.StartUpdatesAsync();
+        await _status.StartUpdatesAsync();
     }
     
     private async Task StopUpdates()
     {
-        var status = _characteristics["2acd"];
-        await status.StopUpdatesAsync();
+        await _status.StopUpdatesAsync();
     }
 }
