@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EqiPoc.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Start">
+            
+            <Image
+                Source="{AppThemeBinding Light=treadmill.png Dark=treadmill_darkmode.png}"
+                   HeightRequest="150"
+                   HorizontalOptions="Center" />
+            
+            <Button
+                x:Name="StartBtn"
+                Text="Start"
+                SemanticProperties.Hint="Starts the Treadmill"
+                Clicked="OnStartTreadmill"
+                HorizontalOptions="Fill"/>
+            
+            <Button
+                x:Name="StopBtn"
+                Text="Stop"
+                SemanticProperties.Hint="Stops the Treadmill"
+                Clicked="OnStopTreadmill"
+                HorizontalOptions="Fill" />
+            
+            <Button
+                x:Name="SpeedBtn"
+                Text="Speed Up"
+                SemanticProperties.Hint="Speeds Up the Treadmill"
+                Clicked="OnSpeedTreadmill"
+                HorizontalOptions="Fill" />
+            
+            <Button
+                x:Name="SlowBtn"
+                Text="Slow Down"
+                SemanticProperties.Hint="Slows the Treadmill"
+                Clicked="OnSlowTreadmill"
+                HorizontalOptions="Fill"/>
+            
+            <Label
+                x:Name="BluetoothStatusLbl"
+                Text="Bluetooth: Disconnected"
+                />
+            
+            <Label 
+                x:Name="TimeLbl"
+                Text = "Time (s):"/>
+            
+            <Label 
+                x:Name="DistanceLbl"
+                Text = "Distance (km):"/>
+            
+            <Label 
+                x:Name="SpeedLbl"
+                Text = "Speed (kmh⁻¹):"/>
+            
+            <Label 
+                x:Name="StepsLbl"
+                Text = "Steps:"/>
+            
+            <Label 
+                x:Name="CaloriesLbl"
+                Text = "Calories (Indicated):"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
