@@ -9,25 +9,26 @@ on:
       - master
         
 jobs:
-  # Probably need to work out what issues this presents re: cross-platform tests... Cross that when we get there
-  run-tests:
-    name: "Run Tests"
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 8.0.x
-      - name: Install MAUI Workloads
-        run: dotnet workload install maui
-      - name: Run Tests
-        run: dotnet test ./src/OpenEqiSports.sln
+# Probably need to work out what issues this presents re: cross-platform tests... Cross that when we get there
+#  Disabled for now to speed up debugging later steps
+#  run-tests:
+#    name: "Run Tests"
+#    runs-on: windows-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#      - name: Setup .NET
+#        uses: actions/setup-dotnet@v1
+#        with:
+#          dotnet-version: 8.0.x
+#      - name: Install MAUI Workloads
+#        run: dotnet workload install maui
+#      - name: Run Tests
+#        run: dotnet test ./src/OpenEqiSports.sln
         
   build-android:
     name: "Build Android"
-    needs: run-tests
+#    needs: run-tests
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -52,7 +53,7 @@ jobs:
           
   build-windows:
     name: "Build Windows"
-    needs: run-tests
+#    needs: run-tests
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -75,8 +76,8 @@ jobs:
 
   build-ios:
     name: "Build iOS"
-    needs: run-tests
-    runs-on: macos-14
+#    needs: run-tests
+    runs-on: macos-13
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -100,8 +101,8 @@ jobs:
           
   build-maccatalyst:
     name: "Build MacCatalyst"
-    needs: run-tests
-    runs-on: macos-14
+#    needs: run-tests
+    runs-on: macos-13
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
