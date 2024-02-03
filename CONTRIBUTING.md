@@ -28,7 +28,11 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 
 ## Any Contributions You Make Will Be Under the Repository's Licence
 
-In short, when you submit code changes, your submissions are understood to be under the same [license](LICENSE.md) that covers the project. Feel free to contact the maintainers if that's a concern.
+In short, when you submit code changes, your submissions are understood to be under the same [license](LICENSE.md) that covers the project. 
+
+You are also granting the maintainers personal and irrevocable licenses to use, modify, sell, and redistribute your contributions in addition to the rights granted by the project license.
+
+Feel free to contact the maintainers if that's a concern.
 
 ## Report Bugs Using Github's [issues](https://github.com/hughesjs/OpenEqiSports/issues)
 
