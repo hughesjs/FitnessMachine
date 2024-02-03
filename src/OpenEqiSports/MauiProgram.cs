@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using OpenEqiSports.DependencyInjection;
 
 namespace OpenEqiSports;
 
@@ -13,7 +14,8 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            })
+            .Services.AddFrontend();
 
 #if DEBUG
         builder.Logging.AddDebug();
