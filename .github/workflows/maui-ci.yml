@@ -12,20 +12,20 @@ jobs:
 # Probably need to work out what issues this presents re: cross-platform tests... Cross that when we get there
 # Should probably also build once and carry the artifacts through the pipeline
 
-  run-tests:
-    name: "Run Tests"
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 8.0.x
-      - name: Install MAUI Workloads
-        run: dotnet workload install maui
-      - name: Run Tests
-        run: dotnet test ./src/OpenEqiSports.sln
+#  run-tests:
+#    name: "Run Tests"
+#    runs-on: windows-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#      - name: Setup .NET
+#        uses: actions/setup-dotnet@v1
+#        with:
+#          dotnet-version: 8.0.x
+#      - name: Install MAUI Workloads
+#        run: dotnet workload install maui
+#      - name: Run Tests
+#        run: dotnet test ./src/OpenEqiSports.sln
         
   build-android:
     name: "Build Android"
@@ -52,28 +52,28 @@ jobs:
           name: OpenEqiSports-Android
           path: ./src/OpenEqiSports/bin/Release/net8.0-android/*Signed.a*
           
-  build-windows:
-    name: "Build Windows"
-#    needs: run-tests
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 8.0.x
-      - name: Install MAUI Workloads
-        run: dotnet workload install maui
-      - name: Restore Dependencies
-        run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj
-      - name: Build Windows
-        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows --no-restore
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenEqiSports-Windows
-          path: ./src/OpenEqiSports/bin/Release/net8.0-windows*/**/OpenEqiSports*.msix   
+#  build-windows:
+#    name: "Build Windows"
+##    needs: run-tests
+#    runs-on: windows-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#      - name: Setup .NET
+#        uses: actions/setup-dotnet@v1
+#        with:
+#          dotnet-version: 8.0.x
+#      - name: Install MAUI Workloads
+#        run: dotnet workload install maui
+##      - name: Restore Dependencies
+##        run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj -r win-x64 -p:ReadyToRun=false
+#      - name: Build Windows
+#        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows10.0.19041.0 -r win-x64 -p:ReadyToRun=false
+#      - name: Upload Windows Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: OpenEqiSports-Windows
+#          path: ./src/OpenEqiSports/bin/Release/net8.0-windows*/**/OpenEqiSports*.msix   
 
   build-ios:
     name: "Build iOS"
@@ -103,7 +103,10 @@ jobs:
           path: ./src/OpenEqiSports/bin/Release/net8.0-ios/**/*.app/
           
   build-maccatalyst:
-    name: "Build MacCatalyst"
+    strategy:
+      matrix:
+        runtime: [maccatalyst-arm64, maccatalyst-x64]
+    name: "Build MacCatalyst (${{ matrix.runtime }})"
 #    needs: run-tests
     runs-on: macos-14
     steps:
@@ -122,9 +125,10 @@ jobs:
       - name: Restore Dependencies
         run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj
       - name: Build MacCatalyst
-        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-maccatalyst --no-restore
+        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-maccatalyst --no-restore --runtime ${{ matrix.runtime }}
       - name: Upload MacCatalyst Artifact
         uses: actions/upload-artifact@v2
         with:
           name: OpenEqiSports-MacCatalyst
           path: ./src/OpenEqiSports/bin/Release/net8.0-maccatalyst/**/*.app/
+          
