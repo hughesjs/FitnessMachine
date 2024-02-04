@@ -103,7 +103,7 @@ jobs:
           path: ./src/OpenEqiSports/bin/Release/net8.0-ios/**/*.app/
           
   build-maccatalyst-arm64:
-    name: "Build MacCatalyst Arm64"
+    name: "Build MacCatalyst (Arm64)"
 #    needs: run-tests
     runs-on: macos-14
     steps:
@@ -130,7 +130,7 @@ jobs:
           path: ./src/OpenEqiSports/bin/Release/net8.0-maccatalyst/**/*.app/
           
   build-maccatalyst-x64:
-    name: "Build MacCatalyst x64"
+    name: "Build MacCatalyst (x64)"
     #    needs: run-tests
     runs-on: macos-14
     steps:
