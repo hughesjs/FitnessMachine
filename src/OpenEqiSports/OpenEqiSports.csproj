@@ -28,11 +28,7 @@
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19044</TargetPlatformMinVersion>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
-
-    <PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst'))">         
-        <RuntimeIdentifier>maccatalyst-arm64</RuntimeIdentifier>
-    </PropertyGroup>
-
+    
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
