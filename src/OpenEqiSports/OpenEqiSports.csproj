@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19044</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 
         <OutputType>Exe</OutputType>
         <RootNamespace>OpenEqiSports</RootNamespace>
@@ -30,7 +30,7 @@
     </PropertyGroup>
     
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
-        <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
+        <RuntimeIdentifier>maccatalyst-arm64</RuntimeIdentifier>
     </PropertyGroup>
     
     <ItemGroup>
