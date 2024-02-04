@@ -35,6 +35,7 @@
 
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+        <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
     
     <ItemGroup>
