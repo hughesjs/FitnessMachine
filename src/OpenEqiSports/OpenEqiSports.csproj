@@ -30,7 +30,7 @@
     </PropertyGroup>
     
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
-        <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
+        <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
     </PropertyGroup>
     
     <ItemGroup>
