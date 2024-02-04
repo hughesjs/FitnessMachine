@@ -122,7 +122,34 @@ jobs:
       - name: Restore Dependencies
         run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj
       - name: Build MacCatalyst
-        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-maccatalyst --no-restore
+        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-maccatalyst --no-restore --runtime maccatalyst-arm64
+      - name: Upload MacCatalyst Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: OpenEqiSports-MacCatalyst
+          path: ./src/OpenEqiSports/bin/Release/net8.0-maccatalyst/**/*.app/
+          
+  build-maccatalyst-x64:
+    name: "Build MacCatalyst x64"
+    #    needs: run-tests
+    runs-on: macos-14
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Select Xcode 15.2
+        run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Install MAUI Workloads
+        run: |
+          dotnet workload install maui
+          dotnet workload install maccatalyst
+      - name: Restore Dependencies
+        run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj
+      - name: Build MacCatalyst
+        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-maccatalyst --no-restore --runtime maccatalyst-x64 
       - name: Upload MacCatalyst Artifact
         uses: actions/upload-artifact@v2
         with:
