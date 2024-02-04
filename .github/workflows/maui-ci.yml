@@ -52,28 +52,26 @@ jobs:
           name: OpenEqiSports-Android
           path: ./src/OpenEqiSports/bin/Release/net8.0-android/*Signed.a*
           
-#  build-windows:
-#    name: "Build Windows"
-##    needs: run-tests
-#    runs-on: windows-latest
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v2
-#      - name: Setup .NET
-#        uses: actions/setup-dotnet@v1
-#        with:
-#          dotnet-version: 8.0.x
-#      - name: Install MAUI Workloads
-#        run: dotnet workload install maui
-##      - name: Restore Dependencies
-##        run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj -r win-x64 -p:ReadyToRun=false
-#      - name: Build Windows
-#        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows10.0.19041.0 -r win-x64 -p:ReadyToRun=false
-#      - name: Upload Windows Artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: OpenEqiSports-Windows
-#          path: ./src/OpenEqiSports/bin/Release/net8.0-windows*/**/OpenEqiSports*.msix   
+  build-windows:
+    name: "Build Windows"
+#    needs: run-tests
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Install MAUI Workloads
+        run: dotnet workload install maui
+      - name: Build Windows
+        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows10.0.19041.0 --self-contained
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: OpenEqiSports-Windows
+          path: ./src/OpenEqiSports/bin/Release/net8.0-windows*/**/OpenEqiSports*.msix   
 
   build-ios:
     name: "Build iOS"
