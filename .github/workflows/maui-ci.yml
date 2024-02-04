@@ -65,10 +65,10 @@ jobs:
           dotnet-version: 8.0.x
       - name: Install MAUI Workloads
         run: dotnet workload install maui
-      - name: Restore Dependencies
-        run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj
+#      - name: Restore Dependencies
+#        run: dotnet restore ./src/OpenEqiSports/OpenEqiSports.csproj
       - name: Build Windows
-        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows10.0.19041.0 --no-restore -p:PublishReadyToRun=true
+        run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows10.0.19041.0
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v2
         with:
