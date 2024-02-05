@@ -127,6 +127,6 @@ jobs:
       - name: Upload MacCatalyst Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: OpenEqiSports-MacCatalyst
+          name: OpenEqiSports-${{ matrix.runtime }}
           path: ./src/OpenEqiSports/bin/Release/net8.0-maccatalyst/**/*.app/
           
