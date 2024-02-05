@@ -17,9 +17,9 @@ jobs:
 #    runs-on: windows-latest
 #    steps:
 #      - name: Checkout repository
-#        uses: actions/checkout@v2
+#        uses: actions/checkout@v4
 #      - name: Setup .NET
-#        uses: actions/setup-dotnet@v1
+#        uses: actions/setup-dotnet@v4
 #        with:
 #          dotnet-version: 8.0.x
 #      - name: Install MAUI Workloads
@@ -33,9 +33,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
       - name: Install MAUI Workloads
@@ -47,7 +47,7 @@ jobs:
       - name: Build Android
         run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj  -c Release -f net8.0-android --no-restore
       - name: Upload Android Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: OpenEqiSports-Android
           path: ./src/OpenEqiSports/bin/Release/net8.0-android/*Signed.a*
@@ -58,9 +58,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
       - name: Install MAUI Workloads
@@ -68,7 +68,7 @@ jobs:
       - name: Build Windows
         run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-windows10.0.19041.0 --self-contained
       - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: OpenEqiSports-Windows
           path: ./src/OpenEqiSports/bin/Release/net8.0-windows*/**/OpenEqiSports*.msix   
@@ -79,11 +79,11 @@ jobs:
     runs-on: macos-14
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Select Xcode 15.2
         run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
       - name: Install MAUI Workloads
@@ -95,7 +95,7 @@ jobs:
       - name: Build iOS
         run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-ios --no-restore
       - name: Upload iOS Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: OpenEqiSports-iOS
           path: ./src/OpenEqiSports/bin/Release/net8.0-ios/**/*.app/
@@ -109,11 +109,11 @@ jobs:
     runs-on: macos-14
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Select Xcode 15.2
         run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
       - name: Install MAUI Workloads
@@ -125,8 +125,8 @@ jobs:
       - name: Build MacCatalyst
         run: dotnet build ./src/OpenEqiSports/OpenEqiSports.csproj -c Release -f net8.0-maccatalyst --no-restore --runtime ${{ matrix.runtime }}
       - name: Upload MacCatalyst Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: OpenEqiSports-MacCatalyst
+          name: OpenEqiSports-${{ matrix.runtime }}
           path: ./src/OpenEqiSports/bin/Release/net8.0-maccatalyst/**/*.app/
           
