@@ -1,4 +1,4 @@
-﻿namespace OpenEqiSports;
+ ﻿namespace OpenEqiSports;
 
 public partial class App : Application
 {
