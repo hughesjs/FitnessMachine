@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenEqiSports.Core", "OpenE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenEqiSports.Core.Tests", "OpenEqiSports.Core.Tests\OpenEqiSports.Core.Tests.csproj", "{0DB4E641-9D9D-4CC5-A491-20E70E8169A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenEqiSports", "OpenEqiSports\OpenEqiSports.csproj", "{BD398E08-2563-4275-85B2-DCA215905F78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{0DB4E641-9D9D-4CC5-A491-20E70E8169A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB4E641-9D9D-4CC5-A491-20E70E8169A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DB4E641-9D9D-4CC5-A491-20E70E8169A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD398E08-2563-4275-85B2-DCA215905F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD398E08-2563-4275-85B2-DCA215905F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD398E08-2563-4275-85B2-DCA215905F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD398E08-2563-4275-85B2-DCA215905F78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
