@@ -19,18 +19,20 @@ class _MainLayoutState extends State<MainLayout> {
     final ThemeData theme = Theme.of(context);
     final pages = widget._pageProvider.getPageDefinitions().toList();
 
-    return Scaffold(
-      bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          indicatorColor: theme.colorScheme.primary,
-          selectedIndex: currentPageIndex,
-          destinations:
-              pages.map((e) => NavigationDestination(selectedIcon: e.selectedIcon, icon: e.unselectedIcon, label: e.title)).toList()),
-      body: pages[currentPageIndex].content,
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: NavigationBar(
+            onDestinationSelected: (int index) {
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+            indicatorColor: theme.colorScheme.primary,
+            selectedIndex: currentPageIndex,
+            destinations:
+                pages.map((e) => NavigationDestination(selectedIcon: e.selectedIcon, icon: e.unselectedIcon, label: e.title)).toList()),
+        body: pages[currentPageIndex].content,
+      ),
     );
   }
 }
