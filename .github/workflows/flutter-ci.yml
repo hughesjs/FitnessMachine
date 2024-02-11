@@ -52,7 +52,7 @@ jobs:
           channel: 'stable'
       - name: Run Flutter Build
         working-directory: ./src
-        run: flutter build ios      
+        run: flutter build ios --no-codesign # Won't be able to publish this but it's fine for now 
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
