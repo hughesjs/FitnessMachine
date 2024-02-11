@@ -1,0 +1,54 @@
+name: Flutter Continuous Integration
+
+on:
+  pull_request: 
+    branches:
+      - master
+  push:
+    branches:
+      - master
+        
+jobs:
+
+  run-tests:
+    name: "Run Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.9'
+          channel: 'stable'
+      - run: flutter test
+
+  build-android:
+    name: "Build Android"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.9'
+          channel: 'stable'
+      - run: flutter build apk
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenEqiSports-Android
+          path: ./src/build/**/flutter-apk/*.apk
+
+  build-ios:
+    name: "Build iOS"
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.9'
+          channel: 'stable'
+      - run: flutter build ios
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenEqiSports-Android
+          path: ./src/build/ios/Release-iphoneos/*.app
