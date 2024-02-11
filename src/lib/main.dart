@@ -26,8 +26,10 @@ class MyApp extends StatelessWidget {
       title: 'OpenEqiSports',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
+      darkTheme: ThemeData.dark(), // <---- This needs some version of the fromSeed()
+      themeMode: ThemeMode.system,
       home: MainLayout(pageProvider),
     );
   }
