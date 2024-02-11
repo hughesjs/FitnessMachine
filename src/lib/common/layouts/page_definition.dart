@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class PageDefinition {
-  final Widget content;
+  final Type content;
   final String title;
   final Icon selectedIcon;
   final Icon unselectedIcon;
