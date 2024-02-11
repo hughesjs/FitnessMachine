@@ -13,18 +13,11 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final MainLayout mainLayout;
+  const MyApp(this.mainLayout, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Do this with DI or reflection later
-    const Set<PageDefinition> pages = {
-      PageDefinition(OverviewPage, "Overview", Icon(Icons.home), Icon(Icons.home_outlined)),
-      PageDefinition(ControlPage, "Control", Icon(Icons.bluetooth), Icon(Icons.bluetooth_outlined))
-    };
-
-    const PageDefinitionProvider pageProvider = PageDefinitionProvider(pages);
-
     return MaterialApp(
       title: 'OpenEqiSports',
       theme: ThemeData(
@@ -33,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(), // <---- This needs some version of the fromSeed()
       themeMode: ThemeMode.system,
-      home: const MainLayout(pageProvider),
+      home: mainLayout,
     );
   }
 }
