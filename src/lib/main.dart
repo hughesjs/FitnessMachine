@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Do this with DI or reflection later
     const Set<PageDefinition> pages = {
-      PageDefinition(OverviewPage(), "Overview", Icon(Icons.bluetooth), Icon(Icons.bluetooth_outlined)),
+      PageDefinition(OverviewPage(), "Overview", Icon(Icons.home), Icon(Icons.home_outlined)),
       PageDefinition(ControlPage(), "Control", Icon(Icons.bluetooth), Icon(Icons.bluetooth_outlined))
     };
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(), // <---- This needs some version of the fromSeed()
       themeMode: ThemeMode.system,
-      home: MainLayout(pageProvider),
+      home: const MainLayout(pageProvider),
     );
   }
 }
