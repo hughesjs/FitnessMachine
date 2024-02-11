@@ -11,7 +11,10 @@ import 'package:flutter_test/flutter_test.dart';
 // import 'package:open_eqi_sports/main.dart';
 
 void main() {
-  expect(true, true);
+  test("Dummy test", () {
+    expect(true, true);
+  });
+
   // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
   //   // Build our app and trigger a frame.
   //   await tester.pumpWidget(const MyApp());
