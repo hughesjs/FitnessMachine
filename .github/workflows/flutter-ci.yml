@@ -30,7 +30,9 @@ jobs:
         with:
           flutter-version: '3.16.9'
           channel: 'stable'
-      - run: flutter build apk
+      - name: Run Flutter Build
+        working-directory: ./src
+        run: flutter build apk
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -46,7 +48,9 @@ jobs:
         with:
           flutter-version: '3.16.9'
           channel: 'stable'
-      - run: flutter build ios
+      - name: Run Flutter Build
+        working-directory: ./src
+        run: flutter build ios      
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
