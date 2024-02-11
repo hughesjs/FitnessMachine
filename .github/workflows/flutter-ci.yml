@@ -19,7 +19,9 @@ jobs:
         with:
           flutter-version: '3.16.9'
           channel: 'stable'
-      - run: flutter test
+      - name: Run Flutter Test
+        working-directory: ./src
+        run: flutter test
 
   build-android:
     name: "Build Android"
