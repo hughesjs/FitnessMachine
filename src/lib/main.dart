@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_eqi_sports/common/dependency_injection/dependency_injection.dart';
 import 'package:open_eqi_sports/common/layouts/main_layout.dart';
-import 'package:open_eqi_sports/common/layouts/page_definition.dart';
-import 'package:open_eqi_sports/common/layouts/page_definition_provider.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/control_page.dart';
-import 'package:open_eqi_sports/modules/overview/overview_page.dart';
 
 void main() {
   final DependencyInjection container = DependencyInjection.bootstrap();

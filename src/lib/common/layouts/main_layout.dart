@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:open_eqi_sports/common/layouts/page_definition.dart';
 import 'package:open_eqi_sports/common/layouts/page_definition_provider.dart';
 
 class MainLayout extends StatefulWidget {
