@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/treadmill_ctrl/treadmill_status.dart';
 
@@ -16,17 +14,11 @@ class TreadmillControlService {
     var subscription = FlutterBluePlus.onScanResults.listen(
       (results) async {
         if (results.isNotEmpty) {
-          ScanResult r = results.last; // the most recently found device
-          print('${r.device.remoteId}: "${r.advertisementData.advName}" found!');
+          ScanResult r = results.single;
           _device = r.device;
           FlutterBluePlus.stopScan();
           await _device!.connect();
-          await _device!.discoverServices();
-          var fitnessMachine = _device!.servicesList.firstWhere((s) => s.uuid == Guid("1826"));
-          _control = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2ad9"));
-          _workoutStatus = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2acd"));
-          _workoutStatus!.onValueReceived.listen(processStatusUpdate);
-          _workoutStatus!.setNotifyValue(true);
+          await setupServices();
           await wakeup();
         }
       },
@@ -68,5 +60,14 @@ class TreadmillControlService {
   void processStatusUpdate(List<int> value) {
     print("listint: ${value.map((e) => e.toRadixString(16)).join(" ")}");
     var status = WorkoutStatus.fromBytes(value);
+  }
+
+  Future<void> setupServices() async {
+    await _device!.discoverServices();
+    var fitnessMachine = _device!.servicesList.firstWhere((s) => s.uuid == Guid("1826"));
+    _control = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2ad9"));
+    _workoutStatus = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2acd"));
+    _workoutStatus!.onValueReceived.listen(processStatusUpdate);
+    _workoutStatus!.setNotifyValue(true);
   }
 }

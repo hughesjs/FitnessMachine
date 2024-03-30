@@ -10,11 +10,6 @@ class ControlPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Text(treadmillControlService.Device?.connectionState.toString() ?? 'Disconnected'),
-        // Text(treadmillControlService.Device?.advName.toString() ?? 'No device found'),
-        // Text(treadmillControlService.Device?.isConnected ?? false ? 'Connected' : 'Disconnected'),
-        // Text(treadmillControlService.Device?.disconnectReason.toString() ?? 'No reason'),
-        // Text(treadmillControlService.Device?.bondState.toString() ?? 'No bond state'),
         ElevatedButton(
           onPressed: () {
             treadmillControlService.connect();

@@ -23,7 +23,7 @@ class WorkoutStatus {
     var distance = statusBytes.getUint16(4, Endian.little) / 1000;
     var time = statusBytes.getUint16(12, Endian.little);
     var steps = statusBytes.getUint16(14, Endian.little);
-    var calories = statusBytes.getUint16(6, Endian.big);
+    var calories = statusBytes.getUint16(7, Endian.little);
 
     return WorkoutStatus(
       speedInKmh: speed,
