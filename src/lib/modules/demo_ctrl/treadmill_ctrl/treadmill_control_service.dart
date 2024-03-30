@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/treadmill_ctrl/treadmill_status.dart';
 
@@ -6,8 +8,16 @@ class TreadmillControlService {
   BluetoothCharacteristic? _control;
   BluetoothCharacteristic? _workoutStatus;
 
+  // Double underscore to ensure you use the setter
+  double __requestedSpeed = 0;
+
+  WorkoutStatus? _status;
+
+  static const double minSpeed = 1;
+  static const double maxSpeed = 6;
+
   TreadmillControlService() {
-    FlutterBluePlus.setLogLevel(LogLevel.info, color: false);
+    FlutterBluePlus.setLogLevel(LogLevel.warning, color: false);
   }
 
   Future<void> connect() async {
@@ -42,24 +52,33 @@ class TreadmillControlService {
     await _control!.write([0x08, 0x01]);
   }
 
+  Future<void> setSpeed(double speed) async {
+    int requestSpeed = (speed * 100).toInt();
+    ByteData bytes = ByteData(3);
+    bytes.setUint8(0, 0x02);
+    bytes.setUint16(1, requestSpeed, Endian.little);
+    await _control!.write(bytes.buffer.asUint8List());
+  }
+
   void pause() {
     // TODO: Implement pause method
     print('Pausing the treadmill');
   }
 
-  void speedUp() {
-    // TODO: Implement speedUp method
-    print('Increasing the speed of the treadmill');
+  Future<void> speedUp() async {
+    requestedSpeed += 0.5;
+    await setSpeed(requestedSpeed);
+    print('Increasing the speed of the treadmill to $requestedSpeed km/h');
   }
 
-  void speedDown() {
-    // TODO: Implement speedDown method
-    print('Decreasing the speed of the treadmill');
+  Future<void> speedDown() async {
+    requestedSpeed -= 0.5;
+    await setSpeed(requestedSpeed);
+    print('Decreasing the speed of the treadmill to $requestedSpeed km/h');
   }
 
   void processStatusUpdate(List<int> value) {
-    print("listint: ${value.map((e) => e.toRadixString(16)).join(" ")}");
-    var status = WorkoutStatus.fromBytes(value);
+    _status = WorkoutStatus.fromBytes(value);
   }
 
   Future<void> setupServices() async {
@@ -70,4 +89,15 @@ class TreadmillControlService {
     _workoutStatus!.onValueReceived.listen(processStatusUpdate);
     _workoutStatus!.setNotifyValue(true);
   }
+
+  set requestedSpeed(double value) {
+    if (value < minSpeed) {
+      value = minSpeed;
+    } else if (value > maxSpeed) {
+      value = maxSpeed;
+    }
+    __requestedSpeed = value;
+  }
+
+  double get requestedSpeed => __requestedSpeed;
 }

@@ -30,12 +30,6 @@ class ControlPage extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            treadmillControlService.pause();
-          },
-          child: const Text('Pause'),
-        ),
-        ElevatedButton(
-          onPressed: () {
             treadmillControlService.speedUp();
           },
           child: const Text('Speed Up'),
