@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/treadmill_ctrl/treadmill_status.dart';
 
 class TreadmillControlService {
   BluetoothDevice? _device;
@@ -6,7 +9,7 @@ class TreadmillControlService {
   BluetoothCharacteristic? _workoutStatus;
 
   TreadmillControlService() {
-    FlutterBluePlus.setLogLevel(LogLevel.verbose, color: false);
+    FlutterBluePlus.setLogLevel(LogLevel.info, color: false);
   }
 
   Future<void> connect() async {
@@ -22,6 +25,8 @@ class TreadmillControlService {
           var fitnessMachine = _device!.servicesList.firstWhere((s) => s.uuid == Guid("1826"));
           _control = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2ad9"));
           _workoutStatus = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2acd"));
+          _workoutStatus!.onValueReceived.listen(processStatusUpdate);
+          _workoutStatus!.setNotifyValue(true);
           await wakeup();
         }
       },
@@ -58,5 +63,10 @@ class TreadmillControlService {
   void speedDown() {
     // TODO: Implement speedDown method
     print('Decreasing the speed of the treadmill');
+  }
+
+  void processStatusUpdate(List<int> value) {
+    print("listint: ${value.map((e) => e.toRadixString(16)).join(" ")}");
+    var status = WorkoutStatus.fromBytes(value);
   }
 }
