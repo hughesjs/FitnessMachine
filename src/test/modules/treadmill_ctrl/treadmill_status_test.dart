@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/treadmill_ctrl/treadmill_status.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_status.dart';
 
 void main() {
   group('Status parsing tests', () {
@@ -77,8 +77,7 @@ void main() {
 
     test("Long walk parsing:", () {
       var data = [0x84, 0x24, 0x58, 0x02, 0x4e, 0x20, 0x00, 0x11, 0x01, 0xff, 0xff, 0xff, 0x52, 0x17, 0x17, 0x27, 0x00];
-      final expected =
-          WorkoutStatus(speedInKmh: 6.0, distanceInKm: 8.27, indicatedCalories: 273, timeInSeconds: 5970, steps: 10007);
+      final expected = WorkoutStatus(speedInKmh: 6.0, distanceInKm: 8.27, indicatedCalories: 273, timeInSeconds: 5970, steps: 10007);
 
       var res = WorkoutStatus.fromBytes(data);
       expect(res.speedInKmh, expected.speedInKmh);

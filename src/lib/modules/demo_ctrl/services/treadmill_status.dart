@@ -15,6 +15,16 @@ class WorkoutStatus {
     required this.steps,
   });
 
+  factory WorkoutStatus.zero() {
+    return WorkoutStatus(
+      speedInKmh: 0,
+      distanceInKm: 0,
+      timeInSeconds: 0,
+      indicatedCalories: 0,
+      steps: 0,
+    );
+  }
+
   factory WorkoutStatus.fromBytes(List<int> value) {
     Uint8List status = Uint8List.fromList(value);
     ByteData statusBytes = status.buffer.asByteData();

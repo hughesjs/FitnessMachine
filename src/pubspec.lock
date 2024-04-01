@@ -171,6 +171,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.1"
+  safe_device:
+    dependency: "direct main"
+    description:
+      name: safe_device
+      sha256: "889ba192a7056b4cedf24cf464226217d8f26a5c007a7b8e50a31f6c44b4def4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.6"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -242,4 +250,4 @@ packages:
     version: "13.0.0"
 sdks:
   dart: ">=3.2.6 <4.0.0"
-  flutter: ">=2.5.0"
+  flutter: ">=3.3.0"
