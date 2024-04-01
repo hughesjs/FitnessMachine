@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_status.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/widgets/pages/control_page.dart';
 
-class TreadmillControlService {
+class TreadmillControlService extends Cubit<TreadmillState> {
   BluetoothDevice? _device;
   BluetoothCharacteristic? _control;
   BluetoothCharacteristic? _workoutStatus;
@@ -16,7 +18,7 @@ class TreadmillControlService {
   static const double minSpeed = 1;
   static const double maxSpeed = 6;
 
-  TreadmillControlService() {
+  TreadmillControlService(super.initialState) {
     FlutterBluePlus.setLogLevel(LogLevel.warning, color: false);
   }
 
