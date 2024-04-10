@@ -1,19 +1,17 @@
 import 'dart:typed_data';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_status.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/pages/control_page.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_state.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_workout_union.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/workout_status.dart';
 
-class TreadmillControlService extends Cubit<TreadmillState> {
+class TreadmillControlService extends Cubit<TreadmillWorkoutUnion> {
   BluetoothDevice? _device;
   BluetoothCharacteristic? _control;
-  BluetoothCharacteristic? _workoutStatus;
+  BluetoothCharacteristic? _workoutStatusUpdate;
 
   // Double underscore to ensure you use the setter
   double __requestedSpeed = 0;
-
-  WorkoutStatus? _status;
 
   static const double minSpeed = 1;
   static const double maxSpeed = 6;
@@ -79,16 +77,27 @@ class TreadmillControlService extends Cubit<TreadmillState> {
   }
 
   void _processStatusUpdate(List<int> value) {
-    _status = WorkoutStatus.fromBytes(value);
+    final workoutStatus = WorkoutStatus.fromBytes(value);
+    // Make a factory for this or something
+    final treadmillSatus = TreadmillState(
+        speedState: workoutStatus.speedInKmh == _requestedSpeed
+            ? SpeedState.steady
+            : workoutStatus.speedInKmh < _requestedSpeed
+                ? SpeedState.increasing
+                : SpeedState.decreasing,
+        connectionState: _device!.isConnected ? ConnectionState.connected : ConnectionState.disconnected,
+        requestedSpeed: _requestedSpeed,
+        currentSpeed: workoutStatus.speedInKmh);
+    emit(TreadmillWorkoutUnion(treadmillSatus, workoutStatus));
   }
 
   Future<void> _setupServices() async {
     await _device!.discoverServices();
     var fitnessMachine = _device!.servicesList.firstWhere((s) => s.uuid == Guid("1826"));
     _control = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2ad9"));
-    _workoutStatus = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2acd"));
-    _workoutStatus!.onValueReceived.listen(_processStatusUpdate);
-    _workoutStatus!.setNotifyValue(true);
+    _workoutStatusUpdate = fitnessMachine.characteristics.firstWhere((c) => c.uuid == Guid("2acd"));
+    _workoutStatusUpdate!.onValueReceived.listen(_processStatusUpdate);
+    _workoutStatusUpdate!.setNotifyValue(true);
   }
 
   set _requestedSpeed(double value) {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class UnitQuantityCard extends StatelessWidget {
-  final int value;
+  final num value;
   final String unit;
+  final int decimalPlaces;
 
-  const UnitQuantityCard(int this.value, String this.unit, {super.key});
+  const UnitQuantityCard(this.value, this.unit, this.decimalPlaces, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final valString = value.toStringAsFixed(2);
+    final valString = value.toStringAsFixed(decimalPlaces);
     return Expanded(
       child: Card(
         child: Row(
