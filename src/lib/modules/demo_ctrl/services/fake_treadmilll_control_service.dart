@@ -12,22 +12,25 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
   static const double _ticksInSeconds = 0.25;
   static int ticks = 0;
 
-  double _actualSpeed = 0;
   double __requestedSpeed = 0;
+
+  double _actualSpeed = 0;
   double _innerCals = 0;
   double _fractionsOfSteps = 0;
 
   bool _isRunning = false;
   bool _isConnected = false;
+
   Timer? _tickTimer;
   Timer? _secondTimer;
+  Timer? _speedTimer;
 
   WorkoutStatus _innerWorkoutState;
 
   double get _requestedSpeed => __requestedSpeed;
 
   set _requestedSpeed(double value) {
-    if (value < minSpeed) {
+    if (value < minSpeed && _isRunning) {
       value = minSpeed;
     } else if (value > maxSpeed) {
       value = maxSpeed;
@@ -42,6 +45,7 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
     _isConnected = true;
     _tickTimer = Timer.periodic(Duration(milliseconds: (_ticksInSeconds * 1000).toInt()), _updateState);
     _secondTimer = Timer.periodic(const Duration(seconds: 1), _updateSeconds);
+    _speedTimer = Timer.periodic(Duration(milliseconds: (_ticksInSeconds * 1000).toInt()), (_) => _updateSpeed());
   }
 
   @override
@@ -68,30 +72,21 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
   @override
   Future<void> stop() async {
     _isRunning = false;
+    _requestedSpeed = 0;
   }
 
   @override
   FutureOr onDispose() {
     _tickTimer?.cancel();
     _secondTimer?.cancel();
+    _speedTimer?.cancel();
   }
 
   void _updateState(Timer timer) {
-    if (!_isRunning) return;
+    if (!_isRunning && _actualSpeed == 0) return;
     final distanceCovered = _requestedSpeed * _ticksInSeconds / 3600; // Units are per hour
     _innerCals += _requestedSpeed * 75 * (_ticksInSeconds / 3600); // Speed as proxy for METs
     _innerWorkoutState.distanceInKm += distanceCovered;
-
-    if (_actualSpeed < _requestedSpeed) {
-      _actualSpeed += 0.1;
-    } else if (_actualSpeed > _requestedSpeed) {
-      _actualSpeed -= 0.1;
-    }
-
-    if ((_actualSpeed - _requestedSpeed).abs() < 0.11) {
-      _actualSpeed = _requestedSpeed;
-    }
-
     _innerWorkoutState.speedInKmh = _actualSpeed;
 
     int cadence = 0;
@@ -132,5 +127,17 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
   void _updateSeconds(Timer timer) {
     if (!_isRunning || _requestedSpeed == 0) return;
     _innerWorkoutState.timeInSeconds += 1;
+  }
+
+  void _updateSpeed() {
+    if (_actualSpeed < _requestedSpeed) {
+      _actualSpeed += 0.1;
+    } else if (_actualSpeed > _requestedSpeed) {
+      _actualSpeed -= 0.1;
+    }
+
+    if ((_actualSpeed - _requestedSpeed).abs() < 0.11) {
+      _actualSpeed = _requestedSpeed;
+    }
   }
 }
