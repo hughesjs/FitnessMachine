@@ -12,6 +12,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.0
   get_it: ^7.6.7
+  flutter_blue_plus: ^1.32.0
+  safe_device: ^1.1.6
+  flutter_bloc: ^8.1.5
+  equatable: ^2.0.5
 
 
 dev_dependencies:

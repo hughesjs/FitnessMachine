@@ -25,9 +25,9 @@ UUID: `2ACD` (Treadmill Data)
 
 ATT OPCODE: `0x1b` (Received Handle Value Notification)
 
-| `84 24` | `XX XX` | `XX XX`  | `XX XX`    | `00 ff` | `ff ff` | `XX XX` | `XX XX` | `00`  |
-| ----- | ----- | ------ | -------- | ----- | ----- | ------- | ----- | --- |
-| Start | Speed | Metres | Calories | ?     | ?     | Seconds | Steps | END |
+| START | Speed | Metres | ? | Calories | ?     | ?     | Seconds | Steps | END |
+| ----- | ----- | ------ | --- | -------- | ----- | ----- | ------- | ----- | --- |
+| `84 24` | `XX XX` | `XX XX`  | `00` |  `XX XX`    | `ff` | `ff ff` | `XX XX` | `XX XX` | `00`  |
 
 
 Note:

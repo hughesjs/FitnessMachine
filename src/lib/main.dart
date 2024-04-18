@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:open_eqi_sports/common/dependency_injection/dependency_injection.dart';
 import 'package:open_eqi_sports/common/layouts/main_layout.dart';
 
-void main() {
-  final DependencyInjection container = DependencyInjection.bootstrap();
+Future<void> main() async {
+  final DependencyInjection container = await DependencyInjection.bootstrap();
   final MyApp app = container.get<MyApp>();
   runApp(app);
 }
