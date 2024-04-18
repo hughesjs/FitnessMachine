@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_control_service.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/models/treadmill_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/services/treadmill_control_service.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
 
 class FakeTreadmillControlService implements TreadmillControlService, Disposable {
   final StreamController<WorkoutStatus> _workoutStatusStreamController;

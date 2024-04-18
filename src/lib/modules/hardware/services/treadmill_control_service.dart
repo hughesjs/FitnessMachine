@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/models/treadmill_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
 
 class TreadmillControlService implements Disposable {
   BluetoothDevice? _device;

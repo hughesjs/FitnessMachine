@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/models/treadmill_state.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/treadmill_state_cubit.dart';
 
 class TreadmillControls extends StatelessWidget {

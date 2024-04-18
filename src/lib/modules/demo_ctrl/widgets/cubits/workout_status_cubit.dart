@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_control_service.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/services/treadmill_control_service.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
 
 class WorkoutStatusCubit extends Cubit<WorkoutStatus> {
   final TreadmillControlService _treadmillControlService;

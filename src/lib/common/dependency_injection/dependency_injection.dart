@@ -6,6 +6,7 @@ import 'package:open_eqi_sports/common/layouts/page_definition_provider.dart';
 import 'package:open_eqi_sports/main.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/pages/control_page.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/dependency_injection/demo_ctrl_di.dart';
+import 'package:open_eqi_sports/modules/hardware/dependency_injection/hardware_di.dart';
 import 'package:open_eqi_sports/modules/overview/dependency_injection/overview_di.dart';
 import 'package:open_eqi_sports/modules/overview/overview_page.dart';
 
@@ -33,6 +34,7 @@ class DependencyInjection {
       return MyApp(di._services<MainLayout>());
     });
 
+    await di._services.addHardware();
     await di._services.addDemoControl();
     di._services.addOverview();
 
