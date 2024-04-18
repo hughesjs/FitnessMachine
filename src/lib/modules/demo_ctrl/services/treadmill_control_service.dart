@@ -1,11 +1,11 @@
+import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_workout_union.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/workout_status.dart';
+import 'package:get_it/get_it.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/models/treadmill_state.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/models/workout_status.dart';
 
-class TreadmillControlService extends Cubit<TreadmillWorkoutUnion> {
+class TreadmillControlService implements Disposable {
   BluetoothDevice? _device;
   BluetoothCharacteristic? _control;
   BluetoothCharacteristic? _workoutStatusUpdate;
@@ -16,7 +16,17 @@ class TreadmillControlService extends Cubit<TreadmillWorkoutUnion> {
   static const double minSpeed = 1;
   static const double maxSpeed = 6;
 
-  TreadmillControlService(super.initialState) {
+  final StreamController<WorkoutStatus> _workoutStatusStreamController;
+  final StreamController<TreadmillState> _treadmillStateStreamController;
+
+  late Stream workoutStatusStream;
+  late Stream treadmillStateStream;
+
+  TreadmillControlService()
+      : _workoutStatusStreamController = StreamController<WorkoutStatus>.broadcast(),
+        _treadmillStateStreamController = StreamController<TreadmillState>.broadcast() {
+    workoutStatusStream = _workoutStatusStreamController.stream;
+    treadmillStateStream = _treadmillStateStreamController.stream;
     FlutterBluePlus.setLogLevel(LogLevel.warning, color: false);
   }
 
@@ -79,7 +89,7 @@ class TreadmillControlService extends Cubit<TreadmillWorkoutUnion> {
   void _processStatusUpdate(List<int> value) {
     final workoutStatus = WorkoutStatus.fromBytes(value);
     // Make a factory for this or something
-    final treadmillSatus = TreadmillState(
+    final treadmillState = TreadmillState(
         speedState: workoutStatus.speedInKmh == _requestedSpeed
             ? SpeedState.steady
             : workoutStatus.speedInKmh < _requestedSpeed
@@ -88,7 +98,8 @@ class TreadmillControlService extends Cubit<TreadmillWorkoutUnion> {
         connectionState: _device!.isConnected ? ConnectionState.connected : ConnectionState.disconnected,
         requestedSpeed: _requestedSpeed,
         currentSpeed: workoutStatus.speedInKmh);
-    emit(TreadmillWorkoutUnion(treadmillSatus, workoutStatus));
+    _workoutStatusStreamController.add(workoutStatus);
+    _treadmillStateStreamController.add(treadmillState);
   }
 
   Future<void> _setupServices() async {
@@ -110,4 +121,10 @@ class TreadmillControlService extends Cubit<TreadmillWorkoutUnion> {
   }
 
   double get _requestedSpeed => __requestedSpeed;
+
+  @override
+  FutureOr onDispose() {
+    _device?.disconnect();
+    ;
+  }
 }

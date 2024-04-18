@@ -19,6 +19,20 @@ class TreadmillState {
       currentSpeed: 0,
     );
   }
+
+  TreadmillState copyWith({
+    SpeedState? speedState,
+    ConnectionState? connectionState,
+    double? requestedSpeed,
+    double? currentSpeed,
+  }) {
+    return TreadmillState(
+      speedState: speedState ?? this.speedState,
+      connectionState: connectionState ?? this.connectionState,
+      requestedSpeed: requestedSpeed ?? this.requestedSpeed,
+      currentSpeed: currentSpeed ?? this.currentSpeed,
+    );
+  }
 }
 
 enum SpeedState { increasing, decreasing, steady }

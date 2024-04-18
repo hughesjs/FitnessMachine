@@ -1,13 +1,15 @@
 import 'dart:typed_data';
 
-class WorkoutStatus {
-  double speedInKmh;
-  double distanceInKm;
-  int timeInSeconds;
-  int indicatedCalories;
-  int steps;
+import 'package:equatable/equatable.dart';
 
-  WorkoutStatus({
+class WorkoutStatus extends Equatable {
+  final double speedInKmh;
+  final double distanceInKm;
+  final int timeInSeconds;
+  final int indicatedCalories;
+  final int steps;
+
+  const WorkoutStatus({
     required this.speedInKmh,
     required this.distanceInKm,
     required this.timeInSeconds,
@@ -16,7 +18,7 @@ class WorkoutStatus {
   });
 
   factory WorkoutStatus.zero() {
-    return WorkoutStatus(
+    return const WorkoutStatus(
       speedInKmh: 0,
       distanceInKm: 0,
       timeInSeconds: 0,
@@ -43,4 +45,23 @@ class WorkoutStatus {
       steps: steps,
     );
   }
+
+  WorkoutStatus copyWith({
+    double? speedInKmh,
+    double? distanceInKm,
+    int? timeInSeconds,
+    int? indicatedCalories,
+    int? steps,
+  }) {
+    return WorkoutStatus(
+      speedInKmh: speedInKmh ?? this.speedInKmh,
+      distanceInKm: distanceInKm ?? this.distanceInKm,
+      timeInSeconds: timeInSeconds ?? this.timeInSeconds,
+      indicatedCalories: indicatedCalories ?? this.indicatedCalories,
+      steps: steps ?? this.steps,
+    );
+  }
+
+  @override
+  List<Object?> get props => [speedInKmh, distanceInKm, timeInSeconds, indicatedCalories, steps];
 }

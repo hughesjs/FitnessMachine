@@ -1,12 +1,18 @@
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_control_service.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/treadmill_workout_union.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/workout_status.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/models/treadmill_state.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/models/workout_status.dart';
 
-class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implements TreadmillControlService, Disposable {
+class FakeTreadmillControlService implements TreadmillControlService, Disposable {
+  final StreamController<WorkoutStatus> _workoutStatusStreamController;
+  final StreamController<TreadmillState> _treadmillStateStreamController;
+
+  @override
+  late Stream treadmillStateStream;
+  @override
+  late Stream workoutStatusStream;
+
   static const double minSpeed = 1;
   static const double maxSpeed = 6;
   static const double _ticksInSeconds = 0.25;
@@ -38,7 +44,13 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
     __requestedSpeed = value;
   }
 
-  FakeTreadmillControlService(super.initialState) : _innerWorkoutState = WorkoutStatus.zero();
+  FakeTreadmillControlService()
+      : _workoutStatusStreamController = StreamController.broadcast(),
+        _treadmillStateStreamController = StreamController.broadcast(),
+        _innerWorkoutState = WorkoutStatus.zero() {
+    workoutStatusStream = _workoutStatusStreamController.stream;
+    treadmillStateStream = _treadmillStateStreamController.stream;
+  }
 
   @override
   Future<void> connect() async {
@@ -86,8 +98,8 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
     if (!_isRunning && _actualSpeed == 0) return;
     final distanceCovered = _requestedSpeed * _ticksInSeconds / 3600; // Units are per hour
     _innerCals += _requestedSpeed * 75 * (_ticksInSeconds / 3600); // Speed as proxy for METs
-    _innerWorkoutState.distanceInKm += distanceCovered;
-    _innerWorkoutState.speedInKmh = _actualSpeed;
+    _innerWorkoutState = _innerWorkoutState.copyWith(distanceInKm: _innerWorkoutState.distanceInKm + distanceCovered);
+    _innerWorkoutState = _innerWorkoutState.copyWith(speedInKmh: _actualSpeed);
 
     int cadence = 0;
 
@@ -102,31 +114,32 @@ class FakeTreadmillControlService extends Cubit<TreadmillWorkoutUnion> implement
     _fractionsOfSteps += cadence * _ticksInSeconds / 60;
 
     if (_fractionsOfSteps >= 1) {
-      _innerWorkoutState.steps += _fractionsOfSteps.round();
+      _innerWorkoutState = _innerWorkoutState.copyWith(steps: _innerWorkoutState.steps + _fractionsOfSteps.round());
       _fractionsOfSteps = 0;
     }
 
     if (_innerCals > 1) {
-      _innerWorkoutState.indicatedCalories++;
+      _innerWorkoutState = _innerWorkoutState.copyWith(indicatedCalories: _innerWorkoutState.indicatedCalories + 1);
       _innerCals = 0;
     }
-    emit(TreadmillWorkoutUnion(
-        TreadmillState(
-          connectionState: _isConnected ? ConnectionState.connected : ConnectionState.disconnected,
-          currentSpeed: _innerWorkoutState.speedInKmh,
-          requestedSpeed: _requestedSpeed,
-          speedState: _innerWorkoutState.speedInKmh == _requestedSpeed
-              ? SpeedState.steady
-              : _innerWorkoutState.speedInKmh < _requestedSpeed
-                  ? SpeedState.increasing
-                  : SpeedState.decreasing,
-        ),
-        _innerWorkoutState));
+
+    final treadmillState = TreadmillState(
+        connectionState: _isConnected ? ConnectionState.connected : ConnectionState.disconnected,
+        currentSpeed: _innerWorkoutState.speedInKmh,
+        requestedSpeed: _requestedSpeed,
+        speedState: _innerWorkoutState.speedInKmh == _requestedSpeed
+            ? SpeedState.steady
+            : _innerWorkoutState.speedInKmh < _requestedSpeed
+                ? SpeedState.increasing
+                : SpeedState.decreasing);
+
+    _treadmillStateStreamController.add(treadmillState);
+    _workoutStatusStreamController.add(_innerWorkoutState);
   }
 
   void _updateSeconds(Timer timer) {
     if (!_isRunning || _requestedSpeed == 0) return;
-    _innerWorkoutState.timeInSeconds += 1;
+    _innerWorkoutState = _innerWorkoutState.copyWith(timeInSeconds: _innerWorkoutState.timeInSeconds + 1);
   }
 
   void _updateSpeed() {

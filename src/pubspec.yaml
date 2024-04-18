@@ -15,6 +15,7 @@ dependencies:
   flutter_blue_plus: ^1.32.0
   safe_device: ^1.1.6
   flutter_bloc: ^8.1.5
+  equatable: ^2.0.5
 
 
 dev_dependencies:

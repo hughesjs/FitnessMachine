@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/services/workout_status.dart';
+import 'package:open_eqi_sports/modules/demo_ctrl/services/models/workout_status.dart';
 
 void main() {
   group('Status parsing tests', () {
