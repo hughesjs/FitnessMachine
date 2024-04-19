@@ -16,7 +16,7 @@ class FitnessMachineDiscoveryService {
     });
 
     FlutterBluePlus.cancelWhenScanComplete(scanningSub);
-    FlutterBluePlus.startScan(withServices: [KnownServices.fitnessMachine], timeout: const Duration(seconds: 15));
+    await FlutterBluePlus.startScan(withServices: [KnownServices.fitnessMachine], timeout: const Duration(seconds: 15));
   }
 
   void parseResults(List<ScanResult> results) {
