@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fake_treadmilll_control_service.dart';
+import 'package:open_eqi_sports/modules/hardware/services/dev_only/fake_treadmilll_control_service.dart';
 import 'package:open_eqi_sports/modules/hardware/services/treadmill_control_service.dart';
 import 'package:safe_device/safe_device.dart';
 

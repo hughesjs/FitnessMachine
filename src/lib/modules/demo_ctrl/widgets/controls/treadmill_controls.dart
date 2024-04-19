@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/treadmill_state_cubit.dart';
+import 'package:open_eqi_sports/modules/hardware/widgets/pages/device_selection_screen.dart';
 
 class TreadmillControls extends StatelessWidget {
   const TreadmillControls({super.key});
@@ -15,7 +16,8 @@ class TreadmillControls extends StatelessWidget {
         Text("Speed ${state.speedState.name} (${state.currentSpeed}/${state.requestedSpeed})"),
         ElevatedButton(
           onPressed: () {
-            controlCubit.connect();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const DeviceSelectionScreen()));
+            //controlCubit.connect();
           },
           child: const Text('Connect'),
         ),

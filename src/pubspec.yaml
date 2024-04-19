@@ -16,6 +16,8 @@ dependencies:
   safe_device: ^1.1.6
   flutter_bloc: ^8.1.5
   equatable: ^2.0.5
+  foundation: ^0.0.5
+  wakelock_plus: ^1.2.4
 
 
 dev_dependencies:
