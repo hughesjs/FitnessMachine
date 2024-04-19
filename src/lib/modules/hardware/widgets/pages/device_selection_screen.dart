@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_discovery_service.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/cubits/fitness_machine_cubit.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/models/device_descriptor.dart';
 
@@ -24,8 +23,7 @@ class DeviceSelectionScreen extends StatelessWidget {
               ],
             ),
             body: BlocProvider(
-                // TODO: DI
-                create: (context) => FitnessMachineCubit(FitnessMachineDiscoveryService()),
+                create: (context) => FitnessMachineCubit(),
                 child: BlocBuilder<FitnessMachineCubit, List<DeviceDescriptor>>(builder: (context, state) {
                   final cubit = context.read<FitnessMachineCubit>();
                   return ListView.builder(
