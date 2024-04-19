@@ -9,18 +9,20 @@ class FitnessMachineList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => FitnessMachineCubit(),
-        child: BlocBuilder<FitnessMachineCubit, List<DeviceDescriptor>>(builder: (context, state) {
-          final cubit = context.read<FitnessMachineCubit>();
+        create: (context) => FitnessMachineDiscoveryCubit(),
+        child: BlocBuilder<FitnessMachineDiscoveryCubit, List<DeviceDescriptor>>(builder: (context, state) {
+          final cubit = context.read<FitnessMachineDiscoveryCubit>();
           return ListView.builder(
               itemCount: state.length,
               itemBuilder: (context, index) {
                 final selectedDevice = state[index];
                 return ListTile(
-                  title: Text(selectedDevice.name),
-                  subtitle: Text(selectedDevice.address),
-                  onTap: () => cubit.selectDevice(state[index]),
-                );
+                    title: Text(selectedDevice.name),
+                    subtitle: Text(selectedDevice.address),
+                    onTap: () {
+                      cubit.selectDevice(state[index]);
+                      Navigator.pop(context);
+                    });
               });
         }));
   }
