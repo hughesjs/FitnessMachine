@@ -1,14 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_service.dart';
+import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
 
 class FitnessMachineProvider {
-  FitnessMachine? currentMachine;
+  StreamController<FitnessMachine> currentMachineStreamController;
+  Stream<FitnessMachine> get currentMachineStream => currentMachineStreamController.stream;
 
-  bool get isSet => currentMachine != null;
-
-  FitnessMachineProvider();
+  FitnessMachineProvider() : currentMachineStreamController = StreamController<FitnessMachine>.broadcast();
 
   Future<void> setMachine(BluetoothDevice device) async {
-    currentMachine = await FitnessMachine.fromDevice(device);
+    final currentMachine = await FitnessMachine.fromDevice(device);
+    currentMachineStreamController.add(currentMachine);
   }
 }

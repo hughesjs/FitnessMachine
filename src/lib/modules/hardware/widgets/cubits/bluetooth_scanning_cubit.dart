@@ -11,4 +11,10 @@ class BluetoothScanningCubit extends Cubit<bool> {
       emit(event);
     });
   }
+
+  @override
+  Future<void> close() async {
+    _subscription.cancel();
+    super.close();
+  }
 }

@@ -9,7 +9,7 @@ class WorkoutStatusPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WorkoutStatusCubit, WorkoutStatus>(builder: (ctx, state) {
+    return BlocBuilder<TrainingStatusCubit, TreadmillData>(builder: (ctx, state) {
       return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Row(
           children: [

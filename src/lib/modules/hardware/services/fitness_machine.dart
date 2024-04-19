@@ -5,23 +5,32 @@ import 'package:open_eqi_sports/modules/hardware/bt/extensions/bluetooth_device_
 import 'package:open_eqi_sports/modules/hardware/bt/extensions/bluetooth_service_extensions.dart';
 
 class FitnessMachine {
-  final BluetoothService _fitnessMachineService;
+  final BluetoothService fitnessMachineService;
 
-  final BluetoothCharacteristic _fitnessMachineFeature;
-  final BluetoothCharacteristic _fitnessMachineControl;
-  final BluetoothCharacteristic _fitnessMachineStatus;
-  final BluetoothCharacteristic _treadmillData;
-  final BluetoothCharacteristic _trainingStatus;
-  final BluetoothCharacteristic _supportedSpeeds;
+  final BluetoothCharacteristic fitnessMachineFeature;
+  final BluetoothCharacteristic fitnessMachineControl;
+  final BluetoothCharacteristic fitnessMachineStatus;
+  final BluetoothCharacteristic treadmillData;
+  final BluetoothCharacteristic trainingStatus;
+  final BluetoothCharacteristic supportedSpeeds;
+
+  late List<BluetoothCharacteristic> characteristics = [
+    fitnessMachineFeature,
+    fitnessMachineControl,
+    fitnessMachineStatus,
+    treadmillData,
+    trainingStatus,
+    supportedSpeeds,
+  ];
 
   FitnessMachine._(
-    this._fitnessMachineService,
-    this._fitnessMachineFeature,
-    this._fitnessMachineControl,
-    this._fitnessMachineStatus,
-    this._treadmillData,
-    this._trainingStatus,
-    this._supportedSpeeds,
+    this.fitnessMachineService,
+    this.fitnessMachineFeature,
+    this.fitnessMachineControl,
+    this.fitnessMachineStatus,
+    this.treadmillData,
+    this.trainingStatus,
+    this.supportedSpeeds,
   );
 
   static Future<FitnessMachine> fromDevice(BluetoothDevice device) async {

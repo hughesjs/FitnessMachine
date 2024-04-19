@@ -5,7 +5,7 @@ import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
 
 class FakeTreadmillControlService implements TreadmillControlService, Disposable {
-  final StreamController<WorkoutStatus> _workoutStatusStreamController;
+  final StreamController<TreadmillData> _workoutStatusStreamController;
   final StreamController<TreadmillState> _treadmillStateStreamController;
 
   @override
@@ -31,7 +31,7 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
   Timer? _secondTimer;
   Timer? _speedTimer;
 
-  WorkoutStatus _innerWorkoutState;
+  TreadmillData _innerWorkoutState;
 
   double get _requestedSpeed => __requestedSpeed;
 
@@ -47,7 +47,7 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
   FakeTreadmillControlService()
       : _workoutStatusStreamController = StreamController.broadcast(),
         _treadmillStateStreamController = StreamController.broadcast(),
-        _innerWorkoutState = WorkoutStatus.zero() {
+        _innerWorkoutState = TreadmillData.zero() {
     workoutStatusStream = _workoutStatusStreamController.stream;
     treadmillStateStream = _treadmillStateStreamController.stream;
   }
@@ -61,7 +61,7 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
   }
 
   @override
-  void pause() {}
+  Future<void> pause() async => _isRunning = false;
 
   @override
   Future<void> speedDown() async {
@@ -76,7 +76,7 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
   @override
   Future<void> start() async {
     if (_isConnected) {
-      _innerWorkoutState = WorkoutStatus.zero();
+      _innerWorkoutState = TreadmillData.zero();
       _isRunning = true;
     }
   }
@@ -124,7 +124,6 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
     }
 
     final treadmillState = TreadmillState(
-        connectionState: _isConnected ? ConnectionState.connected : ConnectionState.disconnected,
         currentSpeed: _innerWorkoutState.speedInKmh,
         requestedSpeed: _requestedSpeed,
         speedState: _innerWorkoutState.speedInKmh == _requestedSpeed
@@ -153,4 +152,9 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
       _actualSpeed = _requestedSpeed;
     }
   }
+
+  @override
+  Future<void> resume() async => _isRunning = true;
+  @override
+  Future<void> takeControl() async {}
 }

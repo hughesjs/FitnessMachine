@@ -1,12 +1,10 @@
 class TreadmillState {
   SpeedState speedState;
-  ConnectionState connectionState;
   double requestedSpeed;
   double currentSpeed;
 
   TreadmillState({
     required this.speedState,
-    required this.connectionState,
     required this.requestedSpeed,
     required this.currentSpeed,
   });
@@ -14,7 +12,6 @@ class TreadmillState {
   static TreadmillState initial() {
     return TreadmillState(
       speedState: SpeedState.steady,
-      connectionState: ConnectionState.disconnected,
       requestedSpeed: 0,
       currentSpeed: 0,
     );
@@ -28,7 +25,6 @@ class TreadmillState {
   }) {
     return TreadmillState(
       speedState: speedState ?? this.speedState,
-      connectionState: connectionState ?? this.connectionState,
       requestedSpeed: requestedSpeed ?? this.requestedSpeed,
       currentSpeed: currentSpeed ?? this.currentSpeed,
     );
