@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/controls/bluetooth_scanning_indicator.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/cubits/fitness_machine_cubit.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/models/device_descriptor.dart';
+import 'package:open_eqi_sports/modules/hardware/widgets/controls/fitness_machine_list.dart';
 
 class DeviceSelectionScreen extends StatelessWidget {
   const DeviceSelectionScreen({super.key});
@@ -22,19 +20,6 @@ class DeviceSelectionScreen extends StatelessWidget {
                 BluetoothScanningIndicator(),
               ],
             ),
-            body: BlocProvider(
-                create: (context) => FitnessMachineCubit(),
-                child: BlocBuilder<FitnessMachineCubit, List<DeviceDescriptor>>(builder: (context, state) {
-                  final cubit = context.read<FitnessMachineCubit>();
-                  return ListView.builder(
-                      itemCount: state.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(state[index].name),
-                          subtitle: Text(state[index].address),
-                          onTap: () => cubit.selectDevice(state[index]),
-                        );
-                      });
-                }))));
+            body: const FitnessMachineList()));
   }
 }
