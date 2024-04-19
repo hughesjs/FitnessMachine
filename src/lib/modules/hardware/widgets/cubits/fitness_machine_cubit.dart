@@ -1,27 +1,17 @@
-import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_discovery_service.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/models/device_descriptor.dart';
 
 class FitnessMachineCubit extends Cubit<List<DeviceDescriptor>> {
-  Timer? _timer;
+  final FitnessMachineDiscoveryService _fitnessMachineDiscoveryService;
 
-  FitnessMachineCubit() : super([]) {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) => fetchData());
+  FitnessMachineCubit(this._fitnessMachineDiscoveryService) : super([]) {
+    _fitnessMachineDiscoveryService.deviceStream
+        .listen((devices) => emit(devices.map((e) => DeviceDescriptor(e.platformName, e.remoteId.str)).toList()));
+    _fitnessMachineDiscoveryService.start();
   }
 
-  // Example function to fetch data
-  void fetchData() {
-    List<DeviceDescriptor> newData = [
-      DeviceDescriptor("Treadmill", "CITYSPORTS-Linker"),
-      DeviceDescriptor("Bike", "CITYSPORTS-Linker"),
-      DeviceDescriptor("Bike", "CITYSPORTS-Linker"),
-    ];
-    emit(newData);
-  }
-
-  @override
-  Future<void> close() {
-    _timer?.cancel();
-    return super.close();
+  void selectDevice(DeviceDescriptor device) {
+    print("Selecting device ${device.name}");
   }
 }
