@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_eqi_sports/modules/hardware/widgets/controls/bluetooth_scanning_indicator.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/cubits/fitness_machine_cubit.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/models/device_descriptor.dart';
 
@@ -18,8 +19,7 @@ class DeviceSelectionScreen extends StatelessWidget {
                     Navigator.pop(context);
                   }),
               actions: const [
-                // Maybe tie this to FlutterBluePlus.isScanning
-                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: CircularProgressIndicator(value: null)),
+                BluetoothScanningIndicator(),
               ],
             ),
             body: BlocProvider(
