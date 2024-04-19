@@ -53,14 +53,6 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
   }
 
   @override
-  Future<void> connect() async {
-    _isConnected = true;
-    _tickTimer = Timer.periodic(Duration(milliseconds: (_ticksInSeconds * 1000).toInt()), _updateState);
-    _secondTimer = Timer.periodic(const Duration(seconds: 1), _updateSeconds);
-    _speedTimer = Timer.periodic(Duration(milliseconds: (_ticksInSeconds * 1000).toInt()), (_) => _updateSpeed());
-  }
-
-  @override
   Future<void> pause() async => _isRunning = false;
 
   @override

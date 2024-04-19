@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/models/supported_speed_range.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
 
@@ -11,17 +12,28 @@ class FitnessMachineQueryDispatcher {
   Stream get treadmillDataStream => _treadmillDataStreamController.stream;
 
   StreamSubscription? _machineStatusSubscription;
+  FitnessMachine? _currentMachine;
 
   FitnessMachineQueryDispatcher()
       : _fitnessMachineProvider = GetIt.I<FitnessMachineProvider>(),
         _treadmillDataStreamController = StreamController<TreadmillData>.broadcast() {
-    _fitnessMachineProvider.currentMachineStream.listen((currentMachine) async => await _reconnectStreams(currentMachine));
+    _fitnessMachineProvider.currentMachineStream.listen((currentMachine) async {
+      _currentMachine = currentMachine;
+      await _reconnectStreams();
+    });
   }
 
-  Future<void> _reconnectStreams(FitnessMachine currentMachine) async {
+  Future<SupportedSpeedRange> getSupportedSpeedRange() async {
+    if (_currentMachine == null) return SupportedSpeedRange(0, 0, 0);
+    List<int> rawSpeeds = await _currentMachine!.supportedSpeeds.read();
+    return SupportedSpeedRange.fromBytes(rawSpeeds);
+  }
+
+  Future<void> _reconnectStreams() async {
+    if (_currentMachine == null) return;
     _machineStatusSubscription?.cancel();
-    _machineStatusSubscription = currentMachine.treadmillData.onValueReceived.listen(_processTreadmillDataUpdate);
-    await currentMachine.treadmillData.setNotifyValue(true);
+    _machineStatusSubscription = _currentMachine!.treadmillData.onValueReceived.listen(_processTreadmillDataUpdate);
+    await _currentMachine!.treadmillData.setNotifyValue(true);
   }
 
   void _processTreadmillDataUpdate(List<int> value) {

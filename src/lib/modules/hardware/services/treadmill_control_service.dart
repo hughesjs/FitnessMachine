@@ -1,22 +1,18 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/models/supported_speed_range.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_command_dispatcher.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_query_dispatcher.dart';
 
 class TreadmillControlService {
-  // TODO Read this from the device
-  static const double minSpeed = 1;
-  static const double maxSpeed = 6;
-
   late Stream workoutStatusStream;
 
-  // Double underscore to ensure you use the setter
-  // ^^ This is shit... do something else
-  double __requestedSpeed = 0;
-  double get _requestedSpeed => __requestedSpeed;
+  double _requestedSpeed = 0;
 
   final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
   final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;
+
+  SupportedSpeedRange? _supportedSpeedRange;
 
   TreadmillControlService()
       : _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>(),
@@ -26,7 +22,9 @@ class TreadmillControlService {
 
   Future<void> takeControl() async => _fitnessMachineCommandDispatcher.takeControl();
 
-  Future<void> start() async => _fitnessMachineCommandDispatcher.start();
+  Future<void> start() async {
+    _fitnessMachineCommandDispatcher.start();
+  }
 
   Future<void> stop() async => _fitnessMachineCommandDispatcher.stop();
 
@@ -35,23 +33,26 @@ class TreadmillControlService {
   Future<void> resume() async => _fitnessMachineCommandDispatcher.resume();
 
   Future<void> speedUp() async {
-    _requestedSpeed += 0.5;
+    _supportedSpeedRange ??= await _fitnessMachineQueryDispatcher.getSupportedSpeedRange();
+    _requestedSpeed = _clampValue(_requestedSpeed + 0.5, _supportedSpeedRange!.minSpeedInKmh, _supportedSpeedRange!.maxSpeedInKmh);
     await _setSpeed(_requestedSpeed);
   }
 
   Future<void> speedDown() async {
-    _requestedSpeed -= 0.5;
+    _supportedSpeedRange ??= await _fitnessMachineQueryDispatcher.getSupportedSpeedRange();
+    _requestedSpeed = _clampValue(_requestedSpeed - 0.5, _supportedSpeedRange!.minSpeedInKmh, _supportedSpeedRange!.maxSpeedInKmh);
     await _setSpeed(_requestedSpeed);
   }
 
   Future<void> _setSpeed(double speed) async => _fitnessMachineCommandDispatcher.setSpeed(speed);
 
-  set _requestedSpeed(double value) {
-    if (value < minSpeed) {
-      value = minSpeed;
-    } else if (value > maxSpeed) {
-      value = maxSpeed;
+  static double _clampValue(double value, min, max) {
+    if (value < min) {
+      return min;
     }
-    __requestedSpeed = value;
+    if (value > max) {
+      return max;
+    }
+    return value;
   }
 }
