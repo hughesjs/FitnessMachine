@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:open_eqi_sports/modules/hardware/services/treadmill_control_service.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/models/treadmill_data.dart';
 
 class FakeTreadmillControlService implements TreadmillControlService, Disposable {
   final StreamController<TreadmillData> _workoutStatusStreamController;
-  final StreamController<TreadmillState> _treadmillStateStreamController;
 
   @override
   late Stream treadmillStateStream;
@@ -46,10 +44,8 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
 
   FakeTreadmillControlService()
       : _workoutStatusStreamController = StreamController.broadcast(),
-        _treadmillStateStreamController = StreamController.broadcast(),
         _innerWorkoutState = TreadmillData.zero() {
     workoutStatusStream = _workoutStatusStreamController.stream;
-    treadmillStateStream = _treadmillStateStreamController.stream;
   }
 
   @override
@@ -115,16 +111,6 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
       _innerCals = 0;
     }
 
-    final treadmillState = TreadmillState(
-        currentSpeed: _innerWorkoutState.speedInKmh,
-        requestedSpeed: _requestedSpeed,
-        speedState: _innerWorkoutState.speedInKmh == _requestedSpeed
-            ? SpeedState.steady
-            : _innerWorkoutState.speedInKmh < _requestedSpeed
-                ? SpeedState.increasing
-                : SpeedState.decreasing);
-
-    _treadmillStateStreamController.add(treadmillState);
     _workoutStatusStreamController.add(_innerWorkoutState);
   }
 

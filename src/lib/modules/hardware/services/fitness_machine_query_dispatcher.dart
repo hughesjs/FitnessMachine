@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/models/treadmill_data.dart';
 import 'package:open_eqi_sports/modules/hardware/bt/models/supported_speed_range.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
