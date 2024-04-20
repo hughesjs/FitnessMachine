@@ -7,8 +7,6 @@ import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_query_
 class TreadmillControlService {
   late Stream workoutStatusStream;
 
-  double _requestedSpeed = 0;
-
   final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
   final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;
 
@@ -20,7 +18,6 @@ class TreadmillControlService {
     workoutStatusStream = _fitnessMachineQueryDispatcher.treadmillDataStream;
     _fitnessMachineQueryDispatcher.supportedSpeedRangeStream.listen((event) {
       _supportedSpeedRange = event;
-      _setSpeed(_requestedSpeed); // Incase we're outside the acceptable range
     });
   }
 
@@ -33,23 +30,4 @@ class TreadmillControlService {
   Future<void> pause() async => _fitnessMachineCommandDispatcher.pause();
 
   Future<void> resume() async => _fitnessMachineCommandDispatcher.resume();
-
-  Future<void> speedUp() async => await _setSpeed(_requestedSpeed + 0.5);
-
-  Future<void> speedDown() async => await _setSpeed(_requestedSpeed - 0.5);
-
-  Future<void> _setSpeed(double speed) async {
-    _requestedSpeed = _clampValue(speed, _supportedSpeedRange.minSpeedInKmh, _supportedSpeedRange.maxSpeedInKmh);
-    _fitnessMachineCommandDispatcher.setSpeed(speed);
-  }
-
-  static double _clampValue(double value, min, max) {
-    if (value < min) {
-      return min;
-    }
-    if (value > max) {
-      return max;
-    }
-    return value;
-  }
 }

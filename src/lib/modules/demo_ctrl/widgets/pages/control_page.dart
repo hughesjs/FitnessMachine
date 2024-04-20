@@ -14,8 +14,8 @@ class ControlPage extends StatelessWidget {
       create: (ctx) => TrainingStatusCubit(),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         const WorkoutStatusPanel(),
-        TreadmillControls(),
         const SpeedIndicator(),
+        TreadmillControls(),
       ]),
     );
   }

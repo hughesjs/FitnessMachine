@@ -44,18 +44,6 @@ class TreadmillControls extends StatelessWidget {
         },
         child: const Text('Pause'),
       ),
-      ElevatedButton(
-        onPressed: () {
-          _treadmillControllService.speedUp();
-        },
-        child: const Text('Speed Up'),
-      ),
-      ElevatedButton(
-        onPressed: () {
-          _treadmillControllService.speedDown();
-        },
-        child: const Text('Speed Down'),
-      ),
     ]);
   }
 }
