@@ -27,7 +27,9 @@ class SpeedIndicator extends StatelessWidget {
                     Align(alignment: Alignment.centerRight, child: Text(state.maxSpeed.toStringAsFixed(1)))
                   ]),
                   Row(children: [
-                    Expanded(child: LinearProgressIndicator(value: state.maxSpeed > 0 ? state.speedInKmh / state.maxSpeed : 0))
+                    Expanded(
+                        child: LinearProgressIndicator(
+                            value: state.maxSpeed > 0 ? (state.speedInKmh - state.minSpeed) / (state.maxSpeed - state.minSpeed) : 0))
                   ]),
                 ])),
                 Padding(
