@@ -13,8 +13,10 @@ class TreadmillControls extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       ElevatedButton(
         onPressed: () async {
-          await Navigator.push(context, MaterialPageRoute(builder: (context) => GetIt.I<DeviceSelectionScreen>()));
-          _treadmillControllService.takeControl();
+          if (context.mounted) {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => GetIt.I<DeviceSelectionScreen>()));
+            await _treadmillControllService.takeControl();
+          }
         },
         child: const Text('Connect'),
       ),

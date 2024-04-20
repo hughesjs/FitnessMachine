@@ -25,7 +25,7 @@ class FakeTreadmillControlService implements TreadmillControlService, Disposable
   double _fractionsOfSteps = 0;
 
   bool _isRunning = false;
-  bool _isConnected = false;
+  final bool _isConnected = false;
 
   Timer? _tickTimer;
   Timer? _secondTimer;

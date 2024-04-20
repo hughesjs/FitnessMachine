@@ -12,16 +12,18 @@ import 'package:safe_device/safe_device.dart';
 extension DependencyInjectionExtensions on GetIt {
   Future<void> addHardware() async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    registerSingleton<FitnessMachineDiscoveryService>(FitnessMachineDiscoveryService());
+    registerSingleton<FitnessMachineProvider>(FitnessMachineProvider());
+    registerSingleton<FitnessMachineCommandDispatcher>((FitnessMachineCommandDispatcher()));
+    registerSingleton<FitnessMachineQueryDispatcher>((FitnessMachineQueryDispatcher()));
+    registerSingleton<DeviceSelectionScreen>(const DeviceSelectionScreen());
+
     if (await SafeDevice.isRealDevice) {
-      registerLazySingleton<TreadmillControlService>((() => TreadmillControlService()));
+      registerSingleton<TreadmillControlService>((TreadmillControlService()));
     } else {
-      registerLazySingleton<TreadmillControlService>((() => FakeTreadmillControlService()));
+      registerSingleton<TreadmillControlService>((FakeTreadmillControlService()));
       print("Injecting fake treadmill service");
     }
-    registerLazySingleton<FitnessMachineDiscoveryService>(() => FitnessMachineDiscoveryService());
-    registerLazySingleton<FitnessMachineProvider>(() => FitnessMachineProvider());
-    registerLazySingleton<FitnessMachineCommandDispatcher>((() => FitnessMachineCommandDispatcher()));
-    registerLazySingleton<FitnessMachineQueryDispatcher>((() => FitnessMachineQueryDispatcher()));
-    registerLazySingleton<DeviceSelectionScreen>(() => const DeviceSelectionScreen());
   }
 }

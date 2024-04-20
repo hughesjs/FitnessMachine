@@ -8,7 +8,7 @@ class FitnessMachineList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<FitnessMachineDiscoveryCubit>(
         create: (context) => FitnessMachineDiscoveryCubit(),
         child: BlocBuilder<FitnessMachineDiscoveryCubit, List<DeviceDescriptor>>(builder: (context, state) {
           final cubit = context.read<FitnessMachineDiscoveryCubit>();
