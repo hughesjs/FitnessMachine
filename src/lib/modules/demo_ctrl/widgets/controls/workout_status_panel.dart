@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/models/treadmill_data.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/controls/unit_quantity_card.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/workout_status_cubit.dart';
 
@@ -9,7 +9,7 @@ class WorkoutStatusPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WorkoutStatusCubit, WorkoutStatus>(builder: (ctx, state) {
+    return BlocBuilder<TrainingStatusCubit, TreadmillData>(builder: (ctx, state) {
       return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Row(
           children: [

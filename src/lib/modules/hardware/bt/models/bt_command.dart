@@ -6,7 +6,16 @@ class BtCommand {
   final Guid service;
   final Guid characteristic;
   final Uint8List opcode;
-  final Uint8List? payload;
+  final Uint8List? parameters;
 
-  BtCommand(this.service, this.characteristic, this.opcode, {this.payload});
+  Uint8List getPayload() {
+    BytesBuilder builder = BytesBuilder();
+    builder.add(opcode);
+    if (parameters != null) {
+      builder.add(parameters!);
+    }
+    return builder.takeBytes();
+  }
+
+  BtCommand(this.service, this.characteristic, this.opcode, {this.parameters});
 }

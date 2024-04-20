@@ -4,31 +4,41 @@ import 'package:open_eqi_sports/modules/hardware/bt/constants/known_services.dar
 import 'package:open_eqi_sports/modules/hardware/bt/extensions/bluetooth_device_extensions.dart';
 import 'package:open_eqi_sports/modules/hardware/bt/extensions/bluetooth_service_extensions.dart';
 
-class FitnessMachineService {
-  final BluetoothService _fitnessMachineService;
+class FitnessMachine {
+  final BluetoothService fitnessMachineService;
 
-  final BluetoothCharacteristic _fitnessMachineFeature;
-  final BluetoothCharacteristic _fitnessMachineControl;
-  final BluetoothCharacteristic _fitnessMachineStatus;
-  final BluetoothCharacteristic _treadmillData;
-  final BluetoothCharacteristic _trainingStatus;
-  final BluetoothCharacteristic _supportedSpeeds;
+  final BluetoothCharacteristic fitnessMachineFeature;
+  final BluetoothCharacteristic fitnessMachineControl;
+  final BluetoothCharacteristic fitnessMachineStatus;
+  final BluetoothCharacteristic treadmillData;
+  final BluetoothCharacteristic trainingStatus;
+  final BluetoothCharacteristic supportedSpeeds;
 
-  FitnessMachineService._(
-    this._fitnessMachineService,
-    this._fitnessMachineFeature,
-    this._fitnessMachineControl,
-    this._fitnessMachineStatus,
-    this._treadmillData,
-    this._trainingStatus,
-    this._supportedSpeeds,
+  late List<BluetoothCharacteristic> characteristics = [
+    fitnessMachineFeature,
+    fitnessMachineControl,
+    fitnessMachineStatus,
+    treadmillData,
+    trainingStatus,
+    supportedSpeeds,
+  ];
+
+  FitnessMachine._(
+    this.fitnessMachineService,
+    this.fitnessMachineFeature,
+    this.fitnessMachineControl,
+    this.fitnessMachineStatus,
+    this.treadmillData,
+    this.trainingStatus,
+    this.supportedSpeeds,
   );
 
-  static Future<FitnessMachineService> fromDevice(BluetoothDevice device) async {
+  static Future<FitnessMachine> fromDevice(BluetoothDevice device) async {
     if (!device.isConnected) {
       await device.connect();
     }
 
+    await device.discoverServices();
     final fitnessMachineService = device.getRequiredService(KnownServices.fitnessMachine);
 
     final fitnessMachineFeature = fitnessMachineService.getRequiredCharacteristic(KnownCharacteristics.fitnessMachineFeature);
@@ -38,7 +48,7 @@ class FitnessMachineService {
     final trainingStatus = fitnessMachineService.getRequiredCharacteristic(KnownCharacteristics.trainingStatus);
     final supportedSpeeds = fitnessMachineService.getRequiredCharacteristic(KnownCharacteristics.supportedSpeeds);
 
-    return FitnessMachineService._(
+    return FitnessMachine._(
       fitnessMachineService,
       fitnessMachineFeature,
       fitnessMachineControl,
