@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:open_eqi_sports/common/layouts/main_layout.dart';
 import 'package:open_eqi_sports/common/layouts/page_definition.dart';
 import 'package:open_eqi_sports/common/layouts/page_definition_provider.dart';
@@ -20,12 +21,16 @@ class DependencyInjection {
   static Future<DependencyInjection> bootstrap() async {
     DependencyInjection di = DependencyInjection();
 
+    di._services.registerSingleton(Logger());
+
     // This is crap, and breaks the module decoupling, but as far as I can tell there's no way to register these all
     // Individually in the modules and then resolve them: https://github.com/fluttercommunity/get_it/issues/75
     // So this will do for now
     di._services.registerLazySingleton(() => PageDefinitionProvider({
-          PageDefinition(di._services<OverviewPage>(), "Overview", const Icon(Icons.home), const Icon(Icons.home_outlined)),
-          PageDefinition(di._services<ControlPage>(), "Control", const Icon(Icons.bluetooth), const Icon(Icons.bluetooth_outlined))
+          PageDefinition(
+              di._services<OverviewPage>(), "Overview", const Icon(Icons.home), const Icon(Icons.home_outlined)),
+          PageDefinition(
+              di._services<ControlPage>(), "Control", const Icon(Icons.bluetooth), const Icon(Icons.bluetooth_outlined))
         }));
 
     di._services.registerLazySingleton<MainLayout>(() => MainLayout(di._services<PageDefinitionProvider>()));
