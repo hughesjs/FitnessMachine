@@ -9,7 +9,10 @@ class FitnessMachineCommandDispatcher {
   FitnessMachine? _currentMachine;
 
   FitnessMachineCommandDispatcher() : currentMachineStream = GetIt.I<FitnessMachineProvider>().currentMachineStream {
-    currentMachineStream.listen((currentMachine) => _currentMachine = currentMachine);
+    currentMachineStream.listen((currentMachine) {
+      _currentMachine = currentMachine;
+      takeControl();
+    });
   }
 
   // Not sure about this... It'll do for now

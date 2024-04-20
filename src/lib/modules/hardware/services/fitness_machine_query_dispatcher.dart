@@ -6,6 +6,8 @@ import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
 
 class FitnessMachineQueryDispatcher {
+  bool get isConnected => _currentMachine != null;
+
   final FitnessMachineProvider _fitnessMachineProvider;
 
   final StreamController<TreadmillData> _treadmillDataStreamController;
@@ -37,7 +39,6 @@ class FitnessMachineQueryDispatcher {
     if (_currentMachine == null) return;
     List<int> rawSpeeds = await _currentMachine!.supportedSpeeds.read();
     _supportedSpeedRangeStreamController.add(SupportedSpeedRange.fromBytes(rawSpeeds));
-    ;
   }
 
   Future<void> _reconnectStreams() async {

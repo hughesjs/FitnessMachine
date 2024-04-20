@@ -2,21 +2,31 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_discovery_service.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/constants/known_services.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/models/device_descriptor.dart';
 
 class FitnessMachineDiscoveryCubit extends Cubit<List<DeviceDescriptor>> {
-  final FitnessMachineDiscoveryService _fitnessMachineDiscoveryService;
   final FitnessMachineProvider _fitnessMachineProvider;
-  late StreamSubscription _discoSub;
+  StreamSubscription? _discoSub;
 
   FitnessMachineDiscoveryCubit()
-      : _fitnessMachineDiscoveryService = GetIt.I<FitnessMachineDiscoveryService>(),
-        _fitnessMachineProvider = GetIt.I<FitnessMachineProvider>(),
+      : _fitnessMachineProvider = GetIt.I<FitnessMachineProvider>(),
         super([]) {
-    _discoSub = _fitnessMachineDiscoveryService.deviceStream.listen((devices) => onDevicesFound(devices));
-    _fitnessMachineDiscoveryService.start();
+    startScanning();
+  }
+
+  Future<void> startScanning() async {
+    await FlutterBluePlus.adapterState.where((val) => val == BluetoothAdapterState.on).first;
+
+    _discoSub = FlutterBluePlus.onScanResults.listen((results) async {
+      if (results.isNotEmpty) {
+        onDevicesFound(results.map((e) => e.device).toList());
+      }
+    });
+
+    FlutterBluePlus.cancelWhenScanComplete(_discoSub!);
+    await FlutterBluePlus.startScan(withServices: [KnownServices.fitnessMachine], timeout: const Duration(seconds: 15));
   }
 
   void onDevicesFound(List<BluetoothDevice> devices) =>
@@ -28,7 +38,7 @@ class FitnessMachineDiscoveryCubit extends Cubit<List<DeviceDescriptor>> {
 
   @override
   Future<void> close() async {
-    _discoSub.cancel();
+    _discoSub?.cancel();
     super.close();
   }
 }
