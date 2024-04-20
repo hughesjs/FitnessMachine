@@ -1,52 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/treadmill_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/treadmill_state_cubit.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/pages/device_selection_screen.dart';
+import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_command_dispatcher.dart';
 
 class TreadmillControls extends StatelessWidget {
-  const TreadmillControls({super.key});
+  final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
+
+  TreadmillControls({super.key}) : _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>();
 
   @override
   Widget build(BuildContext context) {
-    final controlCubit = BlocProvider.of<TreadmillStateCubit>(context);
-    return BlocBuilder<TreadmillStateCubit, TreadmillState>(builder: (ctx, state) {
-      return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Text("Connection: ${state.connectionState.name}"),
-        Text("Speed ${state.speedState.name} (${state.currentSpeed}/${state.requestedSpeed})"),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => GetIt.I<DeviceSelectionScreen>()));
-            //controlCubit.connect();
-          },
-          child: const Text('Connect'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            controlCubit.start();
-          },
-          child: const Text('Start'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            controlCubit.stop();
-          },
-          child: const Text('Stop'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            controlCubit.speedUp();
-          },
-          child: const Text('Speed Up'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            controlCubit.speedDown();
-          },
-          child: const Text('Speed Down'),
-        ),
-      ]);
-    });
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      ElevatedButton(
+        onPressed: () {
+          _fitnessMachineCommandDispatcher.start();
+        },
+        child: const Text('Start'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          _fitnessMachineCommandDispatcher.stop();
+        },
+        child: const Text('Stop'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          _fitnessMachineCommandDispatcher.start();
+        },
+        child: const Text('Resume'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          _fitnessMachineCommandDispatcher.stop();
+        },
+        child: const Text('Pause'),
+      ),
+    ]);
   }
 }

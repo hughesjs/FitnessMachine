@@ -3,7 +3,7 @@ import 'package:open_eqi_sports/modules/demo_ctrl/widgets/pages/control_page.dar
 
 extension DependencyInjectionExtensions on GetIt {
   Future<GetIt> addDemoControl() async {
-    registerSingleton<ControlPage>(const ControlPage());
+    registerSingleton<ControlPage>(ControlPage());
     return this;
   }
 }

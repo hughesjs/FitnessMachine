@@ -1,16 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/hardware/services/treadmill_control_service.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/workout_status.dart';
+import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_query_dispatcher.dart';
+import 'package:open_eqi_sports/modules/hardware/bt/models/treadmill_data.dart';
 
-class WorkoutStatusCubit extends Cubit<WorkoutStatus> {
-  final TreadmillControlService _treadmillControlService;
+class TrainingStatusCubit extends Cubit<TreadmillData> {
+  final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;
 
-  WorkoutStatusCubit()
-      : _treadmillControlService = GetIt.I<TreadmillControlService>(),
-        super(WorkoutStatus.zero()) {
-    _treadmillControlService.workoutStatusStream.listen((state) {
+  late StreamSubscription _sub;
+
+  TrainingStatusCubit()
+      : _fitnessMachineQueryDispatcher = GetIt.I<FitnessMachineQueryDispatcher>(),
+        super(TreadmillData.zero()) {
+    _sub = _fitnessMachineQueryDispatcher.treadmillDataStream.listen((state) {
       emit(state);
     });
+  }
+
+  @override
+  Future<void> close() async {
+    _sub.cancel();
+    super.close();
   }
 }

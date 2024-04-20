@@ -2,14 +2,14 @@ import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
 
-class WorkoutStatus extends Equatable {
+class TreadmillData extends Equatable {
   final double speedInKmh;
   final double distanceInKm;
   final int timeInSeconds;
   final int indicatedCalories;
   final int steps;
 
-  const WorkoutStatus({
+  const TreadmillData({
     required this.speedInKmh,
     required this.distanceInKm,
     required this.timeInSeconds,
@@ -17,8 +17,8 @@ class WorkoutStatus extends Equatable {
     required this.steps,
   });
 
-  factory WorkoutStatus.zero() {
-    return const WorkoutStatus(
+  factory TreadmillData.zero() {
+    return const TreadmillData(
       speedInKmh: 0,
       distanceInKm: 0,
       timeInSeconds: 0,
@@ -27,7 +27,7 @@ class WorkoutStatus extends Equatable {
     );
   }
 
-  factory WorkoutStatus.fromBytes(List<int> value) {
+  factory TreadmillData.fromBytes(List<int> value) {
     Uint8List status = Uint8List.fromList(value);
     ByteData statusBytes = status.buffer.asByteData();
 
@@ -37,7 +37,7 @@ class WorkoutStatus extends Equatable {
     var steps = statusBytes.getUint16(14, Endian.little);
     var calories = statusBytes.getUint16(7, Endian.little);
 
-    return WorkoutStatus(
+    return TreadmillData(
       speedInKmh: speed,
       distanceInKm: distance,
       timeInSeconds: time,
@@ -46,14 +46,14 @@ class WorkoutStatus extends Equatable {
     );
   }
 
-  WorkoutStatus copyWith({
+  TreadmillData copyWith({
     double? speedInKmh,
     double? distanceInKm,
     int? timeInSeconds,
     int? indicatedCalories,
     int? steps,
   }) {
-    return WorkoutStatus(
+    return TreadmillData(
       speedInKmh: speedInKmh ?? this.speedInKmh,
       distanceInKm: distanceInKm ?? this.distanceInKm,
       timeInSeconds: timeInSeconds ?? this.timeInSeconds,
