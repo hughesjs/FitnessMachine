@@ -13,10 +13,9 @@ import 'package:open_eqi_sports/modules/hardware/widgets/pages/device_selection_
 class ControlPage extends StatelessWidget {
   final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;
   final DeviceSelectionScreen _deviceSelectionScreen;
-  ControlPage({Key? key})
+  ControlPage({super.key})
       : _fitnessMachineQueryDispatcher = GetIt.I<FitnessMachineQueryDispatcher>(),
-        _deviceSelectionScreen = GetIt.I<DeviceSelectionScreen>(),
-        super(key: key);
+        _deviceSelectionScreen = GetIt.I<DeviceSelectionScreen>();
 
   @override
   Widget build(BuildContext context) {
