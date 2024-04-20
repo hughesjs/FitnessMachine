@@ -12,19 +12,21 @@ class TreadmillControlService {
   final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
   final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;
 
-  SupportedSpeedRange? _supportedSpeedRange;
+  SupportedSpeedRange _supportedSpeedRange = SupportedSpeedRange(0, 0, 0);
 
   TreadmillControlService()
       : _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>(),
         _fitnessMachineQueryDispatcher = GetIt.I<FitnessMachineQueryDispatcher>() {
     workoutStatusStream = _fitnessMachineQueryDispatcher.treadmillDataStream;
+    _fitnessMachineQueryDispatcher.supportedSpeedRangeStream.listen((event) {
+      _supportedSpeedRange = event;
+      _setSpeed(_requestedSpeed); // Incase we're outside the acceptable range
+    });
   }
 
   Future<void> takeControl() async => _fitnessMachineCommandDispatcher.takeControl();
 
-  Future<void> start() async {
-    _fitnessMachineCommandDispatcher.start();
-  }
+  Future<void> start() async => _fitnessMachineCommandDispatcher.start();
 
   Future<void> stop() async => _fitnessMachineCommandDispatcher.stop();
 
@@ -32,19 +34,14 @@ class TreadmillControlService {
 
   Future<void> resume() async => _fitnessMachineCommandDispatcher.resume();
 
-  Future<void> speedUp() async {
-    _supportedSpeedRange ??= await _fitnessMachineQueryDispatcher.getSupportedSpeedRange();
-    _requestedSpeed = _clampValue(_requestedSpeed + 0.5, _supportedSpeedRange!.minSpeedInKmh, _supportedSpeedRange!.maxSpeedInKmh);
-    await _setSpeed(_requestedSpeed);
-  }
+  Future<void> speedUp() async => await _setSpeed(_requestedSpeed + 0.5);
 
-  Future<void> speedDown() async {
-    _supportedSpeedRange ??= await _fitnessMachineQueryDispatcher.getSupportedSpeedRange();
-    _requestedSpeed = _clampValue(_requestedSpeed - 0.5, _supportedSpeedRange!.minSpeedInKmh, _supportedSpeedRange!.maxSpeedInKmh);
-    await _setSpeed(_requestedSpeed);
-  }
+  Future<void> speedDown() async => await _setSpeed(_requestedSpeed - 0.5);
 
-  Future<void> _setSpeed(double speed) async => _fitnessMachineCommandDispatcher.setSpeed(speed);
+  Future<void> _setSpeed(double speed) async {
+    _requestedSpeed = _clampValue(speed, _supportedSpeedRange.minSpeedInKmh, _supportedSpeedRange.maxSpeedInKmh);
+    _fitnessMachineCommandDispatcher.setSpeed(speed);
+  }
 
   static double _clampValue(double value, min, max) {
     if (value < min) {

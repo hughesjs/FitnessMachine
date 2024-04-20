@@ -9,24 +9,35 @@ class FitnessMachineQueryDispatcher {
   final FitnessMachineProvider _fitnessMachineProvider;
 
   final StreamController<TreadmillData> _treadmillDataStreamController;
+  final StreamController<SupportedSpeedRange> _supportedSpeedRangeStreamController;
+
   Stream get treadmillDataStream => _treadmillDataStreamController.stream;
+  Stream get supportedSpeedRangeStream => _supportedSpeedRangeStreamController.stream;
 
   StreamSubscription? _machineStatusSubscription;
   FitnessMachine? _currentMachine;
 
   FitnessMachineQueryDispatcher()
       : _fitnessMachineProvider = GetIt.I<FitnessMachineProvider>(),
-        _treadmillDataStreamController = StreamController<TreadmillData>.broadcast() {
+        _treadmillDataStreamController = StreamController<TreadmillData>.broadcast(),
+        _supportedSpeedRangeStreamController = StreamController<SupportedSpeedRange>.broadcast() {
     _fitnessMachineProvider.currentMachineStream.listen((currentMachine) async {
       _currentMachine = currentMachine;
       await _reconnectStreams();
+      await refreshSupportedSpeedRange();
     });
+
+    // In-case we miss the first one
+    _supportedSpeedRangeStreamController.onListen = () async {
+      await refreshSupportedSpeedRange();
+    };
   }
 
-  Future<SupportedSpeedRange> getSupportedSpeedRange() async {
-    if (_currentMachine == null) return SupportedSpeedRange(0, 0, 0);
+  Future<void> refreshSupportedSpeedRange() async {
+    if (_currentMachine == null) return;
     List<int> rawSpeeds = await _currentMachine!.supportedSpeeds.read();
-    return SupportedSpeedRange.fromBytes(rawSpeeds);
+    _supportedSpeedRangeStreamController.add(SupportedSpeedRange.fromBytes(rawSpeeds));
+    ;
   }
 
   Future<void> _reconnectStreams() async {

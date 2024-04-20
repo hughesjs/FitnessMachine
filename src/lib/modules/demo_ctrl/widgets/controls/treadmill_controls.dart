@@ -34,6 +34,18 @@ class TreadmillControls extends StatelessWidget {
       ),
       ElevatedButton(
         onPressed: () {
+          _treadmillControllService.start();
+        },
+        child: const Text('Resume'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          _treadmillControllService.stop();
+        },
+        child: const Text('Pause'),
+      ),
+      ElevatedButton(
+        onPressed: () {
           _treadmillControllService.speedUp();
         },
         child: const Text('Speed Up'),

@@ -7,6 +7,7 @@ import 'package:open_eqi_sports/modules/hardware/bt/models/treadmill_data.dart';
 
 class TrainingStatusCubit extends Cubit<TreadmillData> {
   final TreadmillControlService _treadmillControlService;
+
   late StreamSubscription _sub;
 
   TrainingStatusCubit()
