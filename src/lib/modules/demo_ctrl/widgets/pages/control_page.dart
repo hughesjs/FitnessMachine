@@ -7,6 +7,7 @@ import 'package:open_eqi_sports/modules/demo_ctrl/widgets/controls/treadmill_con
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/controls/workout_status_panel.dart';
 import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/workout_status_cubit.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_query_dispatcher.dart';
+import 'package:open_eqi_sports/modules/hardware/widgets/controls/ensure_bluetooth_enabled_wrapper.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/pages/device_selection_screen.dart';
 
 class ControlPage extends StatelessWidget {
@@ -19,18 +20,20 @@ class ControlPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (context.mounted && !_fitnessMachineQueryDispatcher.isConnected) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => _deviceSelectionScreen));
-      }
+    return EnsureBluetoothEnabledWrapper(() {
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        if (context.mounted && !_fitnessMachineQueryDispatcher.isConnected) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => _deviceSelectionScreen));
+        }
+      });
+      return BlocProvider<TrainingStatusCubit>(
+        create: (ctx) => TrainingStatusCubit(),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          const WorkoutStatusPanel(),
+          const SpeedIndicator(),
+          TreadmillControls(),
+        ]),
+      );
     });
-    return BlocProvider<TrainingStatusCubit>(
-      create: (ctx) => TrainingStatusCubit(),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const WorkoutStatusPanel(),
-        const SpeedIndicator(),
-        TreadmillControls(),
-      ]),
-    );
   }
 }

@@ -17,8 +17,6 @@ class FitnessMachineDiscoveryCubit extends Cubit<List<DeviceDescriptor>> {
   }
 
   Future<void> startScanning() async {
-    await FlutterBluePlus.adapterState.where((val) => val == BluetoothAdapterState.on).first;
-
     _discoSub = FlutterBluePlus.onScanResults.listen((results) async {
       if (results.isNotEmpty) {
         onDevicesFound(results.map((e) => e.device).toList());
