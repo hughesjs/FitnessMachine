@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/controls/ensure_bluetooth_enabled_wrapper.dart';
+import 'package:open_eqi_sports/modules/hardware/widgets/barriers/ensure_bluetooth_enabled_wrapper.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/cubits/fitness_machine_cubit.dart';
 import 'package:open_eqi_sports/modules/hardware/widgets/models/device_descriptor.dart';
 
@@ -10,7 +10,7 @@ class FitnessMachineList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EnsureBluetoothEnabledWrapper(
-      () => BlocProvider<FitnessMachineDiscoveryCubit>(
+       BlocProvider<FitnessMachineDiscoveryCubit>(
           create: (context) => FitnessMachineDiscoveryCubit(),
           child: BlocBuilder<FitnessMachineDiscoveryCubit, List<DeviceDescriptor>>(builder: (context, state) {
             final cubit = context.read<FitnessMachineDiscoveryCubit>();
