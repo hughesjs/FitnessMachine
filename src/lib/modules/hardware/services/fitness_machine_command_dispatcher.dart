@@ -4,7 +4,7 @@ import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
 
 class FitnessMachineCommandDispatcher {
-  final Stream<FitnessMachine> currentMachineStream;
+  final Stream<FitnessMachine?> currentMachineStream;
 
   FitnessMachine? _currentMachine;
 
