@@ -43,7 +43,7 @@ jobs:
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: OpenEqiSports-Android
+          name: FitnessMachine-Android
           path: ./src/build/**/flutter-apk/*.apk
 
   build-ios:
@@ -62,5 +62,5 @@ jobs:
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: OpenEqiSports-iOS
+          name: FitnessMachine-iOS
           path: ./src/build/ios/Release-iphoneos/*.app
