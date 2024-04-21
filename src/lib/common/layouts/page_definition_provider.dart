@@ -1,4 +1,4 @@
-import 'package:open_eqi_sports/common/layouts/page_definition.dart';
+import 'package:fitness_machine/common/layouts/page_definition.dart';
 
 class PageDefinitionProvider {
   final Set<PageDefinition> _pageDefinitions;

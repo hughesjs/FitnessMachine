@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/controls/bluetooth_scanning_indicator.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/controls/fitness_machine_list.dart';
+import 'package:fitness_machine/modules/hardware/widgets/controls/bluetooth_scanning_indicator.dart';
+import 'package:fitness_machine/modules/hardware/widgets/controls/fitness_machine_list.dart';
 
 class DeviceSelectionScreen extends StatelessWidget {
   const DeviceSelectionScreen({super.key});

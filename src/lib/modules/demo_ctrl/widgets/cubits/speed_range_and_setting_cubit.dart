@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/speed_state.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_command_dispatcher.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_query_dispatcher.dart';
+import 'package:fitness_machine/modules/demo_ctrl/models/speed_state.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine_command_dispatcher.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine_query_dispatcher.dart';
 
 class SpeedRangeAndSettingCubit extends Cubit<SpeedState> {
   final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;

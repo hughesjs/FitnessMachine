@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/constants/known_commands.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
+import 'package:fitness_machine/modules/hardware/bt/constants/known_commands.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine_provider.dart';
 
 class FitnessMachineCommandDispatcher {
   final Stream<FitnessMachine?> currentMachineStream;

@@ -1,8 +1,8 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/constants/known_characteristics.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/constants/known_services.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/extensions/bluetooth_device_extensions.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/extensions/bluetooth_service_extensions.dart';
+import 'package:fitness_machine/modules/hardware/bt/constants/known_characteristics.dart';
+import 'package:fitness_machine/modules/hardware/bt/constants/known_services.dart';
+import 'package:fitness_machine/modules/hardware/bt/extensions/bluetooth_device_extensions.dart';
+import 'package:fitness_machine/modules/hardware/bt/extensions/bluetooth_service_extensions.dart';
 
 class FitnessMachine {
   final BluetoothService fitnessMachineService;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_eqi_sports/common/layouts/page_definition_provider.dart';
+import 'package:fitness_machine/common/layouts/page_definition_provider.dart';
 
 class MainLayout extends StatefulWidget {
   final PageDefinitionProvider _pageProvider;

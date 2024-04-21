@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine.dart';
 
 class FitnessMachineProvider {
 
