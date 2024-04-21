@@ -32,10 +32,25 @@ class EnsureDeviceConnectedBarrier extends StatelessWidget {
             });
           }
 
-          return ElevatedButton(
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.bluetooth_searching,
+                  size: 100,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
             onPressed: () => openDeviceSelectionScreen(context),
             child: const Text("Connect a device"),
+          )
+              ],
+            ),
           );
+
+
         },
       ),
     );
