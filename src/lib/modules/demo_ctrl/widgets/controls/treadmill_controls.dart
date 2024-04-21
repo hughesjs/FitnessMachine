@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_command_dispatcher.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine_command_dispatcher.dart';
 
 class TreadmillControls extends StatelessWidget {
   final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;

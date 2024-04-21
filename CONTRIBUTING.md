@@ -1,4 +1,4 @@
-# Contributing to OpenEqiSports
+# Contributing to FitnessMachine
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
@@ -8,6 +8,12 @@ We love your input! We want to make contributing to this project as easy and tra
 - Submitting a fix
 - Proposing new features
 - Becoming a maintainer
+
+## License
+
+This project is licensed under the [PolyForm Shield](./LICENSE). The text of the license supercedes this message, but the gist of it is that you are free to use this project for any purpose, including commercial purposes, as long as you aren't competing with the app.
+
+If you would like to discuss obtaining another license, get in touch.
 
 ## We Develop with Github
 
@@ -34,9 +40,9 @@ You are also granting the maintainers personal and irrevocable licenses to use, 
 
 Feel free to contact the maintainers if that's a concern.
 
-## Report Bugs Using Github's [issues](https://github.com/hughesjs/OpenEqiSports/issues)
+## Report Bugs Using Github's [issues](https://github.com/hughesjs/FitnessMachine/issues)
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/hughesjs/OpenEqiSports/issues/new); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/hughesjs/FitnessMachine/issues/new); it's that easy!
 
 ## Write Bug Reports with Detail, Background, and Sample Code
 
@@ -59,10 +65,6 @@ People *love* thorough bug reports. I'm not even kidding.
 ## Use a Consistent Coding Style
 
 Please just follow standard C# coding style. Your IDE should hopefully infer the style rules from the source code.
-
-## License
-
-By contributing, you agree that your contributions will be licensed under its MIT License.
 
 ## References
 

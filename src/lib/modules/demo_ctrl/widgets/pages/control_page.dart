@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/controls/speed_indicator.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/controls/treadmill_controls.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/controls/workout_status_panel.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/workout_status_cubit.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/barriers/ensure_bluetooth_enabled_wrapper.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/barriers/ensure_device_connected_barrier.dart';
+import 'package:fitness_machine/modules/demo_ctrl/widgets/controls/speed_indicator.dart';
+import 'package:fitness_machine/modules/demo_ctrl/widgets/controls/treadmill_controls.dart';
+import 'package:fitness_machine/modules/demo_ctrl/widgets/controls/workout_status_panel.dart';
+import 'package:fitness_machine/modules/demo_ctrl/widgets/cubits/workout_status_cubit.dart';
+import 'package:fitness_machine/modules/hardware/widgets/barriers/ensure_bluetooth_enabled_wrapper.dart';
+import 'package:fitness_machine/modules/hardware/widgets/barriers/ensure_device_connected_barrier.dart';
 
 class ControlPage extends StatelessWidget {
   const ControlPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:open_eqi_sports/modules/hardware/widgets/cubits/bluetooth_enablement_cubit.dart';
+import 'package:fitness_machine/modules/hardware/widgets/cubits/bluetooth_enablement_cubit.dart';
 
 class EnsureBluetoothEnabledWrapper extends StatelessWidget {
   final Widget onEnabled;

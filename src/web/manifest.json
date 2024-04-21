@@ -1,6 +1,6 @@
 {
-    "name": "open_eqi_sports",
-    "short_name": "open_eqi_sports",
+    "name": "fitness_machine",
+    "short_name": "fitness_machine",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

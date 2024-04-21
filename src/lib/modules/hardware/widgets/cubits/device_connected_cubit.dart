@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_eqi_sports/modules/hardware/services/fitness_machine_provider.dart';
+import 'package:fitness_machine/modules/hardware/services/fitness_machine_provider.dart';
 
 class DeviceConnectedCubit extends Cubit<bool> {
   final FitnessMachineProvider _fitnessMachineProvider;

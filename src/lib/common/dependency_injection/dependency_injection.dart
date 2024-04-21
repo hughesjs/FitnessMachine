@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:open_eqi_sports/common/layouts/main_layout.dart';
-import 'package:open_eqi_sports/common/layouts/page_definition.dart';
-import 'package:open_eqi_sports/common/layouts/page_definition_provider.dart';
-import 'package:open_eqi_sports/main.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/pages/control_page.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/dependency_injection/demo_ctrl_di.dart';
-import 'package:open_eqi_sports/modules/hardware/dependency_injection/hardware_di.dart';
-import 'package:open_eqi_sports/modules/overview/dependency_injection/overview_di.dart';
-import 'package:open_eqi_sports/modules/overview/overview_page.dart';
+import 'package:fitness_machine/common/layouts/main_layout.dart';
+import 'package:fitness_machine/common/layouts/page_definition.dart';
+import 'package:fitness_machine/common/layouts/page_definition_provider.dart';
+import 'package:fitness_machine/main.dart';
+import 'package:fitness_machine/modules/demo_ctrl/widgets/pages/control_page.dart';
+import 'package:fitness_machine/modules/demo_ctrl/dependency_injection/demo_ctrl_di.dart';
+import 'package:fitness_machine/modules/hardware/dependency_injection/hardware_di.dart';
+import 'package:fitness_machine/modules/overview/dependency_injection/overview_di.dart';
+import 'package:fitness_machine/modules/overview/overview_page.dart';
 
 class DependencyInjection {
   late GetIt _services;

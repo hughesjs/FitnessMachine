@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/models/speed_state.dart';
-import 'package:open_eqi_sports/modules/demo_ctrl/widgets/cubits/speed_range_and_setting_cubit.dart';
+import 'package:fitness_machine/modules/demo_ctrl/models/speed_state.dart';
+import 'package:fitness_machine/modules/demo_ctrl/widgets/cubits/speed_range_and_setting_cubit.dart';
 
 class SpeedIndicator extends StatelessWidget {
   const SpeedIndicator({super.key});

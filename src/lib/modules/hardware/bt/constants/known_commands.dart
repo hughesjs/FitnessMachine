@@ -1,9 +1,9 @@
 import 'dart:typed_data';
-import 'package:open_eqi_sports/common/utility/number_extensions.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/constants/known_services.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/models/bt_command.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/constants/known_characteristics.dart';
-import 'package:open_eqi_sports/modules/hardware/bt/constants/known_opcodes.dart';
+import 'package:fitness_machine/common/utility/number_extensions.dart';
+import 'package:fitness_machine/modules/hardware/bt/constants/known_services.dart';
+import 'package:fitness_machine/modules/hardware/bt/models/bt_command.dart';
+import 'package:fitness_machine/modules/hardware/bt/constants/known_characteristics.dart';
+import 'package:fitness_machine/modules/hardware/bt/constants/known_opcodes.dart';
 
 // See FTMS 4.16
 class KnownCommands {
