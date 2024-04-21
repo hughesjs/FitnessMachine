@@ -14,6 +14,7 @@ class DeviceConnectedCubit extends Cubit<bool> {
     _sub = _fitnessMachineProvider.currentMachineStream.listen((currentMachine) {
       emit(currentMachine != null);
     });
+    emit(_fitnessMachineProvider.currentMachine != null);
   }
 
   @override

@@ -10,6 +10,7 @@ class BluetoothEnablementCubit extends Cubit<BluetoothAdapterState> {
     _sub = FlutterBluePlus.adapterState.listen((state) {
       emit(state);
     });
+    emit(FlutterBluePlus.adapterStateNow);
   }
 
   @override

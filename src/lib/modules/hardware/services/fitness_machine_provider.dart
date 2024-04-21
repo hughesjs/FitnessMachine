@@ -6,6 +6,9 @@ import 'package:logger/logger.dart';
 import 'package:open_eqi_sports/modules/hardware/services/fitness_machine.dart';
 
 class FitnessMachineProvider {
+
+  FitnessMachine? currentMachine;
+
   final Logger _logger;
 
   StreamController<FitnessMachine?> currentMachineStreamController;
@@ -23,11 +26,12 @@ class FitnessMachineProvider {
       }
     });
 
-    final currentMachine = await FitnessMachine.fromDevice(device);
+    currentMachine = await FitnessMachine.fromDevice(device);
     currentMachineStreamController.add(currentMachine);
   }
 
   Future<void> unsetMachine() async {
     currentMachineStreamController.add(null);
+    currentMachine = null;
   }
 }
