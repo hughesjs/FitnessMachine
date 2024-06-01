@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fitness_machine/common/utility/number_extensions.dart';
+import 'package:fitness_machine/common/lib_extensions/number_extensions.dart';
 
 void main() {
   group('int -> little endian byte buffer', () {

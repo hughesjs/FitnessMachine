@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fitness_machine/modules/hardware/bt/models/treadmill_data.dart';
+import 'package:fitness_machine/hardware/ble/models/treadmill_data.dart';
 
 void main() {
   group('Status parsing tests', () {

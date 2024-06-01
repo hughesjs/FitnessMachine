@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fitness_machine/modules/hardware/bt/models/supported_speed_range.dart';
+import 'package:fitness_machine/hardware/ble/models/supported_speed_range.dart';
 
 void main() {
   group("supported speed range parsing", () {

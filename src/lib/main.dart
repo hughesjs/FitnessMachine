@@ -1,14 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
+import 'package:fitness_machine/bootstrap.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-import 'package:fitness_machine/common/dependency_injection/dependency_injection.dart';
-import 'package:fitness_machine/common/layouts/main_layout.dart';
+import 'package:fitness_machine/layouts/main_layout.dart';
 
 Future<void> main() async {
-  final DependencyInjection container = await DependencyInjection.bootstrap();
-  final MyApp app = container.get<MyApp>();
+  final MyApp app = Bootstrap.bootstrap();
+  Logger logger = GetIt.I<Logger>();
   if (kDebugMode) {
-    print("Enabling wakelock in debug mode");
+    logger.i("Enabling wakelock in debug mode");
     WakelockPlus.enable();
   }
   runApp(app);
