@@ -1,3 +1,4 @@
+import 'package:fitness_machine/workout_management/services/workout_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -18,6 +19,7 @@ class Bootstrap {
     _registerPages();
     _registerLayouts();
     _registerHardware();
+    _registerWorkoutManagement();
     _registerApp();
 
     return GetIt.I<MyApp>();
@@ -55,5 +57,9 @@ class Bootstrap {
     GetIt.I.registerSingleton<FitnessMachineCommandDispatcher>((FitnessMachineCommandDispatcher()));
     GetIt.I.registerSingleton<FitnessMachineQueryDispatcher>((FitnessMachineQueryDispatcher()));
     GetIt.I.registerSingleton<DeviceSelectionScreen>(const DeviceSelectionScreen());
+  }
+  
+  static void _registerWorkoutManagement() {
+    GetIt.I.registerSingleton<WorkoutStateManager>(WorkoutStateManager());
   }
 }

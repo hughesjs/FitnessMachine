@@ -6,14 +6,14 @@ class TreadmillData extends Equatable {
   final double speedInKmh;
   final double distanceInKm;
   final int timeInSeconds;
-  final int indicatedCalories;
+  final int indicatedKiloCalories;
   final int steps;
 
   const TreadmillData({
     required this.speedInKmh,
     required this.distanceInKm,
     required this.timeInSeconds,
-    required this.indicatedCalories,
+    required this.indicatedKiloCalories,
     required this.steps,
   });
 
@@ -22,7 +22,7 @@ class TreadmillData extends Equatable {
       speedInKmh: 0,
       distanceInKm: 0,
       timeInSeconds: 0,
-      indicatedCalories: 0,
+      indicatedKiloCalories: 0,
       steps: 0,
     );
   }
@@ -41,7 +41,7 @@ class TreadmillData extends Equatable {
       speedInKmh: speed,
       distanceInKm: distance,
       timeInSeconds: time,
-      indicatedCalories: calories,
+      indicatedKiloCalories: calories,
       steps: steps,
     );
   }
@@ -57,11 +57,11 @@ class TreadmillData extends Equatable {
       speedInKmh: speedInKmh ?? this.speedInKmh,
       distanceInKm: distanceInKm ?? this.distanceInKm,
       timeInSeconds: timeInSeconds ?? this.timeInSeconds,
-      indicatedCalories: indicatedCalories ?? this.indicatedCalories,
+      indicatedKiloCalories: indicatedCalories ?? this.indicatedKiloCalories,
       steps: steps ?? this.steps,
     );
   }
 
   @override
-  List<Object?> get props => [speedInKmh, distanceInKm, timeInSeconds, indicatedCalories, steps];
+  List<Object?> get props => [speedInKmh, distanceInKm, timeInSeconds, indicatedKiloCalories, steps];
 }

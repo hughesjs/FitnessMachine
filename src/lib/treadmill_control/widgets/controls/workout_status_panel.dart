@@ -19,7 +19,7 @@ class WorkoutStatusPanel extends StatelessWidget {
         ),
         Row(
           children: [
-            UnitQuantityCard(state.indicatedCalories, "kCal", 0),
+            UnitQuantityCard(state.indicatedKiloCalories, "kCal", 0),
             UnitQuantityCard(state.steps, "steps", 0),
           ],
         )
