@@ -6,7 +6,7 @@ import 'package:fitness_machine/workout_management/services/workout_state_manage
 import 'package:get_it/get_it.dart';
 
 class CompletedWorkoutsProvider {
-  
+
   // Maybe we don't re-emit the whole list every time
   // But this will do for now
   Stream<List<CompletedWorkout>> get completedWorkoutsStream => _completedWorkoutsStreamController.stream;
