@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:fitness_machine/hardware/ble/models/treadmill_data.dart';
 import 'package:fitness_machine/hardware/services/fitness_machine_query_dispatcher.dart';
@@ -37,9 +36,7 @@ class WorkoutStateManager {
   void startWorkout()  {
     _currentWorkoutStartTime = DateTime.now();
     _logger.i("Starting workout at $_currentWorkoutStartTime");
-    _treadmillDataSubscription = _fitnessMachineQueryDispatcher.treadmillDataStream.listen((update) {
-      _lastReceivedWorkoutData = update;
-    });
+    _listen();
     _setWorkoutState(WorkoutState.running);
     _workoutStartedStreamController.add(null);
   }
@@ -72,10 +69,12 @@ class WorkoutStateManager {
   }
   
   void pauseWorkout() {
+    _treadmillDataSubscription?.cancel();
     _setWorkoutState(WorkoutState.paused);
   }
 
   void resumeWorkout() {
+    _listen();
     _setWorkoutState(WorkoutState.running);
   }
 
@@ -84,4 +83,10 @@ class WorkoutStateManager {
     currentWorkoutState = state;
     _workoutStateStreamController.add(state);
   }  
+
+  void _listen() {
+    _treadmillDataSubscription = _fitnessMachineQueryDispatcher.treadmillDataStream.listen((update) {
+      _lastReceivedWorkoutData = update;
+    });
+  }
 }

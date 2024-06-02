@@ -1,6 +1,8 @@
 import 'package:fitness_machine/hardware/ble/models/treadmill_data.dart';
+import 'package:flutter_guid/flutter_guid.dart';
 
 class CompletedWorkout {
+  final Guid workoutId;
   final double distanceInKm;
   final int totalSteps;
   final int workoutTimeInSeconds;
@@ -10,7 +12,7 @@ class CompletedWorkout {
   final DateTime completedAt;
 
   CompletedWorkout(this.distanceInKm, this.totalSteps, this.workoutTimeInSeconds, this.machineIndicatedCalories, this.calculatedCalories,
-      this.startedAt, this.completedAt);
+      this.startedAt, this.completedAt): workoutId = Guid.newGuid;
 
   factory CompletedWorkout.fromTreadmillData(TreadmillData data, DateTime start, DateTime end) {
     double calculatedCalories = _calculateCalories(data);

@@ -19,6 +19,7 @@ dependencies:
   foundation: ^0.0.5
   wakelock_plus: ^1.2.4
   logger: ^2.2.0
+  flutter_guid: ^0.3.1
 
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+import 'package:fitness_machine/workout_management/repositories/completed_workouts_repository.dart';
+import 'package:fitness_machine/workout_management/services/completed_workouts_provider.dart';
 import 'package:fitness_machine/workout_management/services/workout_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -61,5 +63,8 @@ class Bootstrap {
   
   static void _registerWorkoutManagement() {
     GetIt.I.registerSingleton<WorkoutStateManager>(WorkoutStateManager());
+    GetIt.I.registerSingleton<CompletedWorkoutsRepository>(CompletedWorkoutsRepository());
+    GetIt.I.registerSingleton<CompletedWorkoutsProvider>(CompletedWorkoutsProvider());
+    
   }
 }
