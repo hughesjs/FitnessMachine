@@ -40,7 +40,7 @@ class TreadmillControls extends StatelessWidget {
       ),
       ElevatedButton(
         onPressed: () {
-          _fitnessMachineCommandDispatcher.stop(); 
+          _fitnessMachineCommandDispatcher.pause(); 
           _workoutStateManager.pauseWorkout();
 
         },

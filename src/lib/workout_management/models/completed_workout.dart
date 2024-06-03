@@ -19,6 +19,18 @@ class CompletedWorkout {
     return CompletedWorkout(data.distanceInKm, data.steps, data.timeInSeconds, data.indicatedKiloCalories.toDouble(), calculatedCalories, start, end);
   }
 
+  factory CompletedWorkout.fromMap(Map<String, dynamic> map) {
+    return CompletedWorkout(
+      map["distanceInKm"] as double,
+      map["totalSteps"] as int,
+      map["workoutTimeInSeconds"] as int,
+      map["machineIndicatedCalories"] as double,
+      map["calculatedCalories"] as double,
+      DateTime.parse(map["startedAt"] as String),
+      DateTime.parse(map["completedAt"] as String),
+    );
+  }
+
   // This doesn't belong here. This also assumes average weight and height.
   // Replace this with userdata when we have it.
   static double _calculateCalories(TreadmillData data) {
@@ -33,5 +45,22 @@ class CompletedWorkout {
     final caloriesBurned = distanceInMeters * ((weightInKilos * a) + ((speedInMs * speedInMs) / heightInMeters) * b * weightInKilos);
 
     return caloriesBurned;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "distanceInKm": distanceInKm,
+      "totalSteps": totalSteps,
+      "workoutTimeInSeconds": workoutTimeInSeconds,
+      "machineIndicatedCalories": machineIndicatedCalories,
+      "calculatedCalories": calculatedCalories,
+      "startedAt": startedAt.toIso8601String(),
+      "completedAt": completedAt.toIso8601String(),
+    };
+  }
+
+  @override
+  String toString() {
+    return "CompletedWorkout(distanceInKm: $distanceInKm, totalSteps: $totalSteps, workoutTimeInSeconds: $workoutTimeInSeconds, machineIndicatedCalories: $machineIndicatedCalories, calculatedCalories: $calculatedCalories, startedAt: $startedAt, completedAt: $completedAt)";
   }
 }

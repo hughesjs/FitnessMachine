@@ -1,3 +1,5 @@
+import 'package:fitness_machine/common/data_persistence/database_provider.dart';
+import 'package:fitness_machine/common/data_persistence/database_schema_manager.dart';
 import 'package:fitness_machine/workout_management/repositories/completed_workouts_repository.dart';
 import 'package:fitness_machine/workout_management/services/completed_workouts_provider.dart';
 import 'package:fitness_machine/workout_management/services/workout_state_manager.dart';
@@ -16,14 +18,20 @@ import 'package:fitness_machine/treadmill_control/widgets/pages/control_page.dar
 import 'package:fitness_machine/workout_management/widgets/pages/workout_history_page.dart';
 
 class Bootstrap {
-  static MyApp bootstrap() {
+  static Future<MyApp> bootstrap() async {
+
+    WidgetsFlutterBinding.ensureInitialized();
+
     _setupLogging();
+    Future persistence = _setupPersistence();
+
     _registerPages();
     _registerLayouts();
     _registerHardware();
     _registerWorkoutManagement();
     _registerApp();
 
+    await persistence;
     return GetIt.I<MyApp>();
   }
 
@@ -64,7 +72,12 @@ class Bootstrap {
   static void _registerWorkoutManagement() {
     GetIt.I.registerSingleton<WorkoutStateManager>(WorkoutStateManager());
     GetIt.I.registerSingleton<CompletedWorkoutsRepository>(CompletedWorkoutsRepository());
-    GetIt.I.registerSingleton<CompletedWorkoutsProvider>(CompletedWorkoutsProvider());
-    
+    GetIt.I.registerSingleton<CompletedWorkoutsProvider>(CompletedWorkoutsProvider()); 
+  }
+  
+  static Future<void> _setupPersistence() async {
+    GetIt.I.registerSingleton<DatabaseProvider>(DatabaseProvider());
+    GetIt.I.registerSingleton<DatabaseSchemaManager>(DatabaseSchemaManager());
+    await GetIt.I<DatabaseSchemaManager>().setupSchema();
   }
 }
