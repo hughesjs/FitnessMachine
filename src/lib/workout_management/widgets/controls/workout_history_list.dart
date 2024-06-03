@@ -26,19 +26,23 @@ class WorkoutHistoryList extends StatelessWidget {
                           child: Column(children: [
                       Row(
                         children: [
-                          Expanded(child: Text(DateFormat("dd-MM-yyyy  HH:mm").format(workout.startedAt))),
-                          Text("${workout.workoutTimeInSeconds / 60} mins")
+                          Expanded(child: _textWithIcon(DateFormat("dd-MM-yyyy  HH:mm").format(workout.startedAt), const Icon(Icons.calendar_month))),
+                          _textWithIcon("${workout.workoutTimeInSeconds / 60} mins", const Icon(Icons.timer)),
                         ],
                       ),
                       Row(
                         children: [
-                          Align(alignment: Alignment.centerLeft, child: Text("${workout.distanceInKm} km")),
-                          Expanded(child: Text("${workout.totalSteps} steps")),
-                          Align(alignment: Alignment.centerRight, child: Text("${workout.machineIndicatedCalories} kcal"))
+                          Align(alignment: Alignment.centerLeft, child: _textWithIcon("${workout.distanceInKm} km", const Icon(Icons.place))),
+                          Expanded(child: Align(alignment: Alignment.center, child: _textWithIcon("${workout.totalSteps} steps", const Icon(Icons.directions_walk)))),
+                          Align(alignment: Alignment.centerRight, child: _textWithIcon("${workout.machineIndicatedCalories} kcal", const Icon(Icons.local_fire_department))),
                         ],
                       ),
                     ]))));
               });
         }));
+  }
+
+  Widget _textWithIcon(String text, Icon icon) {
+    return Wrap(children: [icon, Text(text)]);
   }
 }
