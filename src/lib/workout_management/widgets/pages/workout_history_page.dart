@@ -1,5 +1,6 @@
 
 
+import 'package:fitness_machine/workout_management/widgets/controls/workout_history_list.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutHistoryPage extends StatelessWidget {
@@ -7,7 +8,7 @@ class WorkoutHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(child: 
-    Placeholder(color: Colors.blue));
+    return SafeArea(child: 
+    WorkoutHistoryList());
   }
 }

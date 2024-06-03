@@ -14,8 +14,8 @@ class FitnessMachineQueryDispatcher {
   final StreamController<TreadmillData> _treadmillDataStreamController;
   final StreamController<SupportedSpeedRange> _supportedSpeedRangeStreamController;
 
-  Stream get treadmillDataStream => _treadmillDataStreamController.stream;
-  Stream get supportedSpeedRangeStream => _supportedSpeedRangeStreamController.stream;
+  Stream<TreadmillData> get treadmillDataStream => _treadmillDataStreamController.stream;
+  Stream<SupportedSpeedRange> get supportedSpeedRangeStream => _supportedSpeedRangeStreamController.stream;
 
   StreamSubscription? _machineStatusSubscription;
   FitnessMachine? _currentMachine;

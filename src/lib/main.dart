@@ -7,7 +7,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:fitness_machine/layouts/main_layout.dart';
 
 Future<void> main() async {
-  final MyApp app = Bootstrap.bootstrap();
+  final MyApp app = await Bootstrap.bootstrap();
   Logger logger = GetIt.I<Logger>();
   if (kDebugMode) {
     logger.i("Enabling wakelock in debug mode");

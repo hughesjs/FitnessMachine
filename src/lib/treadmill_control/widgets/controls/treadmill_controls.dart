@@ -1,12 +1,18 @@
+import 'package:fitness_machine/workout_management/services/workout_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:fitness_machine/hardware/services/fitness_machine_command_dispatcher.dart';
 
 
 class TreadmillControls extends StatelessWidget {
-  final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
 
-  TreadmillControls({super.key}) : _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>();
+  // TODO - These should probably be wrapped in something so the UI isn't making two calls
+  final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
+  final WorkoutStateManager _workoutStateManager;
+
+  TreadmillControls({super.key}) : 
+    _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>(),
+    _workoutStateManager = GetIt.I<WorkoutStateManager>();
 
   @override
   Widget build(BuildContext context) {
@@ -14,24 +20,29 @@ class TreadmillControls extends StatelessWidget {
       ElevatedButton(
         onPressed: () {
           _fitnessMachineCommandDispatcher.start();
+          _workoutStateManager.startWorkout();
         },
         child: const Text('Start'),
       ),
       ElevatedButton(
         onPressed: () {
           _fitnessMachineCommandDispatcher.stop();
+          _workoutStateManager.stopWorkout();
         },
         child: const Text('Stop'),
       ),
       ElevatedButton(
         onPressed: () {
-          _fitnessMachineCommandDispatcher.start();
+          _fitnessMachineCommandDispatcher.resume();
+          _workoutStateManager.resumeWorkout();
         },
         child: const Text('Resume'),
       ),
       ElevatedButton(
         onPressed: () {
-          _fitnessMachineCommandDispatcher.stop();
+          _fitnessMachineCommandDispatcher.pause(); 
+          _workoutStateManager.pauseWorkout();
+
         },
         child: const Text('Pause'),
       ),
