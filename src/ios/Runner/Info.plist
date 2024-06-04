@@ -55,5 +55,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSHealthShareUsageDescription</key>
+	<string>We will sync your workout data with Apple Health</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>We will sync your workout data with Apple Health</string>
+
 </dict>
 </plist>
