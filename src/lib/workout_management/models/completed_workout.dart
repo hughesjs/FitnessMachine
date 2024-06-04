@@ -44,11 +44,16 @@ class CompletedWorkout {
 
     final caloriesBurned = distanceInMeters * ((weightInKilos * a) + ((speedInMs * speedInMs) / heightInMeters) * b * weightInKilos);
 
+    if (caloriesBurned.isNaN) {
+      return 0;
+    }
+
     return caloriesBurned;
   }
 
   Map<String, dynamic> toMap() {
     return {
+      "workoutId": workoutId.toString(),
       "distanceInKm": distanceInKm,
       "totalSteps": totalSteps,
       "workoutTimeInSeconds": workoutTimeInSeconds,

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fitness_machine/hardware/ble/models/treadmill_data.dart';
+import 'package:fitness_machine/hardware/services/fitness_machine_command_dispatcher.dart';
 import 'package:fitness_machine/hardware/services/fitness_machine_query_dispatcher.dart';
 import 'package:fitness_machine/workout_management/models/completed_workout.dart';
 import 'package:fitness_machine/workout_management/models/workout_state.dart';
@@ -21,6 +22,7 @@ class WorkoutStateManager {
   final StreamController<CompletedWorkout> _workoutCompletedStreamController;
 
   final FitnessMachineQueryDispatcher _fitnessMachineQueryDispatcher;
+  final FitnessMachineCommandDispatcher _fitnessMachineCommandDispatcher;
 
   DateTime? _currentWorkoutStartTime;
   StreamSubscription? _treadmillDataSubscription;
@@ -30,12 +32,14 @@ class WorkoutStateManager {
     _workoutStartedStreamController = StreamController<void>.broadcast(),
     _workoutCompletedStreamController = StreamController<CompletedWorkout>.broadcast(),
     _logger = GetIt.I<Logger>(),
-    _fitnessMachineQueryDispatcher = GetIt.I<FitnessMachineQueryDispatcher>();
+    _fitnessMachineQueryDispatcher = GetIt.I<FitnessMachineQueryDispatcher>(),
+     _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>();
 
 
   void startWorkout()  {
     _currentWorkoutStartTime = DateTime.now();
     _logger.i("Starting workout at $_currentWorkoutStartTime");
+    _fitnessMachineCommandDispatcher.start();
     _listen();
     _setWorkoutState(WorkoutState.running);
     _workoutStartedStreamController.add(null);
@@ -43,15 +47,11 @@ class WorkoutStateManager {
 
   void stopWorkout({bool aborted = false})
   {
-    if (currentWorkoutState == WorkoutState.idle || _currentWorkoutStartTime == null) {
-      _logger.e("Can't stop workout when idle");
-      return;
-    }
-
+    _fitnessMachineCommandDispatcher.stop();
     _treadmillDataSubscription?.cancel();
     _setWorkoutState(WorkoutState.idle);
 
-    if (_lastReceivedWorkoutData == null) {
+    if (_lastReceivedWorkoutData == null || _currentWorkoutStartTime == null) {
       _logger.e("Workout completed without data");
       return;
     }
@@ -69,11 +69,13 @@ class WorkoutStateManager {
   }
   
   void pauseWorkout() {
+    _fitnessMachineCommandDispatcher.pause(); 
     _treadmillDataSubscription?.cancel();
     _setWorkoutState(WorkoutState.paused);
   }
 
   void resumeWorkout() {
+    _fitnessMachineCommandDispatcher.resume();
     _listen();
     _setWorkoutState(WorkoutState.running);
   }
