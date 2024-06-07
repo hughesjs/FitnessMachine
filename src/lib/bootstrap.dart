@@ -93,8 +93,10 @@ class Bootstrap {
       HealthDataType.DISTANCE_WALKING_RUNNING,
       HealthDataType.TOTAL_CALORIES_BURNED,
       HealthDataType.WORKOUT,
+      HealthDataType.HEART_RATE,
       HealthDataType.WEIGHT,
-      HealthDataType.HEIGHT
+      HealthDataType.HEIGHT,
+      
     ];
 
     var permissions = [
@@ -103,6 +105,7 @@ class Bootstrap {
       HealthDataAccess.WRITE,
       HealthDataAccess.WRITE,
       HealthDataAccess.READ,
+      HealthDataType.HEART_RATE
       HealthDataAccess.READ
     ];
 
