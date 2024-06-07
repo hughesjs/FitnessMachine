@@ -30,6 +30,10 @@
 	<string>This app always needs Bluetooth to function</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This app needs Bluetooth Peripheral to function</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>We will sync your workout data with Apple Health</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>We will sync your workout data with Apple Health</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app always needs location and when in use to function</string>
 	<key>NSLocationAlwaysUsageDescription</key>
