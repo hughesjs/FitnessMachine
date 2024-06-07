@@ -5,6 +5,7 @@ import 'package:fitness_machine/workout_management/repositories/completed_workou
 import 'package:fitness_machine/workout_management/services/completed_workouts_provider.dart';
 import 'package:fitness_machine/workout_management/services/workout_state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:health/health.dart';
@@ -23,7 +24,7 @@ import 'package:fitness_machine/workout_management/widgets/pages/workout_history
 class Bootstrap {
   static Future<MyApp> bootstrap() async {
     WidgetsFlutterBinding.ensureInitialized();
-
+    Future orientation = SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     _setupLogging();
     Future persistence = _setupPersistence();
     _registerPages();
@@ -33,7 +34,7 @@ class Bootstrap {
     Future healthIntegration = _registerHealthIntegration();
     _registerApp();
 
-    Future.wait([persistence, healthIntegration]);
+    Future.wait([persistence, healthIntegration, orientation]);
 
     return GetIt.I<MyApp>();
   }
