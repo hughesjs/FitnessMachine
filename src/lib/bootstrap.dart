@@ -105,7 +105,7 @@ class Bootstrap {
       HealthDataAccess.WRITE,
       HealthDataAccess.WRITE,
       HealthDataAccess.READ,
-      HealthDataType.HEART_RATE
+      HealthDataAccess.READ,
       HealthDataAccess.READ
     ];
 
