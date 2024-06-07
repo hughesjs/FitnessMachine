@@ -1,10 +1,13 @@
 import 'package:fitness_machine/common/data_persistence/database_provider.dart';
 import 'package:fitness_machine/common/data_persistence/database_schema_manager.dart';
+import 'package:fitness_machine/health_integration/health_integration_client.dart';
 import 'package:fitness_machine/workout_management/repositories/completed_workouts_repository.dart';
 import 'package:fitness_machine/workout_management/services/completed_workouts_provider.dart';
 import 'package:fitness_machine/workout_management/services/workout_state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get_it/get_it.dart';
+import 'package:health/health.dart';
 import 'package:logger/logger.dart';
 import 'package:fitness_machine/hardware/services/fitness_machine_command_dispatcher.dart';
 import 'package:fitness_machine/hardware/services/fitness_machine_provider.dart';
@@ -24,14 +27,15 @@ class Bootstrap {
 
     _setupLogging();
     Future persistence = _setupPersistence();
-
     _registerPages();
     _registerLayouts();
     _registerHardware();
     _registerWorkoutManagement();
+    Future healthIntegration = _registerHealthIntegration();
     _registerApp();
 
-    await persistence;
+    Future.wait([persistence, healthIntegration]);
+
     return GetIt.I<MyApp>();
   }
 
@@ -62,6 +66,7 @@ class Bootstrap {
   static void _registerHardware() {
     // Use SafeDevice if we need to inject fakes for simulator
     WidgetsFlutterBinding.ensureInitialized();
+    FlutterBluePlus.setLogLevel(LogLevel.error);
 
     GetIt.I.registerSingleton<FitnessMachineProvider>(FitnessMachineProvider());
     GetIt.I.registerSingleton<FitnessMachineCommandDispatcher>((FitnessMachineCommandDispatcher()));
@@ -79,5 +84,28 @@ class Bootstrap {
     GetIt.I.registerSingleton<DatabaseProvider>(DatabaseProvider());
     GetIt.I.registerSingleton<DatabaseSchemaManager>(DatabaseSchemaManager());
     await GetIt.I<DatabaseSchemaManager>().setupSchema();
+  }
+  
+  static Future<void> _registerHealthIntegration() async {
+    Health().configure(useHealthConnectIfAvailable: true);
+
+        var types = [
+      HealthDataType.STEPS,
+      HealthDataType.DISTANCE_WALKING_RUNNING,
+      HealthDataType.TOTAL_CALORIES_BURNED,
+      HealthDataType.WORKOUT
+    ];
+    
+    var permissions = [HealthDataAccess.WRITE, HealthDataAccess.WRITE, HealthDataAccess.WRITE, HealthDataAccess.WRITE];
+    var permissionsStatus = await Health().requestAuthorization(types, permissions: permissions);
+
+    if (permissionsStatus)
+    {
+      Logger().w("Heatlh permissions denied");
+      return;
+    } 
+
+
+    GetIt.I.registerSingleton<HealthIntegrationClient>(HealthIntegrationClient());
   }
 }
