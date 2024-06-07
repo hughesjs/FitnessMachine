@@ -22,7 +22,6 @@ import 'package:fitness_machine/workout_management/widgets/pages/workout_history
 
 class Bootstrap {
   static Future<MyApp> bootstrap() async {
-
     WidgetsFlutterBinding.ensureInitialized();
 
     _setupLogging();
@@ -73,38 +72,46 @@ class Bootstrap {
     GetIt.I.registerSingleton<FitnessMachineQueryDispatcher>((FitnessMachineQueryDispatcher()));
     GetIt.I.registerSingleton<DeviceSelectionScreen>(const DeviceSelectionScreen());
   }
-  
+
   static void _registerWorkoutManagement() {
     GetIt.I.registerSingleton<WorkoutStateManager>(WorkoutStateManager());
     GetIt.I.registerSingleton<CompletedWorkoutsRepository>(CompletedWorkoutsRepository());
-    GetIt.I.registerSingleton<CompletedWorkoutsProvider>(CompletedWorkoutsProvider()); 
+    GetIt.I.registerSingleton<CompletedWorkoutsProvider>(CompletedWorkoutsProvider());
   }
-  
+
   static Future<void> _setupPersistence() async {
     GetIt.I.registerSingleton<DatabaseProvider>(DatabaseProvider());
     GetIt.I.registerSingleton<DatabaseSchemaManager>(DatabaseSchemaManager());
     await GetIt.I<DatabaseSchemaManager>().setupSchema();
   }
-  
+
   static Future<void> _registerHealthIntegration() async {
     Health().configure(useHealthConnectIfAvailable: true);
 
-        var types = [
+    var types = [
       HealthDataType.STEPS,
       HealthDataType.DISTANCE_WALKING_RUNNING,
       HealthDataType.TOTAL_CALORIES_BURNED,
-      HealthDataType.WORKOUT
+      HealthDataType.WORKOUT,
+      HealthDataType.WEIGHT,
+      HealthDataType.HEIGHT
     ];
-    
-    var permissions = [HealthDataAccess.WRITE, HealthDataAccess.WRITE, HealthDataAccess.WRITE, HealthDataAccess.WRITE];
+
+    var permissions = [
+      HealthDataAccess.WRITE,
+      HealthDataAccess.WRITE,
+      HealthDataAccess.WRITE,
+      HealthDataAccess.WRITE,
+      HealthDataAccess.READ,
+      HealthDataAccess.READ
+    ];
+
     var permissionsStatus = await Health().requestAuthorization(types, permissions: permissions);
 
-    if (permissionsStatus)
-    {
-      Logger().w("Heatlh permissions denied");
+    if (!permissionsStatus) {
+      Logger().w("Health permissions denied");
       return;
-    } 
-
+    }
 
     GetIt.I.registerSingleton<HealthIntegrationClient>(HealthIntegrationClient());
   }

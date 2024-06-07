@@ -30,8 +30,6 @@ class HealthIntegrationClient {
       title: "Treadmill Workout on ${completedWorkout.startedAt.toIso8601String()}",
     );
 
-  
-
     bool stepsSuccess = await Health().writeHealthData(
       type: HealthDataType.STEPS,
       value: completedWorkout.totalSteps.toDouble(),
