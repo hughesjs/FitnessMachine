@@ -3,7 +3,6 @@
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
 - Reporting a bug
-- Submitting packet captures
 - Discussing the current state of the code
 - Submitting a fix
 - Proposing new features
@@ -11,7 +10,7 @@ We love your input! We want to make contributing to this project as easy and tra
 
 ## License
 
-This project is licensed under the [PolyForm Shield](./LICENSE). The text of the license supercedes this message, but the gist of it is that you are free to use this project for any purpose, including commercial purposes, as long as you aren't competing with the app.
+This project is licensed under the [PolyForm Strict](./LICENSE). The text of the license supercedes this message, but the gist of it is that you are free to use this project for personal or academic use.
 
 If you would like to discuss obtaining another license, get in touch.
 
@@ -27,7 +26,6 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 1. Fork the repo and create your branch from `master`.
 2. If you've added code that should be tested, add tests.
 3. If you've changed APIs, update the documentation.
-4. If you've submitted a packet capture ensure that it's complete and follows the requested protocol.
 4. Ensure the test suite passes.
 5. Make sure your code lints.
 6. Issue that pull request!
