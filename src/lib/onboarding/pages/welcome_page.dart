@@ -5,14 +5,11 @@ class WelcomePage extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Container(
-            color: Colors.black54,
-          ),
-          const Center(
+          Center(
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
@@ -36,9 +33,7 @@ Widget build(BuildContext context) {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 50),
-                  Text("Swipe right to continue",
-                  style: TextStyle(fontSize: 14, color: Colors.grey))
+                  SizedBox(height: 50)
                 ],
               ),
             ),
