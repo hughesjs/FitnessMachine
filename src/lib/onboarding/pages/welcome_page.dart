@@ -5,8 +5,7 @@ class WelcomePage extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Stack(
+    return const Stack(
         fit: StackFit.expand,
         children: <Widget>[
           Center(
@@ -39,8 +38,7 @@ Widget build(BuildContext context) {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }
 

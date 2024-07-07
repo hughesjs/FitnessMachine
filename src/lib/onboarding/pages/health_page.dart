@@ -7,18 +7,16 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return  Stack(
         fit: StackFit.expand,
         children: <Widget>[
           Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
-                
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Icon(Icons.favorite_border, size: 200, color: Colors.red,),
+                  Icon(Icons.favorite_border, size: 200, color: Theme.of(context).colorScheme.primary),
                   const SizedBox(height: 50),
                   const Text(
                     'Health Integration',
@@ -39,7 +37,6 @@ class HealthPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

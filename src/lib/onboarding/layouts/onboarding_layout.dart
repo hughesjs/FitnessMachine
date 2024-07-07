@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 class OnboardingLayout extends StatefulWidget {
   const OnboardingLayout({super.key});
 
-
-
   @override
   State<OnboardingLayout> createState() => _PageViewExampleState();
 }
@@ -23,7 +21,7 @@ class _PageViewExampleState extends State<OnboardingLayout> {
     HeightAndWeightPage(),
     FindDevicePage(),
   ];
-  
+
   int _currentPageIndex = 0;
 
   @override
@@ -42,21 +40,22 @@ class _PageViewExampleState extends State<OnboardingLayout> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Column(children: [
-      Expanded(
-        child: PageView(
-          controller: _pageViewController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentPageIndex = index;
-            });
-          },
-          children: _pages,
-        ),
-      ),
-      const Text("Swipe right to continue"),
-      Padding(padding: const EdgeInsets.all(30), child: LinearProgressIndicator(value: _currentPageIndex / (_pages.length - 1))),
-      const SizedBox(height: 20),
-    ])));
+              Expanded(
+                child: PageView(
+                  controller: _pageViewController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentPageIndex = index;
+                    });
+                  },
+                  children: _pages,
+                ),
+              ),
+              const Text("Swipe right to continue"),
+              Padding(padding: const EdgeInsets.all(30), child: LinearProgressIndicator(value: _currentPageIndex / (_pages.length - 1))),
+              const SizedBox(height: 20),
+            ])));
   }
 }
