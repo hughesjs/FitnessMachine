@@ -1,3 +1,4 @@
+import 'package:fitness_machine/onboarding/layouts/onboarding_layout.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(), // <---- This needs some version of the fromSeed()
       themeMode: ThemeMode.system,
-      home: mainLayout,
+      home: const OnboardingLayout(), // TODO: Add a shim between the main layout and the onboarding layout
     );
   }
 }
