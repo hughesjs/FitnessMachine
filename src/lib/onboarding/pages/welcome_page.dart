@@ -29,7 +29,7 @@ Widget build(BuildContext context) {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Your enhanced fitness experience starts here. Let\'s get started!',
+                    "Let's get you running!",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white70,

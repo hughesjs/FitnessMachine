@@ -31,7 +31,7 @@ class _PageViewExampleState extends State<OnboardingLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
+    return SafeArea(child: PageView(
           /// [PageView.scrollDirection] defaults to [Axis.horizontal].
           /// Use [Axis.vertical] to scroll vertically.
           controller: _pageViewController,
@@ -43,6 +43,6 @@ class _PageViewExampleState extends State<OnboardingLayout> {
             HeightAndWeightPage(),
             FindDevicePage(),
           ],
-        );
+        ));
   }
 }
