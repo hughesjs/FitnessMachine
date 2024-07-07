@@ -1,6 +1,7 @@
 import 'package:fitness_machine/onboarding/pages/find_device_page.dart';
 import 'package:fitness_machine/onboarding/pages/health_page.dart';
 import 'package:fitness_machine/onboarding/pages/height_and_weight_page.dart';
+import 'package:fitness_machine/onboarding/pages/review_page.dart';
 import 'package:fitness_machine/onboarding/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class _PageViewExampleState extends State<OnboardingLayout> {
     HealthPage(),
     HeightAndWeightPage(),
     FindDevicePage(),
+    ReviewPage()
   ];
 
   int _currentPageIndex = 0;

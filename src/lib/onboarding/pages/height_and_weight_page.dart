@@ -5,8 +5,7 @@ class HeightAndWeightPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
+    return Stack(fit: StackFit.expand, 
       children: <Widget>[
         Center(
           child: Padding(
@@ -44,17 +43,8 @@ class HeightAndWeightPage extends StatelessWidget {
                 ),
                 const Text("We use this to calculate calories burned"),
                 const SizedBox(height: 20),
-                TextField(
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your height',
-                    suffixText: "cm"
-                  ),
 
-                ),
-
-                HeightWeightWidget(),
+                const HeightWeightWidget(),
                 const SizedBox(height: 20)
               ],
             ),
@@ -72,30 +62,37 @@ class HeightWeightWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Height (cm)',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        TextField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            hintText: 'Enter your height',
-            border: OutlineInputBorder(),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onTapOutside: (e) => FocusScope.of(context).unfocus(),
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                label: Text("Height"),
+                hintText: 'cm',
+                border: OutlineInputBorder(),
+                suffixText: "cm"
+              ),
+            ),
           ),
         ),
-        SizedBox(height: 20),
-        Text(
-          'Weight (kg)',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        TextField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            hintText: 'Enter your weight',
-            border: OutlineInputBorder(),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onTapOutside: (_) => FocusScope.of(context).unfocus(),
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                label: Text("Weight"),
+                hintText: 'kg',
+                border: OutlineInputBorder(),
+                suffixText: "kg"
+              ),
+            ),
           ),
         ),
       ],
