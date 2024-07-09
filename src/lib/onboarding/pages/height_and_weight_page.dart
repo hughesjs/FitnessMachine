@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// TODO - Try and get from Health and launch a toast if successful
+
 class HeightAndWeightPage extends StatelessWidget {
   const HeightAndWeightPage({super.key});
 
@@ -73,7 +75,6 @@ class HeightWeightWidget extends StatelessWidget {
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 label: Text("Height"),
-                hintText: 'cm',
                 border: OutlineInputBorder(),
                 suffixText: "cm"
               ),
@@ -88,7 +89,6 @@ class HeightWeightWidget extends StatelessWidget {
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 label: Text("Weight"),
-                hintText: 'kg',
                 border: OutlineInputBorder(),
                 suffixText: "kg"
               ),
