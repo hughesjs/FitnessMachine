@@ -13,15 +13,17 @@ class OnboardingLayout extends StatefulWidget {
 }
 
 class _PageViewExampleState extends State<OnboardingLayout> {
+  _PageViewExampleState();
+
   late PageController _pageViewController;
 
-  List<Widget> _pages = [
-    WelcomePage(),
-    // PermissionsPage()?
-    HealthPage(),
+
+  final List<Widget> _pages = [
+    const WelcomePage(),
+    const HealthPage(),
     HeightAndWeightPage(),
-    FindDevicePage(),
-    ReviewPage()
+    const FindDevicePage(),
+    const FinishedSetupPage()
   ];
 
   int _currentPageIndex = 0;
@@ -55,8 +57,8 @@ class _PageViewExampleState extends State<OnboardingLayout> {
                   children: _pages,
                 ),
               ),
-              const Text("Swipe right to continue"),
-              Padding(padding: const EdgeInsets.all(30), child: LinearProgressIndicator(value: _currentPageIndex / (_pages.length - 1))),
+             _currentPageIndex < _pages.length - 1 ? const Text("Swipe right to continue") : const Text("Swipe left to go back"),
+              if (_currentPageIndex < _pages.length - 1) Padding(padding: const EdgeInsets.all(30), child: LinearProgressIndicator(value: _currentPageIndex / (_pages.length - 1))),
               const SizedBox(height: 20),
             ])));
   }

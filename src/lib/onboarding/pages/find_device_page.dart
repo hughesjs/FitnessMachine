@@ -28,7 +28,7 @@ class FindDevicePage extends StatelessWidget {
                   ),
                   const Text("What are we controlling?"),
                   const SizedBox(height: 20),
-                  ElevatedButton(onPressed: () => openBluetoothPage(context) /*TODO - Request Health*/, child: const Text("Find Bluetooth Device")),
+                  ElevatedButton(onPressed: () => openBluetoothPage(context), child: const Text("Find Bluetooth Device")),
                   const SizedBox(height: 20)
                 ],
               ),

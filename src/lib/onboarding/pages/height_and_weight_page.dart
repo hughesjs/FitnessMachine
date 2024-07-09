@@ -1,13 +1,22 @@
+
 import 'package:flutter/material.dart';
 
 // TODO - Try and get from Health and launch a toast if successful
 
 class HeightAndWeightPage extends StatelessWidget {
-  const HeightAndWeightPage({super.key});
+
+  HeightAndWeightPage({super.key});
+
+  HeightWeightWidget? _heightWeightWidget;
+
+  TextEditingController? get heightController => _heightWeightWidget?.heightController;
+  TextEditingController? get weightController => _heightWeightWidget?.weightController;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(fit: StackFit.expand, 
+    _heightWeightWidget = HeightWeightWidget();
+    return Stack(
+      fit: StackFit.expand,
       children: <Widget>[
         Center(
           child: Padding(
@@ -45,8 +54,7 @@ class HeightAndWeightPage extends StatelessWidget {
                 ),
                 const Text("We use this to calculate calories burned"),
                 const SizedBox(height: 20),
-
-                const HeightWeightWidget(),
+                _heightWeightWidget ?? const SizedBox(),
                 const SizedBox(height: 20)
               ],
             ),
@@ -57,10 +65,11 @@ class HeightAndWeightPage extends StatelessWidget {
   }
 }
 
-
 class HeightWeightWidget extends StatelessWidget {
 
-  const HeightWeightWidget({super.key});
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +80,10 @@ class HeightWeightWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              controller: heightController,
               onTapOutside: (e) => FocusScope.of(context).unfocus(),
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                label: Text("Height"),
-                border: OutlineInputBorder(),
-                suffixText: "cm"
-              ),
+              decoration: const InputDecoration(label: Text("Height"), border: OutlineInputBorder(), suffixText: "cm"),
             ),
           ),
         ),
@@ -85,15 +91,14 @@ class HeightWeightWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              controller: weightController,
               onTapOutside: (_) => FocusScope.of(context).unfocus(),
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                label: Text("Weight"),
-                border: OutlineInputBorder(),
-                suffixText: "kg"
-              ),
+              decoration: const InputDecoration(label: Text("Weight"), border: OutlineInputBorder(), suffixText: "kg"),
             ),
           ),
         ),
       ],
-    );}}
+    );
+  }
+}
