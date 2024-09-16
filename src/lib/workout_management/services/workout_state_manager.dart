@@ -28,25 +28,44 @@ class WorkoutStateManager {
   StreamSubscription? _treadmillDataSubscription;
   TreadmillData? _lastReceivedWorkoutData;
 
-  WorkoutStateManager(): _workoutStateStreamController = StreamController<WorkoutState>.broadcast(),
-    _workoutStartedStreamController = StreamController<void>.broadcast(),
-    _workoutCompletedStreamController = StreamController<CompletedWorkout>.broadcast(),
-    _logger = GetIt.I<Logger>(),
-    _fitnessMachineQueryDispatcher = GetIt.I<FitnessMachineQueryDispatcher>(),
-     _fitnessMachineCommandDispatcher = GetIt.I<FitnessMachineCommandDispatcher>();
+  WorkoutStateManager()
+      : _workoutStateStreamController =
+            StreamController<WorkoutState>.broadcast(),
+        _workoutStartedStreamController = StreamController<void>.broadcast(),
+        _workoutCompletedStreamController =
+            StreamController<CompletedWorkout>.broadcast(),
+        _logger = GetIt.I<Logger>(),
+        _fitnessMachineQueryDispatcher =
+            GetIt.I<FitnessMachineQueryDispatcher>(),
+        _fitnessMachineCommandDispatcher =
+            GetIt.I<FitnessMachineCommandDispatcher>();
 
-
-  void startWorkout()  {
+  Future<void> startWorkout() async {
     _currentWorkoutStartTime = DateTime.now();
     _logger.i("Starting workout at $_currentWorkoutStartTime");
-    _fitnessMachineCommandDispatcher.start();
-    _listen();
-    _setWorkoutState(WorkoutState.running);
-    _workoutStartedStreamController.add(null);
+
+    await _fitnessMachineCommandDispatcher.start();
+
+    try {
+      await _waitForTreadmillStart().timeout(const Duration(seconds: 5));
+      _workoutStartedStreamController.add(null);
+    } catch (e) {
+      _logger.e("Failed to start treadmill within timeout");
+      _setWorkoutState(WorkoutState.idle);
+    }
   }
 
-  void stopWorkout({bool aborted = false})
-  {
+  Future<void> _waitForTreadmillStart() async {
+    await for (TreadmillData update
+        in _fitnessMachineQueryDispatcher.treadmillDataStream) {
+      if (update.speedInKmh > 0) {
+        _setWorkoutState(WorkoutState.running);
+        break;
+      }
+    }
+  }
+
+  void stopWorkout({bool aborted = false}) {
     _fitnessMachineCommandDispatcher.stop();
     _treadmillDataSubscription?.cancel();
     _setWorkoutState(WorkoutState.idle);
@@ -55,21 +74,23 @@ class WorkoutStateManager {
       _logger.e("Workout completed without data");
       return;
     }
-    
+
     if (!aborted) {
       final completedTime = DateTime.now();
-      
-      CompletedWorkout completedWorkout = CompletedWorkout.fromTreadmillData(_lastReceivedWorkoutData!, _currentWorkoutStartTime!, completedTime);
-      _logger.i("Completed workout: ${completedWorkout.distanceInKm}km in ${completedWorkout.workoutTimeInSeconds}s");
+
+      CompletedWorkout completedWorkout = CompletedWorkout.fromTreadmillData(
+          _lastReceivedWorkoutData!, _currentWorkoutStartTime!, completedTime);
+      _logger.i(
+          "Completed workout: ${completedWorkout.distanceInKm}km in ${completedWorkout.workoutTimeInSeconds}s");
       _workoutCompletedStreamController.add(completedWorkout);
     }
 
     _currentWorkoutStartTime = null;
     _lastReceivedWorkoutData = null;
   }
-  
+
   void pauseWorkout() {
-    _fitnessMachineCommandDispatcher.pause(); 
+    _fitnessMachineCommandDispatcher.pause();
     _treadmillDataSubscription?.cancel();
     _setWorkoutState(WorkoutState.paused);
   }
@@ -84,10 +105,11 @@ class WorkoutStateManager {
     _logger.i("Workout state changed to $state");
     currentWorkoutState = state;
     _workoutStateStreamController.add(state);
-  }  
+  }
 
   void _listen() {
-    _treadmillDataSubscription = _fitnessMachineQueryDispatcher.treadmillDataStream.listen((update) {
+    _treadmillDataSubscription =
+        _fitnessMachineQueryDispatcher.treadmillDataStream.listen((update) {
       _lastReceivedWorkoutData = update;
     });
   }
