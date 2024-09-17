@@ -45,6 +45,7 @@ class WorkoutStateManager {
     _logger.i("Starting workout at $_currentWorkoutStartTime");
 
     await _fitnessMachineCommandDispatcher.start();
+    _listen();
 
     try {
       await _waitForTreadmillStart().timeout(const Duration(seconds: 5));
@@ -58,6 +59,9 @@ class WorkoutStateManager {
   Future<void> _waitForTreadmillStart() async {
     await for (TreadmillData update
         in _fitnessMachineQueryDispatcher.treadmillDataStream) {
+      /**
+       * speedInKmh will be set to minimum speed level on startup
+       */
       if (update.speedInKmh > 0) {
         _setWorkoutState(WorkoutState.running);
         break;
@@ -70,7 +74,15 @@ class WorkoutStateManager {
     _treadmillDataSubscription?.cancel();
     _setWorkoutState(WorkoutState.idle);
 
-    if (_lastReceivedWorkoutData == null || _currentWorkoutStartTime == null) {
+    /**
+     * timeInSeconds will only start if you start to walk on the pad
+     *
+     * It is necessary to check that one has really started to workout and
+     * therefore a workout should also be saved
+     */
+    if (_lastReceivedWorkoutData == null ||
+        _currentWorkoutStartTime == null ||
+        _lastReceivedWorkoutData!.timeInSeconds == 0) {
       _logger.e("Workout completed without data");
       return;
     }
