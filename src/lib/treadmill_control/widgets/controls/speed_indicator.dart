@@ -16,11 +16,9 @@ class SpeedIndicator extends StatelessWidget {
             return Card(
                 child: Row(
               children: [
-                Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: ElevatedButton(
-                        onPressed: () async => cubit.speedDown(),
-                        child: const Icon(Icons.remove))),
+                _SpeedIndicatorButton(
+                    onPressed: () async => cubit.speedDown(),
+                    icon: const Icon(Icons.remove)),
                 Expanded(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,15 +57,38 @@ class SpeedIndicator extends StatelessWidget {
                           child: Text("Speed (km/h)",
                               style: Theme.of(context).textTheme.labelMedium)),
                     ])),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      onPressed: () async => cubit.speedUp(),
-                      child: const Icon(Icons.add)),
-                ),
+                _SpeedIndicatorButton(
+                    onPressed: () async => cubit.speedUp(),
+                    icon: const Icon(Icons.add)),
               ],
             ));
           },
         ));
+  }
+}
+
+class _SpeedIndicatorButton extends StatelessWidget {
+  const _SpeedIndicatorButton({
+    required this.onPressed,
+    required this.icon,
+  });
+
+  final Function() onPressed;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(8),
+        child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all<Color>(Theme.of(context)
+                  .buttonTheme
+                  .colorScheme!
+                  .onSecondary
+                  .withOpacity(0.9)),
+            ),
+            onPressed: onPressed,
+            child: icon));
   }
 }
