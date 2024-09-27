@@ -82,7 +82,7 @@ class _SpeedIndicatorButton extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all<Color>(Theme.of(context)
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context)
                   .buttonTheme
                   .colorScheme!
                   .onSecondary
