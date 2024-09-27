@@ -1,10 +1,10 @@
+import 'package:fitness_machine/bootstrap.dart';
+import 'package:fitness_machine/layouts/main_layout.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:fitness_machine/bootstrap.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-import 'package:fitness_machine/layouts/main_layout.dart';
 
 Future<void> main() async {
   final MyApp app = await Bootstrap.bootstrap();
@@ -28,7 +28,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      darkTheme: ThemeData.dark(), // <---- This needs some version of the fromSeed()
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue, brightness: Brightness.dark),
+      ),
       themeMode: ThemeMode.system,
       home: mainLayout,
     );
