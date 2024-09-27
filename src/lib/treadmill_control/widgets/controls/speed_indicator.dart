@@ -32,7 +32,7 @@ class SpeedIndicator extends StatelessWidget {
                                 child: Text(
                                   state.speedInKmh.toStringAsFixed(1),
                                   style:
-                                      Theme.of(context).textTheme.displayMedium,
+                                      Theme.of(context).textTheme.displayLarge,
                                 ))),
                       ]),
                       Row(children: [
@@ -48,18 +48,16 @@ class SpeedIndicator extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(state.minSpeed.toStringAsFixed(1))),
-                          Expanded(
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text("km/h",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge))),
+                          const Spacer(),
                           Align(
                               alignment: Alignment.centerRight,
                               child: Text(state.maxSpeed.toStringAsFixed(1))),
                         ],
-                      )
+                      ),
+                      Align(
+                          alignment: Alignment.center,
+                          child: Text("Speed (km/h)",
+                              style: Theme.of(context).textTheme.labelMedium)),
                     ])),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
