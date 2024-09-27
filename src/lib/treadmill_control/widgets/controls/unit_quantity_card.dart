@@ -10,19 +10,17 @@ class UnitQuantityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valString = value.toStringAsFixed(decimalPlaces);
     return Expanded(
       child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+        child: Column(
           children: [
             Text(
-              valString,
-              style: Theme.of(context).textTheme.displayLarge,
+              value.toStringAsFixed(decimalPlaces),
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             Text(
               unit,
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelMedium,
               textAlign: TextAlign.end,
             ),
           ],

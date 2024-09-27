@@ -20,13 +20,9 @@ class WorkoutStatusPanel extends StatelessWidget {
         ),
         Row(
           children: [
-            UnitQuantityCard(state.distanceInKm, "km", 2),
-            UnitQuantityCard(state.indicatedKiloCalories, "kCal", 0),
-          ],
-        ),
-        Row(
-          children: [
-            UnitQuantityCard(state.steps, "steps", 0),
+            UnitQuantityCard(state.distanceInKm, "Distance (km)", 2),
+            UnitQuantityCard(state.steps, "Steps", 0),
+            UnitQuantityCard(state.indicatedKiloCalories, "Calories (kCal)", 0),
           ],
         )
       ]);

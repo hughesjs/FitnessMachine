@@ -16,29 +16,42 @@ class DurationCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              hours,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            Text(
-              ':',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              minutes,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            Text(
-              ':',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              seconds,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
+            _DurationTimeComponent(time: hours),
+            const _DurationSeparator(),
+            _DurationTimeComponent(time: minutes),
+            const _DurationSeparator(),
+            _DurationTimeComponent(time: seconds),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _DurationTimeComponent extends StatelessWidget {
+  const _DurationTimeComponent({
+    required this.time,
+  });
+
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      time,
+      style: Theme.of(context).textTheme.displayLarge,
+    );
+  }
+}
+
+class _DurationSeparator extends StatelessWidget {
+  const _DurationSeparator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      ' : ',
+      style: Theme.of(context).textTheme.labelLarge,
     );
   }
 }
