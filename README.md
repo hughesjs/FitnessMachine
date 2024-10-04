@@ -36,3 +36,15 @@ This project aims to reverse engineer the bluetooth protocol used by these tread
 - Add a backend to store verified working devices
 - Add non-fitness machine workouts (weights etc)
 - Add a GenAI powered trainer
+
+# Build the project
+
+## Prerequisites
+
+- Flutter (see [official installation guide](https://docs.flutter.dev/get-started/install))
+- Flutter Version Manager (see [FVM installation guide](https://fvm.app/documentation/getting-started/installation))
+- IDE, like Android Studio/VS Code (optional)
+
+## Build and Run
+
+You can build and run this project like other flutter projects. For more information see the [documentation](https://docs.flutter.dev/get-started/test-drive).
