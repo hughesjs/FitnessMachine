@@ -1,9 +1,10 @@
 {
-    "dart.lineLength": 140,
-"[dart]": {
+  "dart.lineLength": 140,
+  "[dart]": {
     "editor.rulers": [
-        140
-    ],
-},
-"cmake.configureOnOpen": false
+      140
+    ]
+  },
+  "cmake.configureOnOpen": false,
+  "dart.flutterSdkPath": ".fvm/versions/3.24.3"
 }
