@@ -1,6 +1,8 @@
 > [!NOTE]  
 > The project is approaching the point where we will be able to launch it on app stores!
 > We would appreciate anyone who would like to volunteer to be a beta tester.
+> 
+> Also, this project isn't dead, I'm just really busy with work at the moment, so sorry for any delays
 
 # Introduction
 
