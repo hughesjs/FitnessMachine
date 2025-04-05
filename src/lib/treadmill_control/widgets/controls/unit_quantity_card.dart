@@ -5,26 +5,24 @@ class UnitQuantityCard extends StatelessWidget {
   final String unit;
   final int decimalPlaces;
 
-  const UnitQuantityCard(this.value, this.unit, this.decimalPlaces, {super.key});
+  const UnitQuantityCard(this.value, this.unit, this.decimalPlaces,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final valString = value.toStringAsFixed(decimalPlaces);
     return Expanded(
       child: Card(
-        child: Row(
+        child: Column(
           children: [
             Text(
-              valString,
-              style: Theme.of(context).textTheme.displayLarge,
+              value.toStringAsFixed(decimalPlaces),
+              style: Theme.of(context).textTheme.displayMedium,
             ),
-            Expanded(
-              child: Text(
-                unit,
-                style: Theme.of(context).textTheme.labelLarge,
-                textAlign: TextAlign.end,
-              ),
-            )
+            Text(
+              unit,
+              style: Theme.of(context).textTheme.labelMedium,
+              textAlign: TextAlign.end,
+            ),
           ],
         ),
       ),
