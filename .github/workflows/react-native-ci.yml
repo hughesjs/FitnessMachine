@@ -1,0 +1,104 @@
+name: React Native Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  lint-and-typecheck:
+    name: "Lint & Typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+  run-tests:
+    name: "Run Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Jest tests
+        run: npm test -- --coverage --passWithNoTests
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  build-android:
+    name: "Build Android"
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, run-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Android Release
+        working-directory: android
+        run: ./gradlew assembleRelease
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FitnessMachine-Android
+          path: android/app/build/outputs/apk/release/*.apk
+
+  build-ios:
+    name: "Build iOS"
+    runs-on: macos-14
+    needs: [lint-and-typecheck, run-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install CocoaPods dependencies
+        working-directory: ios
+        run: pod install
+      - name: Build iOS Release
+        working-directory: ios
+        run: |
+          xcodebuild \
+            -workspace FitnessMachine.xcworkspace \
+            -scheme FitnessMachine \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination generic/platform=iOS \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FitnessMachine-iOS
+          path: ios/build/Build/Products/Release-iphoneos/*.app
