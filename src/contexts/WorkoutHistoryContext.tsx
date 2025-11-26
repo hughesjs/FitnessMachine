@@ -35,10 +35,10 @@ interface WorkoutHistoryContextActions {
   addWorkout: (workout: CompletedWorkout) => void;
 }
 
-type WorkoutHistoryContextValue = WorkoutHistoryContextState &
+export type WorkoutHistoryContextValue = WorkoutHistoryContextState &
   WorkoutHistoryContextActions;
 
-const WorkoutHistoryContext = createContext<WorkoutHistoryContextValue | null>(
+export const WorkoutHistoryContext = createContext<WorkoutHistoryContextValue | null>(
   null,
 );
 
