@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -9,23 +9,18 @@ import {WorkoutHistoryProvider} from './contexts/WorkoutHistoryContext';
 import {BleServiceImpl} from './services/ble';
 import {SQLiteWorkoutRepository} from './services/database';
 
-// Create service instances
-const bleService = new BleServiceImpl();
-const workoutRepository = new SQLiteWorkoutRepository();
-
 function AppContent(): React.JSX.Element {
+  const bleService = useMemo(() => new BleServiceImpl(), []);
+  const workoutRepository = useMemo(() => new SQLiteWorkoutRepository(), []);
+
   const [isInitializing, setIsInitializing] = useState(true);
   const [initError, setInitError] = useState<string | null>(null);
 
   useEffect(() => {
     async function initialize() {
       try {
-        // Initialize BLE service
         await bleService.initialize();
-
-        // Initialize database
         await workoutRepository.initialize();
-
         setIsInitializing(false);
       } catch (error) {
         console.error('Initialization error:', error);
@@ -39,7 +34,7 @@ function AppContent(): React.JSX.Element {
     return () => {
       bleService.destroy();
     };
-  }, []);
+  }, [bleService, workoutRepository]);
 
   if (isInitializing) {
     return (

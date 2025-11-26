@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useRef,
   ReactNode,
 } from 'react';
 import {
@@ -102,9 +103,7 @@ export function BleProvider({children, bleService}: BleProviderProps): React.JSX
     useState<SupportedSpeedRange>(DEFAULT_SPEED_RANGE);
   const [error, setError] = useState<string | null>(null);
 
-  const [treadmillDataUnsubscribe, setTreadmillDataUnsubscribe] = useState<
-    (() => void) | null
-  >(null);
+  const treadmillDataUnsubscribeRef = useRef<(() => void) | null>(null);
 
   // Initialize BLE service
   useEffect(() => {
@@ -191,13 +190,17 @@ export function BleProvider({children, bleService}: BleProviderProps): React.JSX
       const rangeResult = await bleService.readSpeedRange();
       if (rangeResult.success) {
         setSpeedRange(rangeResult.data);
+      } else {
+        console.warn('Failed to read speed range, using defaults. Speed control may not work correctly.');
+        setError('Warning: Could not read device speed range. Speed control may be limited.');
+        setSpeedRange(DEFAULT_SPEED_RANGE);
       }
 
       // Subscribe to treadmill data
       const unsubscribe = await bleService.subscribeTreadmillData(data => {
         setTreadmillData(data);
       });
-      setTreadmillDataUnsubscribe(() => unsubscribe);
+      treadmillDataUnsubscribeRef.current = unsubscribe;
 
       return true;
     },
@@ -205,15 +208,15 @@ export function BleProvider({children, bleService}: BleProviderProps): React.JSX
   );
 
   const disconnect = useCallback(async (): Promise<void> => {
-    if (treadmillDataUnsubscribe) {
-      treadmillDataUnsubscribe();
-      setTreadmillDataUnsubscribe(null);
+    if (treadmillDataUnsubscribeRef.current) {
+      treadmillDataUnsubscribeRef.current();
+      treadmillDataUnsubscribeRef.current = null;
     }
     await bleService.disconnect();
     setConnectedDevice(null);
     setTreadmillData(createEmptyTreadmillData());
     setSpeedRange(DEFAULT_SPEED_RANGE);
-  }, [bleService, treadmillDataUnsubscribe]);
+  }, [bleService]);
 
   const requestControl = useCallback(async (): Promise<boolean> => {
     const result = await bleService.requestControl();
