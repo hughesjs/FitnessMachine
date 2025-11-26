@@ -285,8 +285,8 @@ export class BleServiceImpl implements BleService {
 
       try {
         await this.connectedDevice.cancelConnection();
-      } catch {
-        // Ignore disconnection errors
+      } catch (error) {
+        console.warn('Error during disconnect:', error);
       }
 
       this.connectedDevice = null;

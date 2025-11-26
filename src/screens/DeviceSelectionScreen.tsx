@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useState, useMemo, useRef} from 'react';
 import {
   View,
   FlatList,
@@ -33,6 +33,7 @@ export function DeviceSelectionScreen({
   } = useBle();
 
   const [connectingDeviceId, setConnectingDeviceId] = useState<string | null>(null);
+  const mountedRef = useRef(true);
 
   // Start scanning on mount
   useEffect(() => {
@@ -41,6 +42,7 @@ export function DeviceSelectionScreen({
     }
 
     return () => {
+      mountedRef.current = false;
       stopScan();
     };
   }, [isBluetoothReady, startScan, stopScan]);
@@ -50,6 +52,8 @@ export function DeviceSelectionScreen({
     clearError();
 
     const success = await connectToDevice(device);
+
+    if (!mountedRef.current) return;
 
     setConnectingDeviceId(null);
 

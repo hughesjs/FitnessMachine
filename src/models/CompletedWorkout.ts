@@ -96,7 +96,7 @@ export function calculateCalories(
  * Generates a unique workout ID.
  */
 export function generateWorkoutId(): string {
-  return `workout-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  return `workout-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 }
 
 /**

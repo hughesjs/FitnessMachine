@@ -42,6 +42,9 @@ function AppContent(): React.JSX.Element {
 
     return () => {
       bleService.destroy();
+      workoutRepository.close().catch(err =>
+        console.error('Failed to close database:', err)
+      );
     };
   }, [bleService, workoutRepository]);
 

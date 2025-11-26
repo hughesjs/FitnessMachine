@@ -8,6 +8,7 @@ import {
   SpeedIndicator,
   TreadmillControls,
 } from '../components';
+import {ErrorService, ErrorSeverity} from '../services/errors';
 
 interface ControlScreenProps {
   onDisconnect?: () => void;
@@ -56,6 +57,12 @@ export function ControlScreen({
       }
     } catch (err) {
       console.error('Failed to start workout:', err);
+      ErrorService.logError(
+        'Failed to start workout',
+        ErrorSeverity.High,
+        {action: 'handleStart'},
+        err instanceof Error ? err : undefined,
+      );
     }
   }, [requestControl, bleStartWorkout, localStartWorkout]);
 
@@ -67,6 +74,12 @@ export function ControlScreen({
       }
     } catch (err) {
       console.error('Failed to pause workout:', err);
+      ErrorService.logError(
+        'Failed to pause workout',
+        ErrorSeverity.High,
+        {action: 'handlePause'},
+        err instanceof Error ? err : undefined,
+      );
     }
   }, [blePauseWorkout, localPauseWorkout]);
 
@@ -78,6 +91,12 @@ export function ControlScreen({
       }
     } catch (err) {
       console.error('Failed to resume workout:', err);
+      ErrorService.logError(
+        'Failed to resume workout',
+        ErrorSeverity.High,
+        {action: 'handleResume'},
+        err instanceof Error ? err : undefined,
+      );
     }
   }, [bleStartWorkout, localResumeWorkout]);
 
@@ -89,6 +108,12 @@ export function ControlScreen({
       }
     } catch (err) {
       console.error('Failed to stop workout:', err);
+      ErrorService.logError(
+        'Failed to stop workout',
+        ErrorSeverity.High,
+        {action: 'handleStop'},
+        err instanceof Error ? err : undefined,
+      );
     }
   }, [bleStopWorkout, localStopWorkout, treadmillData]);
 
@@ -106,6 +131,12 @@ export function ControlScreen({
       await setTargetSpeed(clampedSpeed);
     } catch (err) {
       console.error('Failed to increase speed:', err);
+      ErrorService.logError(
+        'Failed to increase speed',
+        ErrorSeverity.Medium,
+        {action: 'handleSpeedUp'},
+        err instanceof Error ? err : undefined,
+      );
     } finally {
       speedOperationInProgress.current = false;
     }
@@ -125,6 +156,12 @@ export function ControlScreen({
       await setTargetSpeed(clampedSpeed);
     } catch (err) {
       console.error('Failed to decrease speed:', err);
+      ErrorService.logError(
+        'Failed to decrease speed',
+        ErrorSeverity.Medium,
+        {action: 'handleSpeedDown'},
+        err instanceof Error ? err : undefined,
+      );
     } finally {
       speedOperationInProgress.current = false;
     }
@@ -136,6 +173,12 @@ export function ControlScreen({
       onDisconnect?.();
     } catch (err) {
       console.error('Failed to disconnect:', err);
+      ErrorService.logError(
+        'Failed to disconnect',
+        ErrorSeverity.Medium,
+        {action: 'handleDisconnect'},
+        err instanceof Error ? err : undefined,
+      );
     }
   }, [disconnect, onDisconnect]);
 

@@ -75,7 +75,9 @@ export function WorkoutHistoryProvider({
 
   // Load workouts on mount
   useEffect(() => {
-    refresh();
+    refresh().catch(error => {
+      console.error('Failed to load workouts on mount:', error);
+    });
   }, [refresh]);
 
   const deleteWorkout = useCallback(
