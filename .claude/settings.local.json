@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr list:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh run view:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm ci:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git restore:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

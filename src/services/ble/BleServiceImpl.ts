@@ -224,8 +224,13 @@ export class BleServiceImpl implements BleService {
         hasSpeedRange,
       });
 
+      // Remove any existing device subscription first
+      this.deviceSubscription?.remove();
+
       // Monitor disconnection
       this.deviceSubscription = this.connectedDevice.onDisconnected(() => {
+        this.deviceSubscription?.remove();
+        this.deviceSubscription = null;
         this.connectedDevice = null;
         this.connectedMachine = null;
         this.setConnectionState(ConnectionState.Disconnected);
@@ -247,6 +252,9 @@ export class BleServiceImpl implements BleService {
   async disconnect(): Promise<void> {
     if (this.connectedDevice) {
       this.setConnectionState(ConnectionState.Disconnecting);
+
+      this.deviceSubscription?.remove();
+      this.deviceSubscription = null;
 
       try {
         await this.connectedDevice.cancelConnection();
