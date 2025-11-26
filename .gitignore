@@ -1,12 +1,19 @@
 # Dependencies
 node_modules/
+npm-debug.*
+yarn-debug.*
+yarn-error.*
 
 # React Native
 .expo/
+.expo-shared/
 *.jsbundle
+*.bundle
 
 # Build outputs
 android/app/build/
+android/.gradle/
+android/gradle/
 ios/build/
 ios/Pods/
 *.apk
@@ -18,24 +25,41 @@ ios/Pods/
 .vscode/
 *.swp
 *.swo
+*.sublime-*
+.project
+.classpath
+.settings/
+
+# Claude Code
+.claude/
 
 # OS
 .DS_Store
 Thumbs.db
+*.DS_Store
 
 # Metro
 .metro-health-check*
 
-# Debug
-npm-debug.*
-yarn-error.*
-
 # Testing
 coverage/
+.jest/
 
 # TypeScript
 *.tsbuildinfo
 
+# Environment
+.env
+.env.local
+.env.*.local
+
 # Temporary
 *.log
 *.tmp
+*.temp
+
+# React Native specific
+android/app/src/main/assets/
+android/app/src/main/res/drawable-*/
+ios/main.jsbundle
+ios/main.jsbundle.meta
