@@ -32,8 +32,8 @@ class ErrorServiceImpl {
       message,
       severity,
       timestamp: new Date(),
-      context,
-      error,
+      ...(context !== undefined && {context}),
+      ...(error !== undefined && {error}),
     };
 
     this.errors.unshift(appError);

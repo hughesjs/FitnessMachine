@@ -32,8 +32,8 @@ describe('ErrorService', () => {
 
       const errors = ErrorService.getErrors();
       expect(errors).toHaveLength(2);
-      expect(errors[0].message).toBe('Error 2');
-      expect(errors[1].message).toBe('Error 1');
+      expect(errors[0]!.message).toBe('Error 2');
+      expect(errors[1]!.message).toBe('Error 1');
     });
 
     it('includes Error object when provided', () => {
@@ -55,8 +55,8 @@ describe('ErrorService', () => {
 
       const errors = ErrorService.getErrors();
       expect(errors).toHaveLength(50);
-      expect(errors[0].message).toBe('Error 59');
-      expect(errors[49].message).toBe('Error 10');
+      expect(errors[0]!.message).toBe('Error 59');
+      expect(errors[49]!.message).toBe('Error 10');
     });
 
     it('notifies registered callbacks', () => {
@@ -118,8 +118,8 @@ describe('ErrorService', () => {
 
       expect(lowErrors).toHaveLength(2);
       expect(highErrors).toHaveLength(2);
-      expect(lowErrors[0].message).toBe('Low 2');
-      expect(lowErrors[1].message).toBe('Low 1');
+      expect(lowErrors[0]!.message).toBe('Low 2');
+      expect(lowErrors[1]!.message).toBe('Low 1');
     });
 
     it('returns empty array when no errors match severity', () => {

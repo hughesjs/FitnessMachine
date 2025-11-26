@@ -77,8 +77,8 @@ describe('ErrorBoundary', () => {
   });
 
   it('shows error message in development mode', () => {
-    const originalDev = global.__DEV__;
-    global.__DEV__ = true;
+    const originalDev = (global as any).__DEV__;
+    (global as any).__DEV__ = true;
 
     const {getByText} = render(
       <ErrorBoundary>
@@ -88,12 +88,12 @@ describe('ErrorBoundary', () => {
 
     expect(getByText('Test error')).toBeTruthy();
 
-    global.__DEV__ = originalDev;
+    (global as any).__DEV__ = originalDev;
   });
 
   it('hides error message in production mode', () => {
-    const originalDev = global.__DEV__;
-    global.__DEV__ = false;
+    const originalDev = (global as any).__DEV__;
+    (global as any).__DEV__ = false;
 
     const {queryByText} = render(
       <ErrorBoundary>
@@ -103,7 +103,7 @@ describe('ErrorBoundary', () => {
 
     expect(queryByText('Test error')).toBeNull();
 
-    global.__DEV__ = originalDev;
+    (global as any).__DEV__ = originalDev;
   });
 
   it('resets error when Try Again button is pressed', () => {

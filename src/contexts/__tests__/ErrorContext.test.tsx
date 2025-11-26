@@ -38,8 +38,8 @@ describe('ErrorContext', () => {
     });
 
     expect(result.current.errors).toHaveLength(1);
-    expect(result.current.errors[0].message).toBe('Test error');
-    expect(result.current.errors[0].severity).toBe(ErrorSeverity.High);
+    expect(result.current.errors[0]!.message).toBe('Test error');
+    expect(result.current.errors[0]!.severity).toBe(ErrorSeverity.High);
     expect(result.current.lastError).toBe(result.current.errors[0]);
     expect(result.current.hasErrors).toBe(true);
   });
@@ -54,9 +54,9 @@ describe('ErrorContext', () => {
     });
 
     expect(result.current.errors).toHaveLength(1);
-    expect(result.current.errors[0].message).toBe('Context error');
-    expect(result.current.errors[0].severity).toBe(ErrorSeverity.Critical);
-    expect(result.current.errors[0].context).toEqual({source: 'test'});
+    expect(result.current.errors[0]!.message).toBe('Context error');
+    expect(result.current.errors[0]!.severity).toBe(ErrorSeverity.Critical);
+    expect(result.current.errors[0]!.context).toEqual({source: 'test'});
   });
 
   it('logError defaults to Medium severity', () => {
@@ -66,7 +66,7 @@ describe('ErrorContext', () => {
       result.current.logError('Default severity error');
     });
 
-    expect(result.current.errors[0].severity).toBe(ErrorSeverity.Medium);
+    expect(result.current.errors[0]!.severity).toBe(ErrorSeverity.Medium);
   });
 
   it('logError can include Error object', () => {
@@ -82,7 +82,7 @@ describe('ErrorContext', () => {
       );
     });
 
-    expect(result.current.errors[0].error).toBe(originalError);
+    expect(result.current.errors[0]!.error).toBe(originalError);
   });
 
   it('clearErrors removes all errors', () => {
@@ -113,7 +113,7 @@ describe('ErrorContext', () => {
       result.current.logError('Error 3', ErrorSeverity.Critical);
     });
 
-    const errorIdToRemove = result.current.errors[1].id;
+    const errorIdToRemove = result.current.errors[1]!.id;
 
     act(() => {
       result.current.dismissError(errorIdToRemove);
@@ -151,9 +151,9 @@ describe('ErrorContext', () => {
     });
 
     expect(result.current.errors).toHaveLength(3);
-    expect(result.current.errors[0].message).toBe('Third');
-    expect(result.current.errors[1].message).toBe('Second');
-    expect(result.current.errors[2].message).toBe('First');
+    expect(result.current.errors[0]!.message).toBe('Third');
+    expect(result.current.errors[1]!.message).toBe('Second');
+    expect(result.current.errors[2]!.message).toBe('First');
   });
 
   it('hasErrors reflects error state correctly', () => {
@@ -198,7 +198,7 @@ describe('ErrorContext', () => {
       result.current.logError('Only error', ErrorSeverity.Low);
     });
 
-    const errorId = result.current.errors[0].id;
+    const errorId = result.current.errors[0]!.id;
 
     act(() => {
       result.current.dismissError(errorId);
