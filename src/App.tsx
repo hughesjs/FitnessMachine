@@ -6,8 +6,11 @@ import {RootNavigator} from './navigation';
 import {BleProvider} from './contexts/BleContext';
 import {WorkoutProvider} from './contexts/WorkoutContext';
 import {WorkoutHistoryProvider} from './contexts/WorkoutHistoryContext';
+import {ErrorProvider} from './contexts/ErrorContext';
+import {ErrorBoundary} from './components/ErrorBoundary';
 import {BleServiceImpl} from './services/ble';
 import {SQLiteWorkoutRepository} from './services/database';
+import {ErrorService, ErrorSeverity} from './services/errors';
 
 function AppContent(): React.JSX.Element {
   const bleService = useMemo(() => new BleServiceImpl(), []);
@@ -23,8 +26,14 @@ function AppContent(): React.JSX.Element {
         await workoutRepository.initialize();
         setIsInitializing(false);
       } catch (error) {
-        console.error('Initialization error:', error);
-        setInitError(error instanceof Error ? error.message : 'Failed to initialize');
+        const errorMessage = error instanceof Error ? error.message : 'Failed to initialize';
+        ErrorService.logError(
+          'App initialization failed',
+          ErrorSeverity.Critical,
+          {phase: 'startup'},
+          error instanceof Error ? error : undefined,
+        );
+        setInitError(errorMessage);
         setIsInitializing(false);
       }
     }
@@ -68,9 +77,13 @@ function AppContent(): React.JSX.Element {
 const App: React.FC = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <AppContent />
-      </NavigationContainer>
+      <ErrorProvider>
+        <NavigationContainer>
+          <ErrorBoundary>
+            <AppContent />
+          </ErrorBoundary>
+        </NavigationContainer>
+      </ErrorProvider>
     </SafeAreaProvider>
   );
 };
