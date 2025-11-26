@@ -48,26 +48,38 @@ jobs:
     needs: [lint-and-typecheck, run-tests]
     steps:
       - uses: actions/checkout@v4
+      - name: Check if Android directory exists
+        id: check_android
+        run: echo "exists=$([ -d android ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
       - uses: actions/setup-node@v4
+        if: steps.check_android.outputs.exists == 'true'
         with:
           node-version: '20'
           cache: 'npm'
       - uses: actions/setup-java@v4
+        if: steps.check_android.outputs.exists == 'true'
         with:
           distribution: 'temurin'
           java-version: '17'
       - name: Setup Android SDK
+        if: steps.check_android.outputs.exists == 'true'
         uses: android-actions/setup-android@v3
       - name: Install dependencies
+        if: steps.check_android.outputs.exists == 'true'
         run: npm ci
       - name: Build Android Release
+        if: steps.check_android.outputs.exists == 'true'
         working-directory: android
         run: ./gradlew assembleRelease
       - name: Upload Android Artifact
+        if: steps.check_android.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: FitnessMachine-Android
           path: android/app/build/outputs/apk/release/*.apk
+      - name: Skip Android build
+        if: steps.check_android.outputs.exists == 'false'
+        run: echo "Skipping Android build - android directory not found"
 
   build-ios:
     name: "Build iOS"
@@ -75,16 +87,23 @@ jobs:
     needs: [lint-and-typecheck, run-tests]
     steps:
       - uses: actions/checkout@v4
+      - name: Check if iOS directory exists
+        id: check_ios
+        run: echo "exists=$([ -d ios ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
       - uses: actions/setup-node@v4
+        if: steps.check_ios.outputs.exists == 'true'
         with:
           node-version: '20'
           cache: 'npm'
       - name: Install dependencies
+        if: steps.check_ios.outputs.exists == 'true'
         run: npm ci
       - name: Install CocoaPods dependencies
+        if: steps.check_ios.outputs.exists == 'true'
         working-directory: ios
         run: pod install
       - name: Build iOS Release
+        if: steps.check_ios.outputs.exists == 'true'
         working-directory: ios
         run: |
           xcodebuild \
@@ -98,7 +117,11 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
       - name: Upload iOS Artifact
+        if: steps.check_ios.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: FitnessMachine-iOS
           path: ios/build/Build/Products/Release-iphoneos/*.app
+      - name: Skip iOS build
+        if: steps.check_ios.outputs.exists == 'false'
+        run: echo "Skipping iOS build - ios directory not found"
