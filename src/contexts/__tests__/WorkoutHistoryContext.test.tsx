@@ -1,27 +1,11 @@
 import React from 'react';
-import {render, act, waitFor} from '@testing-library/react-native';
-import {Text} from 'react-native';
+import {renderHook, act, waitFor} from '@testing-library/react-native';
 import {WorkoutHistoryProvider, useWorkoutHistory} from '../WorkoutHistoryContext';
 import {MockWorkoutRepository} from '../../services/database';
 import {CompletedWorkout} from '../../models';
 
-// Type for the context value
-type WorkoutHistoryContextValue = ReturnType<typeof useWorkoutHistory>;
-
-// Use a ref-based approach to capture the latest context
-function TestConsumer({
-  contextRef,
-}: {
-  contextRef: React.MutableRefObject<WorkoutHistoryContextValue | null>;
-}): React.JSX.Element {
-  const context = useWorkoutHistory();
-  contextRef.current = context;
-  return <Text>Workouts: {context.workouts.length}</Text>;
-}
-
 describe('WorkoutHistoryContext', () => {
   let repository: MockWorkoutRepository;
-  let contextRef: React.MutableRefObject<WorkoutHistoryContextValue | null>;
 
   const createTestWorkout = (
     id: string,
@@ -40,20 +24,17 @@ describe('WorkoutHistoryContext', () => {
   beforeEach(async () => {
     repository = new MockWorkoutRepository();
     await repository.initialize();
-    contextRef = {current: null};
   });
 
   afterEach(async () => {
     await repository.close();
   });
 
-  const renderWithProvider = () => {
-    return render(
-      <WorkoutHistoryProvider workoutRepository={repository}>
-        <TestConsumer contextRef={contextRef} />
-      </WorkoutHistoryProvider>,
-    );
-  };
+  const wrapper = ({children}: {children: React.ReactNode}) => (
+    <WorkoutHistoryProvider workoutRepository={repository}>
+      {children}
+    </WorkoutHistoryProvider>
+  );
 
   describe('initial load', () => {
     it('loads workouts on mount', async () => {
@@ -62,38 +43,38 @@ describe('WorkoutHistoryContext', () => {
         createTestWorkout('workout-2'),
       ]);
 
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.workouts).toHaveLength(2);
+        expect(result.current.workouts).toHaveLength(2);
       });
     });
 
     it('sets isLoading to false after load', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.isLoading).toBe(false);
+        expect(result.current.isLoading).toBe(false);
       });
     });
   });
 
   describe('addWorkout', () => {
     it('adds workout to the list', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.isLoading).toBe(false);
+        expect(result.current.isLoading).toBe(false);
       });
 
       const newWorkout = createTestWorkout('new-workout');
 
       await act(async () => {
-        contextRef.current?.addWorkout(newWorkout);
+        result.current.addWorkout(newWorkout);
       });
 
-      expect(contextRef.current?.workouts).toHaveLength(1);
-      expect(contextRef.current?.workouts[0]?.workoutId).toBe('new-workout');
+      expect(result.current.workouts).toHaveLength(1);
+      expect(result.current.workouts[0]?.workoutId).toBe('new-workout');
     });
 
     it('maintains sorted order (newest first)', async () => {
@@ -101,20 +82,20 @@ describe('WorkoutHistoryContext', () => {
         createTestWorkout('older', new Date('2024-01-01')),
       ]);
 
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.isLoading).toBe(false);
+        expect(result.current.isLoading).toBe(false);
       });
 
       const newerWorkout = createTestWorkout('newer', new Date('2024-01-02'));
 
       await act(async () => {
-        contextRef.current?.addWorkout(newerWorkout);
+        result.current.addWorkout(newerWorkout);
       });
 
-      expect(contextRef.current?.workouts[0]?.workoutId).toBe('newer');
-      expect(contextRef.current?.workouts[1]?.workoutId).toBe('older');
+      expect(result.current.workouts[0]?.workoutId).toBe('newer');
+      expect(result.current.workouts[1]?.workoutId).toBe('older');
     });
   });
 
@@ -125,20 +106,20 @@ describe('WorkoutHistoryContext', () => {
         createTestWorkout('workout-2'),
       ]);
 
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.workouts).toHaveLength(2);
+        expect(result.current.workouts).toHaveLength(2);
       });
 
       let success = false;
       await act(async () => {
-        success = (await contextRef.current?.deleteWorkout('workout-1')) ?? false;
+        success = (await result.current.deleteWorkout('workout-1')) ?? false;
       });
 
       expect(success).toBe(true);
-      expect(contextRef.current?.workouts).toHaveLength(1);
-      expect(contextRef.current?.workouts[0]?.workoutId).toBe('workout-2');
+      expect(result.current.workouts).toHaveLength(1);
+      expect(result.current.workouts[0]?.workoutId).toBe('workout-2');
     });
   });
 
@@ -150,40 +131,40 @@ describe('WorkoutHistoryContext', () => {
         createTestWorkout('workout-3'),
       ]);
 
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.workouts).toHaveLength(3);
+        expect(result.current.workouts).toHaveLength(3);
       });
 
       let success = false;
       await act(async () => {
-        success = (await contextRef.current?.deleteAllWorkouts()) ?? false;
+        success = (await result.current.deleteAllWorkouts()) ?? false;
       });
 
       expect(success).toBe(true);
-      expect(contextRef.current?.workouts).toHaveLength(0);
+      expect(result.current.workouts).toHaveLength(0);
     });
   });
 
   describe('refresh', () => {
     it('reloads workouts from repository', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkoutHistory(), {wrapper});
 
       await waitFor(() => {
-        expect(contextRef.current?.isLoading).toBe(false);
+        expect(result.current.isLoading).toBe(false);
       });
 
-      expect(contextRef.current?.workouts).toHaveLength(0);
+      expect(result.current.workouts).toHaveLength(0);
 
       // Add directly to repository
       repository.addWorkouts([createTestWorkout('new-workout')]);
 
       await act(async () => {
-        await contextRef.current?.refresh();
+        await result.current.refresh();
       });
 
-      expect(contextRef.current?.workouts).toHaveLength(1);
+      expect(result.current.workouts).toHaveLength(1);
     });
   });
 });

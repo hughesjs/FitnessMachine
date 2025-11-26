@@ -1,162 +1,141 @@
-import React, {useRef, useEffect} from 'react';
-import {render, act} from '@testing-library/react-native';
-import {Text} from 'react-native';
+import React from 'react';
+import {renderHook, act} from '@testing-library/react-native';
 import {WorkoutProvider, useWorkout} from '../WorkoutContext';
 import {MockWorkoutRepository} from '../../services/database';
 import {WorkoutState, TreadmillData} from '../../models';
 
-// Type for the context value
-type WorkoutContextValue = ReturnType<typeof useWorkout>;
-
-// Use a ref-based approach to capture the latest context
-function TestConsumer({
-  contextRef,
-}: {
-  contextRef: React.MutableRefObject<WorkoutContextValue | null>;
-}): React.JSX.Element {
-  const context = useWorkout();
-  contextRef.current = context;
-  return <Text>{context.workoutState}</Text>;
-}
-
 describe('WorkoutContext', () => {
   let repository: MockWorkoutRepository;
-  let contextRef: React.MutableRefObject<WorkoutContextValue | null>;
 
   beforeEach(async () => {
     repository = new MockWorkoutRepository();
     await repository.initialize();
-    contextRef = {current: null};
   });
 
   afterEach(async () => {
     await repository.close();
   });
 
-  const renderWithProvider = () => {
-    return render(
-      <WorkoutProvider workoutRepository={repository}>
-        <TestConsumer contextRef={contextRef} />
-      </WorkoutProvider>,
-    );
-  };
+  const wrapper = ({children}: {children: React.ReactNode}) => (
+    <WorkoutProvider workoutRepository={repository}>{children}</WorkoutProvider>
+  );
 
   describe('initial state', () => {
     it('starts in Idle state', () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
-      expect(contextRef.current?.workoutState).toBe(WorkoutState.Idle);
+      expect(result.current.workoutState).toBe(WorkoutState.Idle);
     });
 
     it('can start workout initially', () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
-      expect(contextRef.current?.canStart).toBe(true);
+      expect(result.current.canStart).toBe(true);
     });
 
     it('cannot pause or stop initially', () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
-      expect(contextRef.current?.canPause).toBe(false);
-      expect(contextRef.current?.canStop).toBe(false);
+      expect(result.current.canPause).toBe(false);
+      expect(result.current.canStop).toBe(false);
     });
   });
 
   describe('startWorkout', () => {
     it('transitions to Running state', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
-      expect(contextRef.current?.workoutState).toBe(WorkoutState.Running);
+      expect(result.current.workoutState).toBe(WorkoutState.Running);
     });
 
     it('sets workout start time', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       const before = new Date();
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
       const after = new Date();
 
-      const startTime = contextRef.current?.workoutStartTime;
+      const startTime = result.current.workoutStartTime;
       expect(startTime).toBeDefined();
       expect(startTime?.getTime()).toBeGreaterThanOrEqual(before.getTime());
       expect(startTime?.getTime()).toBeLessThanOrEqual(after.getTime());
     });
 
     it('allows pause after starting', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
-      expect(contextRef.current?.canPause).toBe(true);
-      expect(contextRef.current?.canStart).toBe(false);
+      expect(result.current.canPause).toBe(true);
+      expect(result.current.canStart).toBe(false);
     });
   });
 
   describe('pauseWorkout', () => {
     it('transitions from Running to Paused', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       await act(async () => {
-        contextRef.current?.pauseWorkout();
+        result.current.pauseWorkout();
       });
 
-      expect(contextRef.current?.workoutState).toBe(WorkoutState.Paused);
+      expect(result.current.workoutState).toBe(WorkoutState.Paused);
     });
 
     it('allows resume after pausing', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       await act(async () => {
-        contextRef.current?.pauseWorkout();
+        result.current.pauseWorkout();
       });
 
-      expect(contextRef.current?.canResume).toBe(true);
-      expect(contextRef.current?.canPause).toBe(false);
+      expect(result.current.canResume).toBe(true);
+      expect(result.current.canPause).toBe(false);
     });
   });
 
   describe('resumeWorkout', () => {
     it('transitions from Paused to Running', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       await act(async () => {
-        contextRef.current?.pauseWorkout();
+        result.current.pauseWorkout();
       });
 
       await act(async () => {
-        contextRef.current?.resumeWorkout();
+        result.current.resumeWorkout();
       });
 
-      expect(contextRef.current?.workoutState).toBe(WorkoutState.Running);
+      expect(result.current.workoutState).toBe(WorkoutState.Running);
     });
   });
 
   describe('stopWorkout', () => {
     it('saves workout and returns to Idle', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       const treadmillData: TreadmillData = {
@@ -169,18 +148,18 @@ describe('WorkoutContext', () => {
 
       let completedWorkout: unknown = null;
       await act(async () => {
-        completedWorkout = await contextRef.current?.stopWorkout(treadmillData);
+        completedWorkout = await result.current.stopWorkout(treadmillData);
       });
 
-      expect(contextRef.current?.workoutState).toBe(WorkoutState.Idle);
+      expect(result.current.workoutState).toBe(WorkoutState.Idle);
       expect(completedWorkout).toBeDefined();
     });
 
     it('saves to repository', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       const treadmillData: TreadmillData = {
@@ -192,32 +171,31 @@ describe('WorkoutContext', () => {
       };
 
       await act(async () => {
-        await contextRef.current?.stopWorkout(treadmillData);
+        await result.current.stopWorkout(treadmillData);
       });
 
-      const result = await repository.getWorkoutCount();
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data).toBe(1);
+      const dbResult = await repository.getWorkoutCount();
+      expect(dbResult.success).toBe(true);
+      if (dbResult.success) {
+        expect(dbResult.data).toBe(1);
       }
     });
 
     it('calls onWorkoutCompleted callback', async () => {
       const onCompleted = jest.fn();
-      const localRef: React.MutableRefObject<WorkoutContextValue | null> = {
-        current: null,
-      };
 
-      render(
+      const wrapperWithCallback = ({children}: {children: React.ReactNode}) => (
         <WorkoutProvider
           workoutRepository={repository}
           onWorkoutCompleted={onCompleted}>
-          <TestConsumer contextRef={localRef} />
-        </WorkoutProvider>,
+          {children}
+        </WorkoutProvider>
       );
 
+      const {result} = renderHook(() => useWorkout(), {wrapper: wrapperWithCallback});
+
       await act(async () => {
-        localRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       const treadmillData: TreadmillData = {
@@ -229,7 +207,7 @@ describe('WorkoutContext', () => {
       };
 
       await act(async () => {
-        await localRef.current?.stopWorkout(treadmillData);
+        await result.current.stopWorkout(treadmillData);
       });
 
       expect(onCompleted).toHaveBeenCalledTimes(1);
@@ -238,22 +216,22 @@ describe('WorkoutContext', () => {
 
   describe('resetWorkout', () => {
     it('returns to Idle without saving', async () => {
-      renderWithProvider();
+      const {result} = renderHook(() => useWorkout(), {wrapper});
 
       await act(async () => {
-        contextRef.current?.startWorkout();
+        result.current.startWorkout();
       });
 
       await act(async () => {
-        contextRef.current?.resetWorkout();
+        result.current.resetWorkout();
       });
 
-      expect(contextRef.current?.workoutState).toBe(WorkoutState.Idle);
+      expect(result.current.workoutState).toBe(WorkoutState.Idle);
 
-      const result = await repository.getWorkoutCount();
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data).toBe(0);
+      const dbResult = await repository.getWorkoutCount();
+      expect(dbResult.success).toBe(true);
+      if (dbResult.success) {
+        expect(dbResult.data).toBe(0);
       }
     });
   });
