@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {useBle} from '../contexts/BleContext';
 import {useWorkout} from '../contexts/WorkoutContext';
@@ -44,58 +44,99 @@ export function ControlScreen({
     stopWorkout: localStopWorkout,
   } = useWorkout();
 
+  const speedOperationInProgress = useRef(false);
   const speedState = createSpeedState(treadmillData.speedInKmh, speedRange);
 
   const handleStart = useCallback(async () => {
-    await requestControl();
-    const success = await bleStartWorkout();
-    if (success) {
-      localStartWorkout();
+    try {
+      await requestControl();
+      const success = await bleStartWorkout();
+      if (success) {
+        localStartWorkout();
+      }
+    } catch (err) {
+      console.error('Failed to start workout:', err);
     }
   }, [requestControl, bleStartWorkout, localStartWorkout]);
 
   const handlePause = useCallback(async () => {
-    const success = await blePauseWorkout();
-    if (success) {
-      localPauseWorkout();
+    try {
+      const success = await blePauseWorkout();
+      if (success) {
+        localPauseWorkout();
+      }
+    } catch (err) {
+      console.error('Failed to pause workout:', err);
     }
   }, [blePauseWorkout, localPauseWorkout]);
 
   const handleResume = useCallback(async () => {
-    const success = await bleStartWorkout();
-    if (success) {
-      localResumeWorkout();
+    try {
+      const success = await bleStartWorkout();
+      if (success) {
+        localResumeWorkout();
+      }
+    } catch (err) {
+      console.error('Failed to resume workout:', err);
     }
   }, [bleStartWorkout, localResumeWorkout]);
 
   const handleStop = useCallback(async () => {
-    const success = await bleStopWorkout();
-    if (success) {
-      await localStopWorkout(treadmillData);
+    try {
+      const success = await bleStopWorkout();
+      if (success) {
+        await localStopWorkout(treadmillData);
+      }
+    } catch (err) {
+      console.error('Failed to stop workout:', err);
     }
   }, [bleStopWorkout, localStopWorkout, treadmillData]);
 
   const handleSpeedUp = useCallback(async () => {
-    const newSpeed = roundToIncrement(
-      treadmillData.speedInKmh + speedRange.minIncrementInKmh,
-      speedRange,
-    );
-    const clampedSpeed = clampSpeed(newSpeed, speedRange);
-    await setTargetSpeed(clampedSpeed);
+    if (speedOperationInProgress.current) {
+      return;
+    }
+    try {
+      speedOperationInProgress.current = true;
+      const newSpeed = roundToIncrement(
+        treadmillData.speedInKmh + speedRange.minIncrementInKmh,
+        speedRange,
+      );
+      const clampedSpeed = clampSpeed(newSpeed, speedRange);
+      await setTargetSpeed(clampedSpeed);
+    } catch (err) {
+      console.error('Failed to increase speed:', err);
+    } finally {
+      speedOperationInProgress.current = false;
+    }
   }, [treadmillData.speedInKmh, speedRange, setTargetSpeed]);
 
   const handleSpeedDown = useCallback(async () => {
-    const newSpeed = roundToIncrement(
-      treadmillData.speedInKmh - speedRange.minIncrementInKmh,
-      speedRange,
-    );
-    const clampedSpeed = clampSpeed(newSpeed, speedRange);
-    await setTargetSpeed(clampedSpeed);
+    if (speedOperationInProgress.current) {
+      return;
+    }
+    try {
+      speedOperationInProgress.current = true;
+      const newSpeed = roundToIncrement(
+        treadmillData.speedInKmh - speedRange.minIncrementInKmh,
+        speedRange,
+      );
+      const clampedSpeed = clampSpeed(newSpeed, speedRange);
+      await setTargetSpeed(clampedSpeed);
+    } catch (err) {
+      console.error('Failed to decrease speed:', err);
+    } finally {
+      speedOperationInProgress.current = false;
+    }
   }, [treadmillData.speedInKmh, speedRange, setTargetSpeed]);
 
   const handleDisconnect = useCallback(async () => {
-    await disconnect();
-    onDisconnect?.();
+    try {
+      await disconnect();
+      onDisconnect?.();
+    } catch (err) {
+      console.error('Failed to disconnect:', err);
+    }
   }, [disconnect, onDisconnect]);
 
   // Not connected state

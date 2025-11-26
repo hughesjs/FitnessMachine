@@ -71,6 +71,25 @@ function bytesToBase64(bytes: Uint8Array): string {
 }
 
 /**
+ * Wraps a promise with a timeout
+ */
+function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  errorMessage: string,
+): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(errorMessage)), timeoutMs),
+    ),
+  ]);
+}
+
+const CONNECTION_TIMEOUT_MS = 30000; // 30 seconds
+const SERVICE_DISCOVERY_TIMEOUT_MS = 15000; // 15 seconds
+
+/**
  * BLE service implementation using react-native-ble-plx.
  */
 export class BleServiceImpl implements BleService {
@@ -183,11 +202,19 @@ export class BleServiceImpl implements BleService {
     try {
       this.setConnectionState(ConnectionState.Connecting);
 
-      // Connect to the device
-      this.connectedDevice = await this.manager.connectToDevice(device.deviceId);
+      // Connect to the device with timeout
+      this.connectedDevice = await withTimeout(
+        this.manager.connectToDevice(device.deviceId),
+        CONNECTION_TIMEOUT_MS,
+        'Connection timeout: Failed to connect within 30 seconds',
+      );
 
-      // Discover services and characteristics
-      await this.connectedDevice.discoverAllServicesAndCharacteristics();
+      // Discover services and characteristics with timeout
+      await withTimeout(
+        this.connectedDevice.discoverAllServicesAndCharacteristics(),
+        SERVICE_DISCOVERY_TIMEOUT_MS,
+        'Service discovery timeout: Failed to discover services within 15 seconds',
+      );
 
       // Get the services to check capabilities
       const services = await this.connectedDevice.services();
