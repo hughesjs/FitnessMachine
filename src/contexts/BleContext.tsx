@@ -72,9 +72,9 @@ interface BleContextActions {
   clearError: () => void;
 }
 
-type BleContextValue = BleContextState & BleContextActions;
+export type BleContextValue = BleContextState & BleContextActions;
 
-const BleContext = createContext<BleContextValue | null>(null);
+export const BleContext = createContext<BleContextValue | null>(null);
 
 interface BleProviderProps {
   children: ReactNode;

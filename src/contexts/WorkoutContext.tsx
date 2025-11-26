@@ -50,9 +50,9 @@ interface WorkoutContextActions {
   resetWorkout: () => void;
 }
 
-type WorkoutContextValue = WorkoutContextState & WorkoutContextActions;
+export type WorkoutContextValue = WorkoutContextState & WorkoutContextActions;
 
-const WorkoutContext = createContext<WorkoutContextValue | null>(null);
+export const WorkoutContext = createContext<WorkoutContextValue | null>(null);
 
 interface WorkoutProviderProps {
   children: ReactNode;
