@@ -1,36 +1,114 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {RootNavigator} from './navigation';
+import {BleProvider} from './contexts/BleContext';
+import {WorkoutProvider} from './contexts/WorkoutContext';
+import {WorkoutHistoryProvider} from './contexts/WorkoutHistoryContext';
+import {BleServiceImpl} from './services/ble';
+import {SQLiteWorkoutRepository} from './services/database';
+
+// Create service instances
+const bleService = new BleServiceImpl();
+const workoutRepository = new SQLiteWorkoutRepository();
+
+function AppContent(): React.JSX.Element {
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [initError, setInitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function initialize() {
+      try {
+        // Initialize BLE service
+        await bleService.initialize();
+
+        // Initialize database
+        await workoutRepository.initialize();
+
+        setIsInitializing(false);
+      } catch (error) {
+        console.error('Initialization error:', error);
+        setInitError(error instanceof Error ? error.message : 'Failed to initialize');
+        setIsInitializing(false);
+      }
+    }
+
+    initialize();
+
+    return () => {
+      bleService.destroy();
+    };
+  }, []);
+
+  if (isInitializing) {
+    return (
+      <View style={styles.loadingContainer} testID="app-loading">
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text style={styles.loadingText}>Initializing...</Text>
+      </View>
+    );
+  }
+
+  if (initError) {
+    return (
+      <View style={styles.errorContainer} testID="app-error">
+        <Text style={styles.errorTitle}>Initialization Failed</Text>
+        <Text style={styles.errorText}>{initError}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <BleProvider bleService={bleService}>
+      <WorkoutProvider workoutRepository={workoutRepository}>
+        <WorkoutHistoryProvider workoutRepository={workoutRepository}>
+          <RootNavigator />
+        </WorkoutHistoryProvider>
+      </WorkoutProvider>
+    </BleProvider>
+  );
+}
 
 const App: React.FC = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Fitness Machine</Text>
-        <Text style={styles.subtitle}>React Native Edition</Text>
-      </View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <AppContent />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  content: {
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  subtitle: {
+  loadingText: {
+    marginTop: 12,
     fontSize: 16,
     color: '#666',
-    marginTop: 8,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 32,
+  },
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF3B30',
+    marginBottom: 8,
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
   },
 });
 

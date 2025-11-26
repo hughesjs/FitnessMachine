@@ -8,6 +8,6 @@ module.exports = {
   },
   testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|@react-native|@testing-library|react-native-ble-plx|react-native-sqlite-storage)/)',
+    'node_modules/(?!(react-native|@react-native|@testing-library|react-native-ble-plx|react-native-sqlite-storage|@react-navigation|react-native-screens|react-native-safe-area-context)/)',
   ],
 };
