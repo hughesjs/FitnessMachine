@@ -40,15 +40,40 @@ export class SQLiteWorkoutRepository implements WorkoutRepository {
     }
   }
 
-  async saveWorkout(workout: CompletedWorkout): Promise<DatabaseResult<void>> {
+  /**
+   * Executes a function within a database transaction.
+   * If the function throws an error, the transaction is rolled back.
+   */
+  private async executeInTransaction<T>(
+    operation: (db: SQLiteDatabase) => Promise<T>,
+  ): Promise<DatabaseResult<T>> {
     if (!this.db) {
       return dbError('Database not initialized');
     }
 
     try {
+      await this.db.executeSql('BEGIN TRANSACTION');
+
+      try {
+        const result = await operation(this.db);
+        await this.db.executeSql('COMMIT');
+        return dbSuccess(result);
+      } catch (error) {
+        await this.db.executeSql('ROLLBACK');
+        throw error;
+      }
+    } catch (error) {
+      return dbError(
+        error instanceof Error ? error.message : 'Transaction failed',
+      );
+    }
+  }
+
+  async saveWorkout(workout: CompletedWorkout): Promise<DatabaseResult<void>> {
+    return this.executeInTransaction(async db => {
       const row = workoutToRow(workout);
 
-      await this.db.executeSql(
+      await db.executeSql(
         `INSERT OR REPLACE INTO ${TABLE_NAME}
          (workout_id, distance_in_km, total_steps, workout_time_in_seconds,
           machine_indicated_calories, calculated_calories, started_at, completed_at)
@@ -64,13 +89,7 @@ export class SQLiteWorkoutRepository implements WorkoutRepository {
           row.completed_at,
         ],
       );
-
-      return dbSuccess(undefined);
-    } catch (error) {
-      return dbError(
-        error instanceof Error ? error.message : 'Failed to save workout',
-      );
-    }
+    });
   }
 
   async getAllWorkouts(): Promise<DatabaseResult<CompletedWorkout[]>> {
