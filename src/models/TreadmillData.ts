@@ -16,6 +16,52 @@ export interface TreadmillData {
 }
 
 /**
+ * Validation rules for treadmill data bounds.
+ */
+interface TreadmillDataValidationRules {
+  maxSpeedKmh: number;
+  maxDistanceKm: number;
+  maxTimeSeconds: number;
+  maxCalories: number;
+  maxSteps: number;
+}
+
+const DEFAULT_VALIDATION_RULES: TreadmillDataValidationRules = {
+  maxSpeedKmh: 30,
+  maxDistanceKm: 999.99,
+  maxTimeSeconds: 86400,
+  maxCalories: 99999,
+  maxSteps: 999999,
+};
+
+/**
+ * Validates and clamps a value to a safe range.
+ */
+function validateAndClamp(
+  value: number,
+  min: number,
+  max: number,
+  fieldName: string,
+): number {
+  if (isNaN(value) || !isFinite(value)) {
+    console.warn(`Invalid ${fieldName}: ${value}, using 0`);
+    return 0;
+  }
+
+  if (value < min) {
+    console.warn(`${fieldName} below minimum: ${value}, clamping to ${min}`);
+    return min;
+  }
+
+  if (value > max) {
+    console.warn(`${fieldName} above maximum: ${value}, clamping to ${max}`);
+    return max;
+  }
+
+  return value;
+}
+
+/**
  * Creates a TreadmillData object with default zero values.
  */
 export function createEmptyTreadmillData(): TreadmillData {
@@ -40,12 +86,18 @@ export function createEmptyTreadmillData(): TreadmillData {
  */
 export function parseTreadmillData(bytes: Uint8Array): TreadmillData {
   if (bytes.length < 4) {
+    console.warn('Treadmill data too short:', bytes.length);
     return createEmptyTreadmillData();
   }
 
   // Speed is always present at bytes 2-3 (uint16, little-endian, 0.01 km/h resolution)
   const speedRaw = (bytes[2] ?? 0) | ((bytes[3] ?? 0) << 8);
-  const speedInKmh = speedRaw / 100;
+  const speedInKmh = validateAndClamp(
+    speedRaw / 100,
+    0,
+    DEFAULT_VALIDATION_RULES.maxSpeedKmh,
+    'speed',
+  );
 
   let offset = 4;
   let distanceInKm = 0;
@@ -69,7 +121,12 @@ export function parseTreadmillData(bytes: Uint8Array): TreadmillData {
         (bytes[offset] ?? 0) |
         ((bytes[offset + 1] ?? 0) << 8) |
         ((bytes[offset + 2] ?? 0) << 16);
-      distanceInKm = distanceMeters / 1000;
+      distanceInKm = validateAndClamp(
+        distanceMeters / 1000,
+        0,
+        DEFAULT_VALIDATION_RULES.maxDistanceKm,
+        'distance',
+      );
       offset += 3;
     }
   }
@@ -97,8 +154,13 @@ export function parseTreadmillData(bytes: Uint8Array): TreadmillData {
   // Bit 7: Expended Energy Present
   if (flags & 0x0080) {
     if (bytes.length >= offset + 5) {
-      indicatedKiloCalories =
-        (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
+      const caloriesRaw = (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
+      indicatedKiloCalories = validateAndClamp(
+        caloriesRaw,
+        0,
+        DEFAULT_VALIDATION_RULES.maxCalories,
+        'calories',
+      );
       offset += 5; // Total (2) + per hour (2) + per minute (1)
     }
   }
@@ -116,8 +178,13 @@ export function parseTreadmillData(bytes: Uint8Array): TreadmillData {
   // Bit 10: Elapsed Time Present
   if (flags & 0x0400) {
     if (bytes.length >= offset + 2) {
-      timeInSeconds =
-        (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
+      const timeRaw = (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
+      timeInSeconds = validateAndClamp(
+        timeRaw,
+        0,
+        DEFAULT_VALIDATION_RULES.maxTimeSeconds,
+        'time',
+      );
       offset += 2;
     }
   }
@@ -136,7 +203,13 @@ export function parseTreadmillData(bytes: Uint8Array): TreadmillData {
   // Some devices use a vendor-specific position
   // Check if we have additional bytes that might contain step data
   if (bytes.length >= offset + 2) {
-    steps = (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
+    const stepsRaw = (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
+    steps = validateAndClamp(
+      stepsRaw,
+      0,
+      DEFAULT_VALIDATION_RULES.maxSteps,
+      'steps',
+    );
   }
 
   return {

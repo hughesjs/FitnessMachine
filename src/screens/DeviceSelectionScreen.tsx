@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {
   View,
   FlatList,
@@ -66,7 +66,10 @@ export function DeviceSelectionScreen({
     }
   };
 
-  const sortedDevices = sortDevicesBySignal(discoveredDevices);
+  const sortedDevices = useMemo(
+    () => sortDevicesBySignal(discoveredDevices),
+    [discoveredDevices],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
