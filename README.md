@@ -1,7 +1,7 @@
-> [!NOTE]  
+> [!NOTE]
 > The project is approaching the point where we will be able to launch it on app stores!
 > We would appreciate anyone who would like to volunteer to be a beta tester.
-> 
+>
 > Also, this project isn't dead, I'm just really busy with work at the moment, so sorry for any delays
 
 # Introduction
@@ -43,10 +43,35 @@ This project aims to reverse engineer the bluetooth protocol used by these tread
 
 ## Prerequisites
 
-- Flutter (see [official installation guide](https://docs.flutter.dev/get-started/install))
-- Flutter Version Manager (see [FVM installation guide](https://fvm.app/documentation/getting-started/installation))
-- IDE, like Android Studio/VS Code (optional)
+- Node.js (v18 or later)
+- npm or yarn
+- React Native CLI
+- For iOS: Xcode and CocoaPods
+- For Android: Android Studio and Android SDK
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+## Run Tests
+
+```bash
+npm test
+```
 
 ## Build and Run
 
-You can build and run this project like other flutter projects. For more information see the [documentation](https://docs.flutter.dev/get-started/test-drive).
+### iOS
+
+```bash
+cd ios && pod install && cd ..
+npm run ios
+```
+
+### Android
+
+```bash
+npm run android
+```

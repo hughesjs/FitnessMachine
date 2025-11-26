@@ -1,66 +1,65 @@
- # Created by https://www.toptal.com/developers/gitignore/api/windows,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos
+# Dependencies
+node_modules/
+npm-debug.*
+yarn-debug.*
+yarn-error.*
 
-### macOS ###
-# General
+# React Native
+.expo/
+.expo-shared/
+*.jsbundle
+*.bundle
+
+# Build outputs
+android/app/build/
+android/.gradle/
+android/gradle/
+ios/build/
+ios/Pods/
+*.apk
+*.aab
+*.ipa
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+.project
+.classpath
+.settings/
+
+# Claude Code
+.claude/
+
+# OS
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-### macOS Patch ###
-# iCloud generated files
-*.icloud
-
-### Windows ###
-# Windows thumbnail cache files
 Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
+*.DS_Store
 
-# Dump file
-*.stackdump
+# Metro
+.metro-health-check*
 
-# Folder config file
-[Dd]esktop.ini
+# Testing
+coverage/
+.jest/
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# TypeScript
+*.tsbuildinfo
 
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
+# Environment
+.env
+.env.local
+.env.*.local
 
-# Windows shortcuts
-*.lnk
+# Temporary
+*.log
+*.tmp
+*.temp
 
-# Jetbrains
-.idea
-
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos
+# React Native specific
+android/app/src/main/assets/
+android/app/src/main/res/drawable-*/
+ios/main.jsbundle
+ios/main.jsbundle.meta
