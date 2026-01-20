@@ -11,10 +11,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   provider: ^6.0.0
-  get_it: ^7.6.7
+  get_it: ">=7.6.7 <9.0.0"
   flutter_blue_plus: ^1.32.0
   safe_device: ^1.1.6
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ">=8.1.5 <10.0.0"
   equatable: ^2.0.5
   foundation: ^0.0.5
   wakelock_plus: ^1.2.4
@@ -22,15 +22,15 @@ dependencies:
   flutter_guid: ^0.3.1
   sqflite: ^2.3.3+1
   path: ^1.9.0
-  intl: ^0.19.0
-  health: ^10.2.0
+  intl: ">=0.19.0 <0.21.0"
+  health: ">=10.2.0 <13.0.0"
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ">=2.0.0 <5.0.0"
-  flutter_launcher_icons: "^0.13.1"
+  flutter_lints: ">=2.0.0 <6.0.0"
+  flutter_launcher_icons: ">=0.13.1 <0.15.0"
 
 
 flutter:
